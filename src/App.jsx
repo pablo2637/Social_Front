@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { NavBar } from './components/NavBar';
 import { NavBarUser } from './components/NavBarUser';
 import { useAuthStore } from './hooks/useAuthStore';
 import { AppRoutes, UserRoutes } from './routers'
+import { io } from 'socket.io-client';
+import { Chat } from './components/Chat';
 
+// const socket = io.connect(import.meta.env.VITE_URL_CHAT_BACK);
 
 function App() {
 
@@ -11,6 +15,18 @@ function App() {
     isChecking,
     status
   } = useAuthStore();
+
+
+  const [username, setUsername] = useState("");
+  const [room] = useState("1");
+  const [showChat, setShowChat] = useState(false);
+
+  const joinRoom = () => {
+    if (username !== "") {
+      socket.emit("join_room", room);
+      setShowChat(true);
+    }
+  };
 
   return (
 
@@ -49,6 +65,24 @@ function App() {
       <footer>
         <p>Footer</p>
       </footer>
+
+      <div className="App">
+        {!showChat ? (
+          <div className="joinChatContainer">
+            <h3>Join A Chat</h3>
+            <input
+              type="text"
+              placeholder="John..."
+              onChange={(event) => {
+                setUsername(event.target.value);
+              }}
+            />
+            <button onClick={joinRoom}>Join A Room</button>
+          </div>
+        ) : (
+          <Chat socket={socket} username={username} room={room} />
+        )}
+      </div>
 
     </>
   );
