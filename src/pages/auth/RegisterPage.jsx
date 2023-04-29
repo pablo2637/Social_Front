@@ -29,7 +29,7 @@ export const RegisterPage = () => {
 
 
 
-    const handleSubmit = async (ev) => {
+    const handleOnSubmit = async (ev) => {
         ev.preventDefault();
 
         const { data, formData } = serializeForm(ev.target);
@@ -51,7 +51,7 @@ export const RegisterPage = () => {
     };
 
 
-    const handleChange = ({ target }) => {
+    const handleOnChange = ({ target }) => {
 
         setForm(prevForm => ({
             ...prevForm,
@@ -73,7 +73,7 @@ export const RegisterPage = () => {
             }
 
 
-            <form encType='multipart/form-data' onSubmit={handleSubmit}>
+            <form encType='multipart/form-data' onSubmit={handleOnSubmit}>
                 <label htmlFor="name">Nombre:</label>
                 <input
                     type="text"
@@ -82,7 +82,7 @@ export const RegisterPage = () => {
                     id="name"
                     autoFocus
                     placeholder='Nombre...'
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                 />
                 {validate.name &&
                     <p className="errorRegister">{validate.name}</p>
@@ -108,7 +108,7 @@ export const RegisterPage = () => {
                     name="email"
                     id="email"
                     placeholder='Email...'
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                 />
                 {validate.email &&
                     <p className="errorRegister">{validate.email}</p>
@@ -121,7 +121,7 @@ export const RegisterPage = () => {
                     name="password"
                     id="password"
                     placeholder='Contraseña...'
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                 />
                 {validate.password &&
                     <p className="errorRegister">{validate.password}</p>
@@ -133,7 +133,7 @@ export const RegisterPage = () => {
                     name="passwordR"
                     id="passwordR"
                     placeholder='Repite la contraseña...'
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                 />
                 {validate.passwordR &&
                     <p className="errorRegister">{validate.passwordR}</p>
@@ -144,7 +144,7 @@ export const RegisterPage = () => {
                     type="file"
                     name="image"
                     id="image"
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                 />
                 {validate.image &&
                     <p className="errorRegister">{validate.image}</p>

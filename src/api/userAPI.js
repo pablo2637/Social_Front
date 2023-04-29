@@ -17,6 +17,14 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
+        case 'updateProfile':
+            url = `${urlBack}/api/users/profile`;
+            options = {
+                method: 'POST',
+                body: formData
+            }
+            break;
+
         case 'registerGoogle':
             url = `${urlBack}/api/users`;
             options = {

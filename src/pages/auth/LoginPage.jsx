@@ -3,11 +3,14 @@ import { useState } from 'react';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import { validateFormLogin } from '../../helpers/validateForm';
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../hooks/useUserStore';
+import { useSelector } from 'react-redux';
 
 export const LoginPage = () => {
 
+  const { loginUser, loginGoogle } = useAuthStore();
 
-  const { status, loginUser, loginGoogle } = useAuthStore();
+  const { status, user, isChecking } = useSelector((state) => state.auth);  
   const [form, setForm] = useState({});
   const [validate, setValidate] = useState({});
   const navigate = useNavigate();
@@ -27,18 +30,19 @@ export const LoginPage = () => {
 
 
 
-  const handleLoginGoogle = async (ev) => {
+  const handleOnLoginGoogle = async (ev) => {
     ev.preventDefault();
 
     await loginGoogle();
 
     if (status === 'authenticated') navigate('/');
 
+
   };
 
 
 
-  const handleSubmit = async (ev) => {
+  const handleOnSubmit = async (ev) => {
     ev.preventDefault();
 
     const data = serializeForm(ev.target);
@@ -55,7 +59,7 @@ export const LoginPage = () => {
   };
 
 
-  const handleChange = ({ target }) => {
+  const handleOnChange = ({ target }) => {
 
     setForm(prevForm => ({
       ...prevForm,
@@ -76,7 +80,7 @@ export const LoginPage = () => {
         <p className="errorLogin">ERROR: {validate.msgError}</p>
       }
 
-      <form encType="multipart/form-data" onSubmit={handleSubmit}>
+      <form encType="multipart/form-data" onSubmit={handleOnSubmit}>
 
         <label htmlFor="email">Email:</label>
         <input
@@ -86,7 +90,7 @@ export const LoginPage = () => {
           name="email"
           id="email"
           placeholder='Email...'
-          onChange={handleChange}
+          onChange={handleOnChange}
         />
         {validate.email &&
           <p className="errorLogin">{validate.email}</p>
@@ -99,7 +103,7 @@ export const LoginPage = () => {
           name="password"
           id="password"
           placeholder='Contraseña...'
-          onChange={handleChange}
+          onChange={handleOnChange}
         />
         {validate.password &&
           <p className="errorLogin">{validate.password}</p>
@@ -113,7 +117,7 @@ export const LoginPage = () => {
         <p>Aún no tienes una cuenta? <NavLink to='/register'>Regístrate</NavLink></p>
 
         <button
-          onClick={handleLoginGoogle}
+          onClick={handleOnLoginGoogle}
         >Entra con tu cuenta de Google</button>
 
       </form>

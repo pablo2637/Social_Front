@@ -1,5 +1,34 @@
 import { userAPI } from "../api/userAPI";
 
+
+
+export const fetchUpdateProfile = async (formData) => {
+
+    const data = {
+        type: 'updateProfile'
+    }
+
+    const response = await userAPI(data, formData);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            user: response.user
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+    }
+}
+
+
+
 export const fetchDataEmail = async (email) => {
 
     const data = {
@@ -7,7 +36,7 @@ export const fetchDataEmail = async (email) => {
         email
     };
 
-    const { data: user, ok, msg } = await userAPI(data);
+    const { user, ok, msg } = await userAPI(data);
 
     if (ok) {
 
@@ -23,7 +52,7 @@ export const fetchDataEmail = async (email) => {
 
         return {
             ok: false,
-            msg
+            msg: msg
         }
 
     }

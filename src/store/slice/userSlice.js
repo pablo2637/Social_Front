@@ -1,44 +1,80 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getLocal } from '../../helpers/localStorage';
-
 
 export const userSlice = createSlice({
 
     name: 'user',
 
     initialState: {
-        user: getLocal().user,
-        status: getLocal().status,
-        isChecking: false,
+        profile: [],
+        friends: [],
+        isLoading: false,
+        userStatus: ''
     },
 
     reducers: {
 
-        onCheckingUser: (state) => {
-            state.isChecking = true;
-            state.user = {};
-            state.status = 'checking';
+        onLoadingProfile: (state) => {
+            state.isLoading = true;
+            state.profile = [];
+            state.userStatus = 'loading';
         },
 
-        onLoginUser: (state, { payload }) => {
-            state.isChecking = false;
-            state.user = payload;
-            state.status = 'authenticated';
+        onLoadProfile: (state, { payload }) => {            
+            state.profile = payload;            
         },
 
-        onLogoutUser: (state) => {
-            state.user = {};
-            state.status = 'not-authenticated';
+        onLoadProfileComplete: (state) => {
+            state.isLoading = false;            
+            state.userStatus = 'loaded';
         },
 
-        onError: (state) => {
-            state.isChecking = false;
-            state.user = {};
-            state.status = 'not-authenticated';
+        onUpdatingProfile: (state) => {
+            state.isLoading = true;
+            state.userStatus = 'updating';
+        },
+
+        onUpdateProfile: (state, { payload }) => {            
+            state.profile = payload;            
+        },
+
+        onUpdatingComplete: (state) => {
+            state.isLoading = false;            
+            state.userStatus = 'updated';
+        },
+
+        onLoadindFriends: (state) => {
+            state.isLoading = true;
+            state.friends = [];
+            state.userStatus = 'loading';
+        },
+
+        onLoadFriends: (state, { payload }) => {            
+            state.friends = payload;            
+        },
+
+        onLoadFriendsComplete: (state) => {
+            state.isLoading = false;
+            state.userStatus = 'loaded';
+        },
+
+        onError: (state, { payload }) => {
+            state.isLoading = false;
+            state.userStatus = payload;
         }
     }
 
 });
 
 
-export const { onCheckingUser, onLoginUser, onLogoutUser, onError } = userSlice.actions;
+export const {
+    onLoadingProfile,
+    onLoadProfile,
+    onLoadProfileComplete,
+    onUpdatingProfile,
+    onUpdateProfile,
+    onUpdatingComplete,
+    onLoadindFriends,
+    onLoadFriends,
+    onLoadFriendsComplete,
+    onError
+} = userSlice.actions;
