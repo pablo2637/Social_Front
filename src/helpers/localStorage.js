@@ -2,7 +2,7 @@
 export const getLocal = () => {
 
     const user = JSON.parse(localStorage.getItem('userSocial')) || {};    
-    const status = user.id ? 'authenticated' : 'checking';
+    const status = user._id ? 'authenticated' : 'checking';
     
     return { user, status }
 };

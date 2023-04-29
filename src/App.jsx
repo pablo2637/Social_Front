@@ -5,16 +5,19 @@ import { useAuthStore } from './hooks/useAuthStore';
 import { AppRoutes, UserRoutes } from './routers'
 import { io } from 'socket.io-client';
 import { Chat } from './components/Chat';
+import { useSelector } from 'react-redux';
 
 // const socket = io.connect(import.meta.env.VITE_URL_CHAT_BACK);
 
 function App() {
 
-  const {
-    user,
-    isChecking,
-    status
-  } = useAuthStore();
+  // const {
+  //   user,
+  //   isChecking,
+  //   status
+  // } = useAuthStore();
+  
+  const { status, user, isChecking } = useSelector((state) => state.auth);
 
 
   const [username, setUsername] = useState("");
@@ -31,13 +34,6 @@ function App() {
   return (
 
     <>
-      <p>Status: {status} - isChecking: {isChecking.toString()} - user: {user.name}</p>
-
-      {
-        (status === 'authenticated') && <img src={user.image} alt="" />
-
-      }
-
       <header>
         <p>Social Connect</p>
       </header>
@@ -47,6 +43,13 @@ function App() {
           <NavBarUser />
           :
           <NavBar />
+      }
+      
+      <p>Status: {status} - isChecking: {isChecking.toString()} - user: {user.name}</p>
+
+      {
+        (status === 'authenticated') && <img src={user.image} width={150} alt="" />
+
       }
 
       <main>
@@ -65,7 +68,7 @@ function App() {
       <footer>
         <p>Footer</p>
       </footer>
-
+{/* 
       <div className="App">
         {!showChat ? (
           <div className="joinChatContainer">
@@ -82,7 +85,7 @@ function App() {
         ) : (
           <Chat socket={socket} username={username} room={room} />
         )}
-      </div>
+      </div> */}
 
     </>
   );

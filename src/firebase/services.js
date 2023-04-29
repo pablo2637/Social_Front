@@ -19,7 +19,7 @@ export const singInWithGoogle = async () => {
         googleProvider.setCustomParameters({ prompt: 'select_account' });
 
         const { user } = await signInWithPopup(FirebaseAuth, googleProvider);
-        
+
         return {
             ok: true,
             user: {
@@ -32,7 +32,8 @@ export const singInWithGoogle = async () => {
         };
 
     } catch (e) {
-        console.log('singInWithGoogle error:', e);
+        if (!e.toString().includes('auth/popup-closed-by-user'))
+            console.log('singInWithGoogle error:', e);
 
         return {
             ok: false,
@@ -86,7 +87,8 @@ export const loginWithCredentials = async (email, password) => {
         };
 
     } catch (e) {
-        console.log('loginWithCredentials error:', e);
+        if (!e.toString().includes('auth/wrong-password'))
+            console.log('loginWithCredentials error:', e);
 
         return {
             ok: false,
