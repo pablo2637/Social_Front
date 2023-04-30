@@ -17,6 +17,18 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
+        case 'registerGoogle':
+            url = `${urlBack}/api/users`;
+            options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data.body)
+            }
+            break;
+
+
+
+
         case 'updateProfile':
             url = `${urlBack}/api/users/profile`;
             options = {
@@ -25,13 +37,8 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
-        case 'registerGoogle':
-            url = `${urlBack}/api/users`;
-            options = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data.body)
-            }
+        case 'getProfiles':
+            url = `${urlBack}/api/public`;
             break;
 
     };

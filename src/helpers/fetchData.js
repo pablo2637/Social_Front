@@ -25,7 +25,33 @@ export const fetchUpdateProfile = async (formData) => {
         }
 
     }
-}
+};
+
+
+export const fetchLoadProfiles = async () => {
+
+    const data = {
+        type: 'getProfiles'
+    }
+
+    const response = await userAPI(data);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            profiles: response.data
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+    }
+};
 
 
 

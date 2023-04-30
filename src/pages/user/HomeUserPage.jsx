@@ -1,7 +1,6 @@
-
+import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { Profile } from "./components";
-import { EditProfile } from "./components/EditProfile";
+import { EditProfile, Profile } from "./components";
 
 export const HomeUserPage = () => {
 
@@ -10,11 +9,22 @@ export const HomeUserPage = () => {
   return (
 
     <section>
+      <div>
+        <p>Tu cuenta</p>
+      </div>
+
       <h1>Hola, {user.name}</h1>
       {
         (user.profile.length > 0) ?
-          <Profile profile={user.profile} />
+
+          <div>
+            <Profile profile={user.profile} />
+
+            <NavLink to='/edit'>Edita tu perfil</NavLink>
+          </div>
+
           :
+
           <EditProfile />
       }
 
