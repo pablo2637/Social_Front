@@ -87,19 +87,7 @@ export const RegisterPage = () => {
                 {validate.name &&
                     <p className="errorRegister">{validate.name}</p>
                 }
-                {/* 
-                <label htmlFor="lastName">Apellidos:</label>
-                <input
-                    type="text"
-                    autoComplete='off'
-                    name="lastName"
-                    id="lastName"
-                    placeholder='Apellidos...'
-                    onChange={handleChange}
-                />
-                {validate.lastName &&
-                    <p className="errorRegister">{validate.lastName}</p>
-                } */}
+      
 
                 <label htmlFor="email">Email:</label>
                 <input
@@ -148,19 +136,7 @@ export const RegisterPage = () => {
                 />
                 {validate.image &&
                     <p className="errorRegister">{validate.image}</p>
-                }
-
-                {/* <label htmlFor="dateOfBirth">Fecha de Nacimiento:</label>
-                <input
-                    type="date"
-                    name="dateOfBirth"
-                    id="dateOfBirth"
-                    placeholder='Fecha de nacimiento...'
-                    onChange={handleChange}
-                />
-                {validate.dateOfBirth &&
-                    <p className="errorRegister">{validate.dateOfBirth}</p>
-                } */}
+                }         
 
                 <input
                     type="submit"

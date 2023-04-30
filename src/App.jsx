@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { NavBar } from './components/NavBar';
 import { NavBarUser } from './components/NavBarUser';
-import { useAuthStore } from './hooks/useAuthStore';
 import { AppRoutes, UserRoutes } from './routers'
 import { io } from 'socket.io-client';
 import { Chat } from './components/Chat';

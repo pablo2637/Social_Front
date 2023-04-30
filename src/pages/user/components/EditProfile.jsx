@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "../../../hooks/useUserStore";
 import { useSelector } from "react-redux";
 import { Profile } from "./Profile";
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const EditProfile = () => {
 
     const { status, user, isChecking } = useSelector((state) => state.auth);
-    const { isLoading, friends, profile, userStatus } = useSelector((state) => state.user);
     const { updateUserProfile } = useUserStore();
     const [form, setForm] = useState([]);
     const [order, setOrder] = useState([]);
+    const navigate = useNavigate();
 
 
     const serializeForm = (serialForm) => {
@@ -51,22 +53,20 @@ export const EditProfile = () => {
 
     const handleImageSelect = ({ target }) => {
 
-        const newInput = form.find(el => el.id == target.id);
-        const newForm = form.filter(el => el.id != target.id);
+        const ind = form.findIndex(el => el.id == target.id);
+        const newInput = form[ind];
 
         const reader = new FileReader();
         reader.onload = ({ target }) => {
 
-            newInput.content = target.result
-
-            setForm(([
-                ...newForm,
-                newInput
-            ]));
+            const newForm = [
+                ...form.slice(0, ind),
+                { ...newInput, content: target.result },
+                ...form.slice(ind + 1)
+            ];
+            setForm(newForm);
         };
-
         reader.readAsDataURL(target.files[0]);
-
     };
 
 
@@ -82,34 +82,49 @@ export const EditProfile = () => {
 
 
         const response = await updateUserProfile(formData);
+        if (!response.ok) return
 
-        console.log('response 2', response)
+        navigate('/');
 
     };
-
 
 
     const handleOnChange = (target) => {
 
-        const newInput = form.find(el => el.id == target.id);
-        const newForm = form.filter(el => el.id != target.id);
+        setForm((prevForm) =>
+            prevForm.map((el) => {
+                if (el.id === target.id)
+                    return { ...el, content: target.value };
 
-        newInput.content = target.value;
-
-        setForm(([
-            ...newForm,
-            newInput
-        ]));
+                return el;
+            })
+        );
 
     };
+
+
+    const loadForm = () => {
+
+        const newForm = [...user.profile];
+        setForm(newForm);
+    };
+
+
+    useEffect(() => {
+        loadForm();
+
+    }, [])
+
 
     return (
 
         <section>
 
-            <h2>Edita tu perfil:</h2>
+            <div>
+                <NavLink to='/'>Tu cuenta</NavLink><span> &gt; Editar perfil</span>
+            </div>
 
-            <p>Status: {userStatus} - isChecking: {isLoading.toString()} - profile: {profile.toString()}</p>
+            <h2>Edita tu perfil:</h2>
 
             <div>
                 <button onClick={() => handleOnClick('text')} >+ Texto</button>
@@ -119,7 +134,7 @@ export const EditProfile = () => {
             </div>
 
 
-            <form onSubmit={handleOnSubmit}>
+            <form key={'editProfile' + user._id} onSubmit={handleOnSubmit}>
                 <input type="hidden" name="_id" value={user._id} />
                 <input type="hidden" name="uid" value={user.uid} />
                 <input type="hidden" name="profileOrder" value={order} />
@@ -168,6 +183,15 @@ export const EditProfile = () => {
                 }
 
             </form>
+
+
+            {
+                (form.length > 0) ?
+                    <h2>Previsualización:</h2>
+                    :
+                    <h2>Añade contenido a tu perfil:</h2>
+            }
+
 
 
             <Profile profile={form} />

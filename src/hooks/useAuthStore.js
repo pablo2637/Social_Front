@@ -1,13 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { singInWithGoogle, logoutFirebase, signInWithCredentials, loginWithCredentials } from '../firebase/services';
 import { fetchDataEmail, fetchDataRegister, fetchDataRegisterGoogle } from '../helpers/fetchData';
 import { onCheckingUser, onError, onLoginUser, onLogoutUser } from '../store/slice/authSlice';
 import { deleteLocal, setLocal } from '../helpers/localStorage';
-import { useUserStore } from './useUserStore';
 
 export const useAuthStore = () => {
 
-    const { loadProfile } = useUserStore();
     const dispatch = useDispatch();
 
 
@@ -98,8 +96,6 @@ export const useAuthStore = () => {
 
         dispatch(onLoginUser(data.user));
         setLocal(data.user);
-
-        loadProfile();
 
         return {
             ok: true
