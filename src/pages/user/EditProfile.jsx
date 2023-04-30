@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useUserStore } from "../../../hooks/useUserStore";
+import { useUserStore } from "../../hooks/useUserStore";
 import { useSelector } from "react-redux";
-import { Profile } from "./Profile";
+import { Profile } from "./components/Profile";
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
@@ -134,14 +134,14 @@ export const EditProfile = () => {
             </div>
 
 
-            <form key={'editProfile' + user._id} onSubmit={handleOnSubmit}>
+            <form onSubmit={handleOnSubmit}>
                 <input type="hidden" name="_id" value={user._id} />
                 <input type="hidden" name="uid" value={user.uid} />
                 <input type="hidden" name="profileOrder" value={order} />
 
                 {
                     form.map(el => (
-                        <>
+                        <div key={'d' + el.id}>
                             {(el.typeInput == 'text') && <input
                                 key={el.id}
                                 type="text"
@@ -171,7 +171,7 @@ export const EditProfile = () => {
                                 onChange={handleImageSelect}
                             />}
 
-                        </>
+                        </div>
                     ))
                 }
 
@@ -181,7 +181,7 @@ export const EditProfile = () => {
                         :
                         <input type="submit" value="Guardar" />
                 }
-
+                <NavLink to='/'>Cancelar</NavLink>
             </form>
 
 

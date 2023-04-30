@@ -15,8 +15,8 @@ function App() {
   //   isChecking,
   //   status
   // } = useAuthStore();
-  
-  const { status, user, isChecking } = useSelector((state) => state.auth);
+
+  const { status, user, isLoading, isChecking } = useSelector((state) => state.auth);
 
 
   const [username, setUsername] = useState("");
@@ -43,11 +43,11 @@ function App() {
           :
           <NavBar />
       }
-      
-      <p>Status: {status} - isChecking: {isChecking.toString()} - user: {user.name}</p>
+
+      <p>Status: {status} - isLoading: {isLoading.toString()} - isChecking: {isChecking.toString()} - user: {user.name}</p>
 
       {
-        (status === 'authenticated') && <img src={user.image} width={150} alt="" />
+        (status === 'authenticated') && <img key={Date.now()} src={user.image} width={150} alt="" />
 
       }
 
@@ -67,7 +67,7 @@ function App() {
       <footer>
         <p>Footer</p>
       </footer>
-{/* 
+      {/* 
       <div className="App">
         {!showChat ? (
           <div className="joinChatContainer">

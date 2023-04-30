@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { singInWithGoogle, logoutFirebase, signInWithCredentials, loginWithCredentials } from '../firebase/services';
-import { fetchDataEmail, fetchDataRegister, fetchDataRegisterGoogle } from '../helpers/fetchData';
-import { onCheckingUser, onError, onLoginUser, onLogoutUser } from '../store/slice/authSlice';
+import { singInWithGoogle, logoutFirebase, signInWithCredentials, loginWithCredentials, changePassword } from '../firebase/services';
+import { fetchDataEmail, fetchDataRegister, fetchDataRegisterGoogle, fetchUpdateUser } from '../helpers/fetchData';
+import { onChecking, onCheckingUser, onComplete, onError, onLoading, onLoginUser, onLogoutUser, onUpdateUser } from '../store/slice/authSlice';
 import { deleteLocal, setLocal } from '../helpers/localStorage';
 
 export const useAuthStore = () => {
+
 
     const dispatch = useDispatch();
 
@@ -184,10 +185,73 @@ export const useAuthStore = () => {
     };
 
 
+
+    const updateUserData = async (formData) => {
+
+        dispatch(onLoading());
+
+        const response = await fetchUpdateUser(formData)
+        console.log('response', response)
+
+        if (!response.ok)
+            return {
+                ok: false,
+                msg: response.msg
+            }
+
+
+        dispatch(onUpdateUser(response.user));
+
+        return {
+            ok: true
+        }
+
+    };
+
+
+    const updatePassword = async (data, setValidate) => {
+
+        dispatch(onChecking());
+
+        let msgErrorPass;
+
+        const response = await changePassword(data)
+
+        if (!response.ok) {
+
+            if (response.error.toString().includes('auth/wrong-password'))
+                msgErrorPass = `Error al validar la contraseña actual.`
+
+            if (response.error.toString().includes('at least 6 characters'))
+                msgErrorPass = `La nueva contraseña debe tener al menos 6 caracteres.`
+
+
+            setValidate(prevValidate => ({
+                ...prevValidate,
+                msgErrorPass
+            }));
+
+            return {
+                ok: false
+            }
+        }
+
+        dispatch(onComplete());
+
+
+        return {
+            ok: true
+        }
+
+    };
+
+
     return {
         loginUser,
         logoutUser,
+        updateUserData,
         registerUser,
+        updatePassword,
         loginGoogle
     };
 };

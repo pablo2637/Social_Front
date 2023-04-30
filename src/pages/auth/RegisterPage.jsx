@@ -21,8 +21,7 @@ export const RegisterPage = () => {
 
         for (let [key, value] of formData) {
             data[key] = typeof value === 'string' ? value.trim() : value;
-        }
-        console.log('data', data)
+        };
 
         return { data, formData };
     };
@@ -87,7 +86,7 @@ export const RegisterPage = () => {
                 {validate.name &&
                     <p className="errorRegister">{validate.name}</p>
                 }
-      
+
 
                 <label htmlFor="email">Email:</label>
                 <input
@@ -136,7 +135,7 @@ export const RegisterPage = () => {
                 />
                 {validate.image &&
                     <p className="errorRegister">{validate.image}</p>
-                }         
+                }
 
                 <input
                     type="submit"

@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { EditProfile, Profile } from "./components";
+import { Profile } from "./components";
+import { EditProfile } from './';
 
 export const HomeUserPage = () => {
 
-  const { status, user, isChecking } = useSelector((state) => state.auth);
+  const { status, user, isLoading, isChecking } = useSelector((state) => state.auth);
 
   return (
 
@@ -20,7 +21,8 @@ export const HomeUserPage = () => {
           <div>
             <Profile profile={user.profile} />
 
-            <NavLink to='/edit'>Edita tu perfil</NavLink>
+            <NavLink to='/editProfile'>Edita tu perfil</NavLink>
+            <NavLink to='/editData'>Edita tus datos personales</NavLink>
           </div>
 
           :

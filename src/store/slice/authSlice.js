@@ -10,6 +10,7 @@ export const authSlice = createSlice({
         user: getLocal().user,
         status: getLocal().status,
         isChecking: false,
+        isLoading: false,
     },
 
     reducers: {
@@ -26,6 +27,23 @@ export const authSlice = createSlice({
             state.status = 'authenticated';
         },
 
+        onLoading: (state) => {
+            state.isLoading = true;
+        },
+
+        onChecking: (state) => {
+            state.isChecking = true;
+        },
+
+        onUpdateUser: (state, { payload }) => {
+            state.user = payload;
+            state.isLoading = false;
+        },
+
+        onComplete: (state) => {
+            state.isChecking = false;
+        },
+
         onLogoutUser: (state) => {
             state.user = {};
             state.status = 'not-authenticated';
@@ -33,6 +51,7 @@ export const authSlice = createSlice({
 
         onError: (state) => {
             state.isChecking = false;
+            state.isLoading = false;
             state.user = {};
             state.status = 'not-authenticated';
         }
@@ -43,7 +62,11 @@ export const authSlice = createSlice({
 
 export const {
     onCheckingUser,
+    onChecking,
+    onComplete,
     onLoginUser,
+    onUpdateUser,
+    onLoading,
     onLogoutUser,
     onError
 } = authSlice.actions;
