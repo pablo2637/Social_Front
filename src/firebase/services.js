@@ -4,13 +4,56 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     getAuth,
-    signOut
+    signOut,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updateCurrentUser,
+    updatePassword
 } from 'firebase/auth'
 import { FirebaseAuth } from './config'
 
 
-
 const googleProvider = new GoogleAuthProvider()
+
+const recheckPassword = async (password, auth) => {
+
+    const user = auth.currentUser;
+    const cred = EmailAuthProvider.credential(user.email, password);
+
+    return await reauthenticateWithCredential(user, cred);
+}
+
+
+export const changePassword = async ({ password, oldPassword }) => {
+
+    try {
+
+        const auth = getAuth();
+
+        const { user } = await recheckPassword(oldPassword, auth);
+
+        await FirebaseAuth.updateCurrentUser(auth.currentUser);
+        await updatePassword(user, password)
+
+        return {
+            ok: true,
+            msg: 'Password actualizado con éxito'
+        }
+
+    } catch (e) {
+        if (!e.toString().includes('auth/wrong-password'))
+            console.log('changePassowrd error:', e);
+
+        return {
+            ok: false,
+            msg: 'changePassowrd error',
+            error: e
+        };
+    };
+
+};
+
+
 
 export const singInWithGoogle = async () => {
 
@@ -32,7 +75,8 @@ export const singInWithGoogle = async () => {
         };
 
     } catch (e) {
-        if (!e.toString().includes('auth/popup-closed-by-user'))
+        if (!e.toString().includes('auth/popup-closed-by-user') &&
+            !e.toString().includes('at least 6 characters'))
             console.log('singInWithGoogle error:', e);
 
         return {
@@ -46,7 +90,6 @@ export const singInWithGoogle = async () => {
 
 
 export const signInWithCredentials = async (email, password) => {
-    console.log('email+password', email, password)
 
     try {
         const { user } = await createUserWithEmailAndPassword(FirebaseAuth, email, password);

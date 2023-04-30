@@ -26,13 +26,23 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
+        case 'updateUser':
+            url = `${urlBack}/api/users`;
+            options = {
+                method: 'PUT',
+                body: formData
+            }
+            break;
+
+        
+
 
 
 
         case 'updateProfile':
             url = `${urlBack}/api/users/profile`;
             options = {
-                method: 'POST',
+                method: 'PUT',
                 body: formData
             }
             break;

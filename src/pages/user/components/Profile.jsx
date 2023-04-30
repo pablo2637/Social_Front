@@ -1,16 +1,16 @@
 
-export const Profile = ({ profile, id, name, email }) => {
+export const Profile = ({ profile, _id = Date.now(), name, email }) => {
 
     return (
-        <section key={'sec' + id}>
+        <section key={'sec' + _id}>
 
-            <h2>{name}</h2>
+            {(name) && <h2>{name}</h2>}
 
             {
                 (profile.length > 0) ?
 
                     profile.map(el => (
-                        <article>
+                        <article key={'a' + el.id}>
 
                             {(el.typeInput == 'text') &&
                                 <p
@@ -31,7 +31,7 @@ export const Profile = ({ profile, id, name, email }) => {
 
 
                             {(el.typeInput == 'image') &&
-                                <div className="imageContainer">
+                                <div key={'d' + el.id} className="imageContainer">
                                     <img
                                         key={'i' + el.id}
                                         name={'i' + el.name}
@@ -47,7 +47,8 @@ export const Profile = ({ profile, id, name, email }) => {
 
                     :
 
-                    <h3>Pendiente de crear perfil...</h3>
+                    (name) && <h3>Pendiente de crear perfil...</h3>
+                    
 
             }
 

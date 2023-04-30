@@ -1,6 +1,33 @@
 import { userAPI } from "../api/userAPI";
 
 
+export const fetchUpdateUser = async (formData) => {
+
+    const data = {
+        type: 'updateUser'
+    }
+
+    const response = await userAPI(data, formData);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            user: response.user
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+    }
+};
+
+
+
 
 export const fetchUpdateProfile = async (formData) => {
 
@@ -26,6 +53,8 @@ export const fetchUpdateProfile = async (formData) => {
 
     }
 };
+
+
 
 
 export const fetchLoadProfiles = async () => {
