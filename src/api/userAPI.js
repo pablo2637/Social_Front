@@ -26,6 +26,37 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
+        case 'sendInvite':
+            url = `${urlBack}/api/users/invite`;
+            options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data.body)
+            }
+            break;
+
+        case 'removeInvite':
+            url = `${urlBack}/api/users/invite`;
+            options = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data.body)
+            }
+            break;
+
+        case 'getInvites':
+            url = `${urlBack}/api/users/invite`;
+            break;
+
+        case 'respondInvite':
+            url = `${urlBack}/api/users/invite`;
+            options = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data.body)
+            }
+            break;
+
         case 'updateUser':
             url = `${urlBack}/api/users`;
             options = {
@@ -33,9 +64,6 @@ export const userAPI = async (data, formData) => {
                 body: formData
             }
             break;
-
-        
-
 
 
 

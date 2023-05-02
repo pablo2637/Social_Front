@@ -1,13 +1,18 @@
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../../hooks/useAuthStore';
-import { useEffect } from 'react';
-
+import { useContext, useEffect } from 'react';
+import { SocketContext } from '../../contexts/SocketContext';
 
 export const LogoutPage = () => {
 
     const { logoutUser } = useAuthStore();
 
-    const logout = () => logoutUser();
+    const { socket } = useContext(SocketContext);
+
+    const logout = () => {
+        logoutUser();
+        socket.emit('byeBye');
+    }
 
     useEffect(() => {
         logout();

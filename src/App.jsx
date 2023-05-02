@@ -1,34 +1,72 @@
-import { useState } from 'react';
 import { NavBar } from './components/NavBar';
 import { NavBarUser } from './components/NavBarUser';
 import { AppRoutes, UserRoutes } from './routers'
-import { io } from 'socket.io-client';
-import { Chat } from './components/Chat';
 import { useSelector } from 'react-redux';
-
-// const socket = io.connect(import.meta.env.VITE_URL_CHAT_BACK);
+import { SocketContext } from './contexts/SocketContext';
+import { useContext, useEffect } from 'react';
+import { useStocketStore } from './hooks/useStocketStore';
+import { io } from 'socket.io-client';
 
 function App() {
 
-  // const {
-  //   user,
-  //   isChecking,
-  //   status
-  // } = useAuthStore();
-
   const { status, user, isLoading, isChecking } = useSelector((state) => state.auth);
 
+  const { isReceiving, isSending, isConnecting, connState } = useSelector((state) => state.socket)
 
-  const [username, setUsername] = useState("");
-  const [room] = useState("1");
-  const [showChat, setShowChat] = useState(false);
+  const { socket, setSocket } = useContext(SocketContext);
+  const { onConnect, onConnectSuccess, onConnectionEror, onDisconnection, onReconnectSuccess, onReconnecting, onReconnectionFailed } = useStocketStore();
 
-  const joinRoom = () => {
-    if (username !== "") {
-      socket.emit("join_room", room);
-      setShowChat(true);
+
+  useEffect(() => {
+
+    const newSocket = io.connect(import.meta.env.VITE_URL_CHAT_BACK, {
+      reconnection: true,
+      reconnectionDelay: 2000
+    });
+
+    setSocket(newSocket);
+    onConnect();
+
+    return () => newSocket.disconnect();
+  }, []);
+
+
+  useEffect(() => {
+
+    if (socket) {
+
+
+      socket.on('inviteSent', (data) => {
+        console.log('data', data)
+      })
+
+
+      socket.on("connect", () => {
+        onConnectSuccess();
+      });
+
+      socket.on("disconnect", () => {
+        onDisconnection();
+      });
+
+      socket.on("reconnect_attempt", () => {
+        onReconnecting();
+      });
+
+      socket.on("reconnect", () => {
+        onReconnectSuccess();
+      });
+
+      socket.on("reconnect_failed", () => {
+        onReconnectionFailed();
+      });
+
+      socket.on("connect_error", () => {
+        onConnectionEror();
+      });
     }
-  };
+
+  }, [socket]);
 
   return (
 
@@ -36,6 +74,7 @@ function App() {
       <header>
         <p>Social Connect</p>
       </header>
+
       {
         (status === 'authenticated')
           ?
@@ -56,7 +95,9 @@ function App() {
         {
           (status === 'authenticated')
             ?
+
             <UserRoutes />
+
             :
             <AppRoutes />
         }
@@ -66,25 +107,11 @@ function App() {
 
       <footer>
         <p>Footer</p>
+
+        {(socket) && <p>socket.id: {socket.id}</p>}
+        <p>isReceiving: {isReceiving.toString()} - isSending: {isSending.toString()} - isConnecting: {isConnecting.toString()} - connState: {connState}</p>
+
       </footer>
-      {/* 
-      <div className="App">
-        {!showChat ? (
-          <div className="joinChatContainer">
-            <h3>Join A Chat</h3>
-            <input
-              type="text"
-              placeholder="John..."
-              onChange={(event) => {
-                setUsername(event.target.value);
-              }}
-            />
-            <button onClick={joinRoom}>Join A Room</button>
-          </div>
-        ) : (
-          <Chat socket={socket} username={username} room={room} />
-        )}
-      </div> */}
 
     </>
   );

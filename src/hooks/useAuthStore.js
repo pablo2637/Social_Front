@@ -3,10 +3,13 @@ import { singInWithGoogle, logoutFirebase, signInWithCredentials, loginWithCrede
 import { fetchDataEmail, fetchDataRegister, fetchDataRegisterGoogle, fetchUpdateUser } from '../helpers/fetchData';
 import { onChecking, onCheckingUser, onComplete, onError, onLoading, onLoginUser, onLogoutUser, onUpdateUser } from '../store/slice/authSlice';
 import { deleteLocal, setLocal } from '../helpers/localStorage';
+import { SocketContext } from '../contexts/SocketContext';
+import { useContext } from 'react';
 
 export const useAuthStore = () => {
 
 
+    const { socket, setSocket } = useContext(SocketContext);
     const dispatch = useDispatch();
 
 
@@ -45,6 +48,9 @@ export const useAuthStore = () => {
 
         dispatch(onLoginUser(newUser));
         setLocal(newUser);
+
+
+        socket.emit('whoAmI', { userID: newUser._id })
 
         return {
             ok: true
@@ -97,6 +103,9 @@ export const useAuthStore = () => {
 
         dispatch(onLoginUser(data.user));
         setLocal(data.user);
+
+
+        socket.emit('whoAmI', { userID: data.user._id });
 
         return {
             ok: true
@@ -155,6 +164,8 @@ export const useAuthStore = () => {
         dispatch(onLoginUser(response.user));
         setLocal(response.user);
 
+        socket.emit('whoAmI', { userID: response.user._id })
+
         return {
             ok: true,
             user: response.user
@@ -191,7 +202,6 @@ export const useAuthStore = () => {
         dispatch(onLoading());
 
         const response = await fetchUpdateUser(formData)
-        console.log('response', response)
 
         if (!response.ok)
             return {

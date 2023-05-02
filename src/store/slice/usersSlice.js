@@ -5,12 +5,23 @@ export const usersSlice = createSlice({
     name: 'users',
 
     initialState: {
+        invites: [],
         profiles: [],
         isLoading: false,
         userStatus: ''
     },
 
     reducers: {
+
+        onLoadInvites: (state, { payload }) => {
+            state.invites = payload;
+            state.isLoading = false;
+        },
+
+        onUpdatingInvites: (state) => {
+            state.isLoading = true;            
+        },
+    
 
         onLoadingProfile: (state) => {
             state.isLoading = true;
@@ -56,6 +67,8 @@ export const {
     onLoadProfileComplete,
     onUpdatingProfile,
     onUpdateProfile,
+    onUpdatingInvites,
     onUpdatingComplete,
+    onLoadInvites,
     onError
 } = usersSlice.actions;
