@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { singInWithGoogle, logoutFirebase, signInWithCredentials, loginWithCredentials, changePassword } from '../firebase/services';
-import { fetchDataEmail, fetchDataRegister, fetchDataRegisterGoogle, fetchUpdateUser } from '../helpers/fetchData';
+import { fetchDataRegister, fetchDataRegisterGoogle } from '../helpers/fetchData';
 import { onChecking, onCheckingUser, onComplete, onError, onLoading, onLoginUser, onLogoutUser, onUpdateUser } from '../store/slice/authSlice';
 import { deleteLocal, setLocal } from '../helpers/localStorage';
 import { SocketContext } from '../contexts/SocketContext';
 import { useContext } from 'react';
+import { fetchDataEmail, fetchUpdateUser } from '../pages/user/helpers/fetchDataUser';
 
 export const useAuthStore = () => {
 
@@ -112,6 +113,32 @@ export const useAuthStore = () => {
         };
 
     };
+
+
+
+    const loadUser = async (email) => {
+
+        dispatch(onCheckingUser());
+
+        console.log('email',email)
+        const data = await fetchDataEmail(email);
+        console.log('data',data)
+
+        if (!data.ok)
+            return {
+                ok: false,
+                response: data.user
+            };
+
+        dispatch(onLoginUser(data.user));
+        setLocal(data.user);
+
+        return {
+            ok: true
+        };
+
+    };
+
 
 
     const registerUser = async (formData, data, setValidate) => {
@@ -259,6 +286,7 @@ export const useAuthStore = () => {
     return {
         loginUser,
         logoutUser,
+        loadUser,
         updateUserData,
         registerUser,
         updatePassword,

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { validateFormChangePassword, validateFormEditData } from '../../helpers/validateForm';
+import { validateFormChangePassword, validateFormEditData } from '../user/helpers/validateFormUser';
 import { useAuthStore } from '../../hooks/useAuthStore';
 
 export const EditPersonalData = () => {
@@ -68,7 +68,7 @@ export const EditPersonalData = () => {
 
     else {
       ev.target.reset();
-      
+
       setValidate(prevValidate => ({
         ...prevValidate,
         msgErrorPass: 'Se modificó la contraseña correctamente.'

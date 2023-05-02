@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getUserName } from "../../../helpers/getUserData";
+import { getUserData } from "../helpers/getUserData";
 import { useInvites } from "../hooks/useInvites";
+import { NavLink } from "react-router-dom";
+import { LittlePeople } from "./";
 
 export const Invites = () => {
 
     const { invites, profiles } = useSelector((state) => state.users);
     const { user } = useSelector((state) => state.auth);
-    const [myInvites, setMyInvites] = useState([]);
+    const [myInvitesSent, setMyInvitesSent] = useState([]);
+    const [myInvitesReceived, setMyInvitesReceived] = useState([]);
     const {
         handleRemove,
         handleRespond,
@@ -17,22 +20,24 @@ export const Invites = () => {
 
     const filterInvites = () => {
 
-        const filter = [];
+        const filterS = [];
+        const filterR = [];
         invites.forEach(inv => {
 
-
             if (inv.sender == user._id) {
-                const { name, email } = getUserName(inv.receiver, profiles);
-                filter.push({ ...inv, name, email })
+                const { name, image } = getUserData(inv.receiver, profiles);
+                filterS.push({ ...inv, name, image })
+
 
             } else if (inv.receiver == user._id) {
-                const { name, email } = getUserName(inv.sender, profiles);
-                filter.push({ ...inv, name, email })
+                const { name, image } = getUserData(inv.sender, profiles);
+                filterR.push({ ...inv, name, image })
             }
 
         });
 
-        setMyInvites(filter);
+        setMyInvitesSent(filterS);
+        setMyInvitesReceived(filterR);
 
     };
 
@@ -43,42 +48,56 @@ export const Invites = () => {
     }, [invites]);
 
     return (
-        <div key={Date.now()}>
 
-            <h3>Invitaciones enviadas:</h3>
+        <section >
+
 
             <p>{msg}</p>
+
+            <h3>Enviadas:</h3>
+
             {
+                (myInvitesSent.length > 0) ?
 
-                myInvites.map(inv =>
-                    inv.sender == user._id &&
+                    myInvitesSent.map(inv =>
 
-                    < article >
-                        <p>Fecha: {new Date(inv.date).toLocaleString()}</p>
-                        <p>Para: {inv.name}</p>
-                        <button onClick={() => handleRemove(inv._id)}>Retirar</button>
-                    </article>
-                )
+                        < article key={`iS-${Date.now()}`} >
+                            <LittlePeople date={inv.date} receiver={inv.name} image={inv.image} />
+                    
+                            <button onClick={() => handleRemove(inv._id)}>Retirar</button>
+                        </article>
+                    )
+
+                    :
+                    <div>
+                        <p>No has enviado solicitudes aún...</p>
+
+                        <NavLink to='/meet'>Conocer Gente</NavLink>
+                    </div>
             }
 
-            <h3>Invitaciones recibidas:</h3>
+            <h3>Recibidas:</h3>
 
-            <p>{msg}</p>
             {
+                (myInvitesReceived.length > 0) ?
 
-                myInvites.map(inv =>
-                    inv.receiver == user._id &&
+                    myInvitesReceived.map(inv =>
 
-                    < article >
-                        <p>Fecha: {new Date(inv.date).toLocaleString()}</p>
-                        <p>De: {inv.name}</p>
-                        <button onClick={() => handleRespond(user._id, inv.receiver, inv._id, true)} >Aceptar</button>
-                        <button onClick={() => handleRespond(user._id, inv.receiver, inv._id, false)} >Rechazar</button>
-                    </article>
-                )
+                        < article key={`iR-${Date.now()}`} >
+                            <LittlePeople date={inv.date} sender={inv.name} image={inv.image} />
+                          
+                            <button onClick={() => handleRespond(inv.sender, user._id, inv._id, true)} >Aceptar</button>
+                            <button onClick={() => handleRespond(inv.sender, user._id, inv._id, false)} >Rechazar</button>
+                        </article>
+                    )
+
+                    :
+                    <div>
+                        <p>No tienes invitaciones pendientes...</p>
+                    </div>
             }
 
 
-        </div >
+        </section >
     )
 }

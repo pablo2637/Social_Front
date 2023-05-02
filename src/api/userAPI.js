@@ -44,6 +44,16 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
+
+        case 'removeFriend':
+            url = `${urlBack}/api/users/friends`;
+            options = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data.body)
+            }
+            break;
+
         case 'getInvites':
             url = `${urlBack}/api/users/invite`;
             break;
@@ -85,16 +95,16 @@ export const userAPI = async (data, formData) => {
     try {
         console.log('url', url, 'options', options)
         const request = await fetch(url, options);
+        // console.log('request',request)
 
         if (request.ok) {
             const response = await request.json();
-
+            // console.log('response',response)
             return response;
 
         } else {
 
             throw {
-                ok: false,
                 data: request
             };
         }
