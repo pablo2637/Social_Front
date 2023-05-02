@@ -28,6 +28,114 @@ export const fetchUpdateUser = async (formData) => {
 
 
 
+export const fetchSendInvite = async (invite) => {
+
+    const data = {
+        type: 'sendInvite',
+        body: invite
+    }
+
+    const response = await userAPI(data);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            invite: response.invite
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response
+        }
+
+    }
+};
+
+
+
+export const fetchRespondInvite = async (invite) => {
+
+    const data = {
+        type: 'respondInvite',
+        body: invite
+    }
+
+    const response = await userAPI(data);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            invite: response.invite
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response
+        }
+
+    }
+};
+
+
+export const fetchRemoveInvite = async (_id) => {
+
+    const data = {
+        type: 'removeInvite',
+        body: _id
+    }
+
+    const response = await userAPI(data);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            msg: response.msg
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response
+        }
+
+    }
+};
+
+
+export const fetchLoadInvites = async () => {
+
+    const data = {
+        type: 'getInvites'
+    }
+
+    const response = await userAPI(data);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            invites: response.data
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+    }
+};
+
+
 
 export const fetchUpdateProfile = async (formData) => {
 
@@ -155,7 +263,7 @@ export const fetchDataRegisterGoogle = async (userData) => {
 
     if (response.ok) {
 
-        let user = response.data;
+        let user = response.user;
         user.alt = `Imagen de ${user.name}`;
         user.date = new Date(user.date).toLocaleDateString();
 

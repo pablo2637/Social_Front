@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useUserStore } from '../hooks/useUserStore';
 import { Profile } from "./user/components";
+import { useUserStore } from "../hooks/useUserStore";
 
 export const HomePage = () => {
 
   const { profiles, isLoading, userStatus } = useSelector((state) => state.users);
 
-  const { loadProfiles } = useUserStore();
+  const { loadProfiles, loadInvites } = useUserStore();
 
-
-  const getProfiles = () => {
+  const getData = () => {
 
     loadProfiles();
-
+    loadInvites();
   };
 
-
   useEffect(() => {
-    getProfiles();
+    getData();
 
   }, []);
 

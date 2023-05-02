@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
-import { fetchLoadProfiles, fetchUpdateProfile } from "../helpers/fetchData";
+import { onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
+import { fetchLoadInvites, fetchLoadProfiles, fetchUpdateProfile } from "../helpers/fetchData";
 import { onLoginUser } from "../store/slice/authSlice";
 import { setLocal } from "../helpers/localStorage";
 
@@ -26,6 +26,26 @@ export const useUserStore = () => {
     dispatch(onLoadProfile(response.profiles));
 
     dispatch(onLoadProfileComplete());
+
+    return { ok: true };
+
+  };
+
+
+  const loadInvites = async () => {
+
+    dispatch(onUpdatingInvites());
+
+    const response = await fetchLoadInvites();
+
+    if (!response.ok)
+      return {
+        ok: false,
+        msg: response
+      };
+
+    dispatch(onLoadInvites(response.invites));
+
 
     return { ok: true };
 
@@ -70,6 +90,7 @@ export const useUserStore = () => {
 
   return {
     loadProfiles,
+    loadInvites,
     updateUserProfile
   };
 };
