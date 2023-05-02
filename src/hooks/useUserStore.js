@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
-import { fetchLoadInvites, fetchLoadProfiles, fetchUpdateProfile } from "../helpers/fetchData";
+import { fetchLoadInvites, fetchLoadProfiles } from "../helpers/fetchData";
 import { onLoginUser } from "../store/slice/authSlice";
 import { setLocal } from "../helpers/localStorage";
+import { fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
 
 export const useUserStore = () => {
 

@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useUserStore } from '../../../hooks/useUserStore';
 import { useSelector } from 'react-redux';
-import { fetchRemoveInvite, fetchRespondInvite, fetchSendInvite } from '../../../helpers/fetchData';
+import { fetchRemoveInvite, fetchRespondInvite, fetchSendInvite } from '../helpers/fetchDataUser';
+import { useAuthStore } from '../../../hooks/useAuthStore';
 
 export const useInvites = () => {
 
 
     const { user } = useSelector((state) => state.auth);
-    const { invites } = useSelector((state) => state.users);
     const { loadInvites } = useUserStore();
-    const [sent, setSent] = useState(null)
+    const { loadUser } = useAuthStore();
     const [msg, setMsg] = useState(null);
 
 
@@ -28,7 +28,7 @@ export const useInvites = () => {
         }
 
         setMsg('Se ha enviado tu solicitud');
-        loadInvites();
+        await loadInvites();
 
 
         setTimeout(() => {
@@ -40,6 +40,7 @@ export const useInvites = () => {
     const handleRemove = async (_id) => {
 
         const response = await fetchRemoveInvite({ _id });
+        console.log('reponse remove', response)
 
         if (!response.ok) {
             setMsg('Esta persona no tiene una solicitud tuya...');
@@ -51,7 +52,9 @@ export const useInvites = () => {
         setTimeout(() => {
             setMsg(null);
         }, 3000)
-        loadInvites();
+
+        await loadInvites();
+        await loadUser(user.email);
     };
 
 
@@ -71,28 +74,15 @@ export const useInvites = () => {
         setTimeout(() => {
             setMsg(null);
         }, 3000)
-        loadInvites();
-    };
 
-
-    const handleCheckInvites = (profile) => {
-
-        const inviteSent = invites.find(inv => inv.sender == user._id && inv.receiver == profile._id);
-
-        if (inviteSent)
-            setSent(inviteSent._id);
-
-        else
-            setSent(null)
+        await loadInvites();
     };
 
 
     return {
-        sent,
         msg,
         handleRemove,
         handleRespond,
-        handleSend,
-        handleCheckInvites
+        handleSend
     }
 }

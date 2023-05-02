@@ -9,10 +9,10 @@ export const HomePage = () => {
 
   const { loadProfiles, loadInvites } = useUserStore();
 
-  const getData = () => {
+  const getData = async () => {
 
-    loadProfiles();
-    loadInvites();
+    await loadProfiles();
+    await loadInvites();
   };
 
   useEffect(() => {

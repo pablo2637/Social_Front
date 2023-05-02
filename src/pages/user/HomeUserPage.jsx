@@ -1,15 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
-import { Profile } from "./components";
+import { Profile, Invites, Friends } from "./components";
 import { EditProfile } from './';
-import { Invites } from './components/Invites';
-
 
 export const HomeUserPage = () => {
 
-  const { status, user, isLoading, isChecking } = useSelector((state) => state.auth);
-
+  const { user } = useSelector((state) => state.auth);
 
   return (
 
@@ -23,11 +20,12 @@ export const HomeUserPage = () => {
       {
         (user.profile.length > 0) ?
 
-          <div>
+          <section>
 
+            <h2>Perfiles:</h2>
             <section>
 
-              <h2>Perfil Público:</h2>
+              <h3>Público:</h3>
               <Profile profile={user.profile} />
 
               <NavLink to='/editProfile'>Edita tu perfil público</NavLink>
@@ -37,13 +35,13 @@ export const HomeUserPage = () => {
 
             <section>
 
-              <h2>Perfil Privado:</h2>
+              <h3>Privado:</h3>
 
               <NavLink to='/editProfile'>Edita tu perfil privado</NavLink>
 
             </section>
 
-          </div>
+          </section>
 
           :
 
@@ -53,7 +51,12 @@ export const HomeUserPage = () => {
       <NavLink to='/editData'>Edita tus datos personales</NavLink>
       <NavLink to='/meet'>Conocer Gente</NavLink>
 
+      <h2>Invitaciones</h2>
       <Invites />
+
+      <h2>Mis relaciones:</h2>
+      <Friends />
+
 
     </section>
 
