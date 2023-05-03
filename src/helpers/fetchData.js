@@ -36,6 +36,7 @@ export const fetchLoadProfiles = async () => {
 
     if (response.ok) {
 
+        response.data.map(prof => prof.dateMod = new Date(prof.dateMod).toLocaleString());
         return {
             ok: true,
             profiles: response.data
@@ -65,7 +66,7 @@ export const fetchDataRegister = async (formData) => {
 
         let user = response.data;
         user.alt = `Imagen de ${user.name}`;
-        user.date = new Date(user.date).toLocaleDateString();
+        user.date = new Date(user.date).toLocaleString();
 
         return {
             ok: true,

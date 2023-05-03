@@ -1,10 +1,15 @@
 
-export const Profile = ({ profile, _id = Date.now(), name, email }) => {
+export const Profile = ({ profile, _id = Date.now(), name, dateMod }) => {
 
     return (
         <section key={'sec' + _id}>
 
-            {(name) && <h2>{name}</h2>}
+            {(name) &&
+                <>
+                    <h2>{name}</h2>
+                    <p>Ult. mod.: {dateMod}</p>
+                </>
+            }
 
             {
                 (profile.length > 0) ?
@@ -14,7 +19,6 @@ export const Profile = ({ profile, _id = Date.now(), name, email }) => {
 
                             {(el.typeInput == 'text') &&
                                 <p
-                                    key={'p' + el.id}
                                     name={'p' + el.name}
                                     id={'p' + el.id}
                                 >{el.content}
@@ -23,17 +27,22 @@ export const Profile = ({ profile, _id = Date.now(), name, email }) => {
 
                             {(el.typeInput == 'title') &&
                                 <h3
-                                    key={'t' + el.id}
                                     name={'t' + el.name}
                                     id={'t' + el.id}
                                 >{el.content}
                                 </h3>}
 
+                            {(el.typeInput == 'paragraph') &&
+                                <textarea
+                                    name={'g' + el.name}
+                                    id={'g' + el.id}
+                                    defaultValue={el.content}>
+                                </textarea>}
+
 
                             {(el.typeInput == 'image') &&
                                 <div key={'d' + el.id} className="imageContainer">
                                     <img
-                                        key={'i' + el.id}
                                         name={'i' + el.name}
                                         id={'i' + el.id}
                                         src={el.content}
@@ -48,7 +57,6 @@ export const Profile = ({ profile, _id = Date.now(), name, email }) => {
                     :
 
                     (name) && <h3>Pendiente de crear perfil...</h3>
-                    
 
             }
 

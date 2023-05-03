@@ -3,7 +3,7 @@ import { onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, o
 import { SocketContext } from '../contexts/SocketContext';
 import { useContext } from 'react';
 
-export const useStocketStore = () => {
+export const useSocketStore = () => {
 
     const { socket, setSocket } = useContext(SocketContext);
     const { user } = useSelector((state) => state.auth);

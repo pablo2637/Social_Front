@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { validateFormChangePassword, validateFormEditData } from '../user/helpers/validateFormUser';
 import { useAuthStore } from '../../hooks/useAuthStore';
 
@@ -12,20 +11,20 @@ export const EditPersonalData = () => {
   const { updateUserData, updatePassword } = useAuthStore();
   const [form, setForm] = useState(user);
   const [validate, setValidate] = useState({});
-  const navigate = useNavigate();
-
-
 
   const serializeForm = (serialForm) => {
 
     const data = {};
     const formData = new FormData(serialForm);
 
-
     for (let [key, value] of formData) {
-      data[key] = typeof value === 'string' ? value.trim() : value.name;
-    };
 
+      if (value.length > 1000)
+        delete data.key
+
+      else
+        data[key] = typeof value === 'string' ? value.trim() : value.name;
+    };
 
     return { data, formData };
   };
@@ -126,8 +125,14 @@ export const EditPersonalData = () => {
           <p className="errorEditData">{validate.name}</p>
         }
 
-        <label htmlFor="image">Elige tu foto:</label>
-        <input type="hidden" name="imageURL" value={form.image} />
+        <label htmlFor="imageURL">Foto elegida:</label>
+        <input
+          type="text"
+          name="imageURL"
+          id="imageURL"          
+          onChange={handleOnChange}
+          value={(form.image.length < 1000) ? form.image : '...'}
+        />
         <input
           type="file"
           name="image"

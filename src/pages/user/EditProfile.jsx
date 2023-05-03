@@ -20,8 +20,13 @@ export const EditProfile = () => {
         const formData = new FormData(serialForm);
 
         for (let [key, value] of formData) {
-            data[key] = typeof value === 'string' ? value.trim() : value;
-        }
+            
+            if (value.length > 1000)
+                delete data.key
+
+            else
+                data[key] = typeof value === 'string' ? value.trim() : value;
+        };
 
         return { data, formData };
     };
@@ -107,6 +112,8 @@ export const EditProfile = () => {
 
         const newForm = [...user.profile];
         setForm(newForm);
+
+        setOrder(user.profileOrder);
     };
 
 
@@ -126,14 +133,6 @@ export const EditProfile = () => {
 
             <h2>Edita tu perfil:</h2>
 
-            <div>
-                <button onClick={() => handleOnClick('text')} >+ Texto</button>
-                <button onClick={() => handleOnClick('image')} >+ Imagen</button>
-                <button onClick={() => handleOnClick('title')} >+ Título</button>
-                <button>+ Video</button>
-            </div>
-
-
             <form onSubmit={handleOnSubmit}>
                 <input type="hidden" name="_id" value={user._id} />
                 <input type="hidden" name="uid" value={user.uid} />
@@ -141,19 +140,8 @@ export const EditProfile = () => {
 
                 {
                     form.map(el => (
-                        <div key={'d' + el.id}>
-                            {(el.typeInput == 'text') && <input
-                                key={el.id}
-                                type="text"
-                                name={el.name}
-                                id={el.id}
-                                value={el.content}
-                                placeholder='Texto...'
-                                onChange={({ target }) => handleOnChange(target, el.typeInput)}
-                            />}
-
+                        <div key={`d${el.id}`}>
                             {(el.typeInput == 'title') && <input
-                                key={el.id}
                                 type="text"
                                 name={el.name}
                                 id={el.id}
@@ -162,18 +150,55 @@ export const EditProfile = () => {
                                 onChange={({ target }) => handleOnChange(target, el.typeInput)}
                             />}
 
-                            {(el.typeInput == 'image') && <input
-                                key={el.id}
-                                type="file"
-                                accept="image/*"
+                            {(el.typeInput == 'text') && <input
+                                type="text"
                                 name={el.name}
                                 id={el.id}
-                                onChange={handleImageSelect}
+                                value={el.content}
+                                placeholder='Texto...'
+                                onChange={({ target }) => handleOnChange(target, el.typeInput)}
                             />}
+
+                            {(el.typeInput == 'paragraph') && <textarea
+                                name={el.name}
+                                id={el.id}
+                                placeholder='Párrafo...'
+                                onChange={({ target }) => handleOnChange(target, el.typeInput)}
+                                defaultValue={el.content}>
+                            </textarea>}
+
+                            {(el.typeInput == 'image') &&
+                                <>
+                                    <label
+                                        htmlFor={`${el.name}_imageURL`}
+                                    >Imagen elegida:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        name={`${el.name}_imageURL`}
+                                        value={(el.content.length < 1000) ? el.content : '...'}
+                                        placeholder="Aún sin seleccionar..."
+                                    />
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        name={el.name}
+                                        id={el.id}
+                                        onChange={handleImageSelect}
+                                    />
+                                </>}
 
                         </div>
                     ))
                 }
+                <div>
+                    <button onClick={() => handleOnClick('title')} >+ Título</button>
+                    <button onClick={() => handleOnClick('text')} >+ Texto</button>
+                    <button onClick={() => handleOnClick('paragraph')} >+ Párrafo</button>
+                    <button onClick={() => handleOnClick('image')} >+ Imagen</button>
+                    <button>+ Video</button>
+                </div>
 
                 {
                     (form.length == 0) ?
@@ -181,21 +206,16 @@ export const EditProfile = () => {
                         :
                         <input type="submit" value="Guardar" />
                 }
-                <NavLink to='/'>Cancelar</NavLink>
+
+                {
+                    (user.profile.length > 0) && <NavLink to='/'>Cancelar</NavLink>
+                }
             </form>
 
 
-            {
-                (form.length > 0) ?
-                    <h2>Previsualización:</h2>
-                    :
-                    <h2>Añade contenido a tu perfil:</h2>
-            }
-
-
+            <h2>Previsualización:</h2>
 
             <Profile profile={form} />
-
 
         </section>
 
