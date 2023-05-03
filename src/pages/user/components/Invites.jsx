@@ -61,9 +61,9 @@ export const Invites = () => {
 
                     myInvitesSent.map(inv =>
 
-                        < article key={`iS-${Date.now()}`} >
+                        < article key={`iS-${inv._id + Date.now()}`} >
                             <LittlePeople date={inv.date} receiver={inv.name} image={inv.image} />
-                    
+
                             <button onClick={() => handleRemove(inv._id)}>Retirar</button>
                         </article>
                     )
@@ -83,9 +83,9 @@ export const Invites = () => {
 
                     myInvitesReceived.map(inv =>
 
-                        < article key={`iR-${Date.now()}`} >
+                        < article key={`iR-${inv._id + Date.now()}`} >
                             <LittlePeople date={inv.date} sender={inv.name} image={inv.image} />
-                          
+
                             <button onClick={() => handleRespond(inv.sender, user._id, inv._id, true)} >Aceptar</button>
                             <button onClick={() => handleRespond(inv.sender, user._id, inv._id, false)} >Rechazar</button>
                         </article>

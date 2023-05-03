@@ -1,7 +1,9 @@
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-
 export const NavBarUser = () => {
+
+    const { user } = useSelector((state) => state.auth);
 
     return (
 
@@ -9,36 +11,74 @@ export const NavBarUser = () => {
             <div className='divNavContainer'>
 
                 <div>
-                    <NavLink
-                        to='/'
-                        className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                    >Home
-                    </NavLink>
+                    {
+                        (user.profile.length > 0) ?
+                            <>
+                                <NavLink
+                                    to='/'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Home
+                                </NavLink>
 
-                    <NavLink
-                        to='/editProfile'
-                        className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                    >Edita tu perfil
-                    </NavLink>
+                                <NavLink
+                                    to='/profiles'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Perfiles
+                                </NavLink>
 
-                    <NavLink
-                        to='/editData'
-                        className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                    >Edita tus datos personales
-                    </NavLink>
+                                <NavLink
+                                    to='/relations'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Mis Relaciones
+                                </NavLink>
+
+                                <NavLink
+                                    to='/editPublicProfile'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Tu Perfil Público
+                                </NavLink>
+
+                                <NavLink
+                                    to='/editPrivateProfile'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Tu Perfil Privado
+                                </NavLink>
+
+                                <NavLink
+                                    to='/editData'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Datos Personales
+                                </NavLink>
 
 
-                    <NavLink
-                        to='/meet'
-                        className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                    >Conocer Gente
-                    </NavLink>
+                                <NavLink
+                                    to='/meet'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Conocer Gente
+                                </NavLink>
 
-                    <NavLink
-                        to='/logout'
-                        className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                    >Cerrar Sesión
-                    </NavLink>
+                                <NavLink
+                                    to='/logout'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Cerrar Sesión
+                                </NavLink>
+                            </>
+                            :
+                            <>
+                                <NavLink
+                                    to='/editPublicProfile'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Tu Perfil Público
+                                </NavLink>
+
+                                <NavLink
+                                    to='/logout'
+                                    className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                >Cerrar Sesión
+                                </NavLink>
+
+                            </>
+                    }
 
                 </div>
 

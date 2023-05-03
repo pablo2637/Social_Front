@@ -54,7 +54,7 @@ export const useInvites = () => {
         }, 3000)
 
         await loadInvites();
-        await loadUser(user.email);
+        // await loadUser(user.email);
     };
 
 
@@ -76,6 +76,7 @@ export const useInvites = () => {
         }, 3000)
 
         await loadInvites();
+        await loadUser(user.email);
     };
 
 
