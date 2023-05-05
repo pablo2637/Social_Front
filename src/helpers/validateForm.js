@@ -74,3 +74,16 @@ export const validateFormLogin = (data, setValidate) => {
 
     return rslt;
 };
+
+
+
+export const validateFormProfile = (data) => {
+
+    let rslt = true;
+
+    for (const [key, value] of Object.entries(data)) {
+        if (data[key] == '') rslt = false;
+    };
+
+    return rslt;
+};

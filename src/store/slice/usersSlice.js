@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getLocalInvites, getLocalProfiles } from '../../helpers/localStorage';
 
 export const usersSlice = createSlice({
 
     name: 'users',
 
     initialState: {
-        invites: [],
-        profiles: [],
+        invites: getLocalInvites(),
+        profiles: getLocalProfiles(),
         isLoading: false,
         userStatus: ''
     },
@@ -19,9 +20,9 @@ export const usersSlice = createSlice({
         },
 
         onUpdatingInvites: (state) => {
-            state.isLoading = true;            
+            state.isLoading = true;
         },
-    
+
 
         onLoadingProfile: (state) => {
             state.isLoading = true;
@@ -52,6 +53,10 @@ export const usersSlice = createSlice({
             state.userStatus = 'updated';
         },
 
+        onLogoutInvites: (state) => {
+            state.invites = [];
+        },
+
         onError: (state, { payload }) => {
             state.isLoading = false;
             state.userStatus = payload;
@@ -62,6 +67,7 @@ export const usersSlice = createSlice({
 
 
 export const {
+    onLogoutInvites,
     onLoadingProfile,
     onLoadProfile,
     onLoadProfileComplete,

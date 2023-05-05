@@ -2,15 +2,20 @@ import { useDispatch } from 'react-redux';
 import { singInWithGoogle, logoutFirebase, signInWithCredentials, loginWithCredentials, changePassword } from '../firebase/services';
 import { fetchDataRegister, fetchDataRegisterGoogle } from '../helpers/fetchData';
 import { onChecking, onCheckingUser, onComplete, onError, onLoading, onLoginUser, onLogoutUser, onUpdateUser } from '../store/slice/authSlice';
+import { onDisconnect, onLogoutChat } from '../store/slice/socketSlice'
+import { onLogoutInvites } from '../store/slice/usersSlice'
 import { deleteLocal, setLocal } from '../helpers/localStorage';
 import { SocketContext } from '../contexts/SocketContext';
 import { useContext } from 'react';
-import { fetchDataEmail, fetchUpdateUser } from '../pages/user/helpers/fetchDataUser';
+import { fetchDataChats, fetchDataEmail, fetchUpdateUser } from '../pages/user/helpers/fetchDataUser';
+import { useUserStore } from './useUserStore';
 
 export const useAuthStore = () => {
 
 
-    const { socket, setSocket } = useContext(SocketContext);
+    const { socket } = useContext(SocketContext);
+
+    const { loadInvites, loadChats } = useUserStore();
     const dispatch = useDispatch();
 
 
@@ -50,8 +55,10 @@ export const useAuthStore = () => {
         dispatch(onLoginUser(newUser));
         setLocal(newUser);
 
+        await socket.emit('whoAmI', { userID: newUser._id })
 
-        socket.emit('whoAmI', { userID: newUser._id })
+        await loadInvites();
+        await loadChats(newUser._id);
 
         return {
             ok: true
@@ -93,20 +100,35 @@ export const useAuthStore = () => {
         }
 
 
-        const data = await fetchDataEmail(email);
+        // const data = await fetchDataEmail(email);
 
-        if (!data.ok)
-            return {
-                ok: false,
-                response: data.user
-            };
-
-
-        dispatch(onLoginUser(data.user));
-        setLocal(data.user);
+        // if (!data.ok)
+        //     return {
+        //         ok: false,
+        //         response: data.user
+        //     };
 
 
-        socket.emit('whoAmI', { userID: data.user._id });
+        // dispatch(onLoginUser(data.user));
+        // setLocal(data.user);
+
+        const { user } = await loadUser(email);
+        await loadInvites();
+        await loadChats(user._id);
+
+        // const chats = await fetchDataChats(data.user._id);
+
+        // if (!chats.ok)
+        //     return {
+        //         ok: false,
+        //         response: chats.msg
+        //     };
+
+
+        // dispatch(onLoadChats(chats.chats));
+
+
+        // socket.emit('whoAmI', { userID: data.user._id });
 
         return {
             ok: true
@@ -120,9 +142,9 @@ export const useAuthStore = () => {
 
         dispatch(onCheckingUser());
 
-        console.log('email',email)
+        console.log('email', email)
         const data = await fetchDataEmail(email);
-        console.log('data',data)
+        console.log('data', data)
 
         if (!data.ok)
             return {
@@ -133,12 +155,25 @@ export const useAuthStore = () => {
         dispatch(onLoginUser(data.user));
         setLocal(data.user);
 
+
+        // const chats = await fetchDataChats(user._id);
+
+        // if (!chats.ok)
+        //     return {
+        //         ok: false,
+        //         response: chats.msg
+        //     };
+
+
+        // dispatch(onLoadChats(chats.chats));
+        await socket.emit('whoAmI', { userID: data.user._id });
+
         return {
-            ok: true
+            ok: true,
+            user: data.user
         };
 
     };
-
 
 
     const registerUser = async (formData, data, setValidate) => {
@@ -191,7 +226,7 @@ export const useAuthStore = () => {
         dispatch(onLoginUser(response.user));
         setLocal(response.user);
 
-        socket.emit('whoAmI', { userID: response.user._id })
+        await socket.emit('whoAmI', { userID: response.user._id })
 
         return {
             ok: true,
@@ -215,6 +250,9 @@ export const useAuthStore = () => {
 
 
         deleteLocal();
+        dispatch(onLogoutChat());
+        dispatch(onLogoutInvites());
+
 
         return {
             ok: true

@@ -1,43 +1,28 @@
 import { useSelector } from "react-redux";
-import { LittlePeople } from "./";
+import { ChatBox, LittlePeople } from "./";
 import { useEffect, useState } from "react";
-import { getUserData } from "../helpers/getUserData";
+// import { getUserData } from "../helpers/getUserData";
 import { useFriends } from "../hooks/useFriends";
 import { useUserStore } from "../../../hooks/useUserStore";
 
 export const Friends = () => {
 
-  const { profiles } = useSelector((state) => state.users);
-  const { user } = useSelector((state) => state.auth);
+
+  const { chats } = useSelector((state) => state.socket)
+  // const { profiles } = useSelector((state) => state.users);
+  // const { user } = useSelector((state) => state.auth);
   const { loadProfiles } = useUserStore();
   const {
     handleRemoveFriend,
-    msg
+    handleOnOpenChat,
+    handleGetFriends,
+    msg,
+    friends
   } = useFriends();
 
-  const [friends, setFriends] = useState([]);
-
-  const getFriends = async () => {
-    console.log('profiles', profiles)
-    if (profiles.length == 0) {
-      console.log('aqui')
-      await loadProfiles();
-    }
-    const newFriends = [];
-    user.friends.map(fr => {
-      const userData = getUserData(fr, profiles);
-      newFriends.push({
-        _id: fr,
-        ...userData
-      })
-    })
-
-    setFriends(newFriends);
-
-  }
 
   useEffect(() => {
-    getFriends();
+    handleGetFriends();
 
   }, []);
 
@@ -52,15 +37,23 @@ export const Friends = () => {
             <LittlePeople name={fr.name} image={fr.image} />
 
             <button onClick={() => handleRemoveFriend(fr._id)}>Romper vínculo</button>
-            <button>Abrir conversación</button>
+            {
+              (fr.show) ?
+                <button onClick={() => handleOnOpenChat(fr._id, false)}>Ocultar conversación</button>
+                :
+                <button onClick={() => handleOnOpenChat(fr._id, true)}>Abrir conversación</button>
+            }
 
             <p>{msg}</p>
+
+            {
+              (fr.show) && <ChatBox {...fr} />
+            }
 
           </article>
 
         )
       }
-
 
     </section>
 

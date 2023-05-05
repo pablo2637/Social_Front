@@ -7,12 +7,11 @@ export const HomePage = () => {
 
   const { profiles, isLoading, userStatus } = useSelector((state) => state.users);
 
-  const { loadProfiles, loadInvites } = useUserStore();
+  const { loadProfiles } = useUserStore();
 
   const getData = async () => {
 
     await loadProfiles();
-    await loadInvites();
   };
 
   useEffect(() => {

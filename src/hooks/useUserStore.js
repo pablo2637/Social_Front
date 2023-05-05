@@ -2,14 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
 import { fetchLoadInvites, fetchLoadProfiles } from "../helpers/fetchData";
 import { onLoginUser } from "../store/slice/authSlice";
-import { setLocal } from "../helpers/localStorage";
-import { fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
+import { setLocal, setLocalChats, setLocalInvites, setLocalProfiles } from "../helpers/localStorage";
+import { fetchDataChats, fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
+import { onLoadChats } from "../store/slice/socketSlice";
+import { SocketContext } from "../contexts/SocketContext";
+import { useContext } from "react";
 
 export const useUserStore = () => {
 
   const { status, user, isChecking } = useSelector((state) => state.auth);
   const { profiles } = useSelector((state) => state.users);
   const dispatch = useDispatch();
+  const { socket } = useContext(SocketContext);
 
 
   const loadProfiles = async () => {
@@ -25,6 +29,7 @@ export const useUserStore = () => {
       };
 
     dispatch(onLoadProfile(response.profiles));
+    setLocalProfiles(response.profiles);
 
     dispatch(onLoadProfileComplete());
 
@@ -45,8 +50,9 @@ export const useUserStore = () => {
         msg: response
       };
 
-    dispatch(onLoadInvites(response.invites));
 
+    dispatch(onLoadInvites(response.invites));
+    setLocalInvites(response.invites)
 
     return { ok: true };
 
@@ -78,6 +84,7 @@ export const useUserStore = () => {
     });
 
     dispatch(onUpdateProfile(newProfile));
+    setLocalProfiles(newProfile);
 
     dispatch(onUpdatingComplete());
 
@@ -89,7 +96,31 @@ export const useUserStore = () => {
   };
 
 
+
+  const loadChats = async (_id) => {
+
+    const chats = await fetchDataChats(_id);
+
+    if (!chats.ok)
+      return {
+        ok: false,
+        response: chats.msg
+      };
+
+
+    dispatch(onLoadChats(chats.chats));
+    setLocalChats(chats.chats)
+    socket.emit('whoAmI', { userID: _id });
+
+    return {
+      ok: true
+    };
+
+  };
+
+
   return {
+    loadChats,
     loadProfiles,
     loadInvites,
     updateUserProfile

@@ -20,24 +20,27 @@ export const Invites = () => {
 
     const filterInvites = () => {
 
-        const filterS = [];
-        const filterR = [];
-        invites.forEach(inv => {
+        if (invites && user._id) {
+            console.log('invite && user', invites, user)
+            const filterS = [];
+            const filterR = [];
+            invites.forEach(inv => {
 
-            if (inv.sender == user._id) {
-                const { name, image } = getUserData(inv.receiver, profiles);
-                filterS.push({ ...inv, name, image })
+                if (inv.sender == user._id) {
+                    const { name, image } = getUserData(inv.receiver, profiles);
+                    filterS.push({ ...inv, name, image })
 
 
-            } else if (inv.receiver == user._id) {
-                const { name, image } = getUserData(inv.sender, profiles);
-                filterR.push({ ...inv, name, image })
-            }
+                } else if (inv.receiver == user._id) {
+                    const { name, image } = getUserData(inv.sender, profiles);
+                    filterR.push({ ...inv, name, image })
+                }
 
-        });
+            });
 
-        setMyInvitesSent(filterS);
-        setMyInvitesReceived(filterR);
+            setMyInvitesSent(filterS);
+            setMyInvitesReceived(filterR);
+        }
 
     };
 

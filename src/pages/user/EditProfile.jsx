@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Profile } from "./components/Profile";
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { validateFormProfile } from "../../helpers/validateForm";
 
 export const EditProfile = () => {
 
@@ -11,6 +12,7 @@ export const EditProfile = () => {
     const { updateUserProfile } = useUserStore();
     const [form, setForm] = useState([]);
     const [order, setOrder] = useState([]);
+    const [validate, setValidate] = useState('');
     const navigate = useNavigate();
 
 
@@ -20,7 +22,7 @@ export const EditProfile = () => {
         const formData = new FormData(serialForm);
 
         for (let [key, value] of formData) {
-            
+
             if (value.length > 1000)
                 delete data.key
 
@@ -82,8 +84,24 @@ export const EditProfile = () => {
 
         const { data, formData } = serializeForm(ev.target);
 
-        // const validateOK = validateFormRegister(data, setValidate);
-        // if (!validateOK) return
+        const validateOK = validateFormProfile(data);
+        if (!validateOK) {
+            setValidate('No puedes dejar campos vacíos...');
+
+            setTimeout(() => {
+                setValidate('');
+            }, 3000)
+            return
+        }
+
+        if (!data){
+            setValidate('Tienes que agregar aunque sea 1 elemtento para continuar...');
+
+            setTimeout(() => {
+                setValidate('');
+            }, 3000)
+            return
+        }
 
 
         const response = await updateUserProfile(formData);
@@ -132,6 +150,10 @@ export const EditProfile = () => {
             </div>
 
             <h2>Edita tu perfil:</h2>
+
+            {validate &&
+                <p className="errorProfile">{validate}</p>
+            }
 
             <form onSubmit={handleOnSubmit}>
                 <input type="hidden" name="_id" value={user._id} />
