@@ -1,7 +1,11 @@
+import { getLocalProfiles } from "../../../helpers/localStorage";
 
-export const getUserData =  (_id, profiles) => {
+export const getUserData = (_id, profiles) => {
+
+    if (profiles.length == 0) 
+        profiles = getLocalProfiles();
     
-    const { name, email, image } = profiles.find(prof => prof._id == _id);
+    const userData = profiles.find(prof => prof._id == _id);
 
-    return { name, email, image };
+    return userData;
 };

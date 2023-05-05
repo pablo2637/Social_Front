@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getLocalChats } from '../../helpers/localStorage';
 
 
 export const socketSlice = createSlice({
@@ -6,7 +7,7 @@ export const socketSlice = createSlice({
     name: 'socket',
 
     initialState: {
-        chats: [],
+        chats: getLocalChats(),
         isReceiving: false,
         isSending: false,
         isConnecting: false,
@@ -14,13 +15,32 @@ export const socketSlice = createSlice({
     },
 
     reducers: {
+
+        onSendMsg: (state, { payload }) => {
+            state.chats[payload.ind].chat.push(payload.newMsg);
+        },
+
+        onUpdateID: (state, { payload }) => {
+            console.log('update id', payload.ind, payload._id)
+            state.chats[payload.ind]._id = payload._id;
+        },
+
+        onLoadChats: (state, { payload }) => {
+            state.chats = payload;
+        },
+
+        onJoinChat: (state, { payload }) => {
+            state.chats = payload;
+            state.isSending = false;
+            state.isReceiving = false;
+        },
+
         onConnected: (state) => {
             state.isConnecting = false;
             state.connState = 'connected';
         },
 
         onConnecting: (state) => {
-         
             state.isConnecting = true;
             state.connState = 'connecting';
         },
@@ -53,6 +73,14 @@ export const socketSlice = createSlice({
         onDisconnect: (state) => {
             state.isConnecting = false;
             state.connState = 'disconnected'
+        },
+
+        onReconnectLimit: (state) => {
+            state.connState = 'stop'
+        },
+
+        onLogoutChat: (state) => {
+            state.chats = [];
         }
     }
 
@@ -60,6 +88,10 @@ export const socketSlice = createSlice({
 
 
 export const {
+    onJoinChat,
+    onLogoutChat,
+    onReconnectLimit,
+    onUpdateID,
     onConnected,
     onConnectError,
     onConnecting,
@@ -67,5 +99,7 @@ export const {
     onReconnectFailed,
     onReconnectAttempt,
     onReconnect,
+    onSendMsg,
+    onLoadChats,
     onSending
 } = socketSlice.actions;

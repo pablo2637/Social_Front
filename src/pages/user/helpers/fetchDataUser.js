@@ -193,3 +193,30 @@ export const fetchDataEmail = async (email) => {
     }
 };
 
+
+
+export const fetchDataChats = async (_id) => {
+
+    const data = {
+        type: 'getChats',
+        _id
+    };
+
+    const response = await userAPI(data);
+    console.log('response',response)
+
+    if (!response.ok)
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+
+    return {
+        ok: true,
+        chats: response.data
+    };
+
+
+
+};

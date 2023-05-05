@@ -62,7 +62,7 @@ export const EditPersonalData = () => {
     if (type == 'personal')
       setValidate(prevValidate => ({
         ...prevValidate,
-        msgError: 'Se actulizaron los datos correctamente.'
+        msgError: 'Se actualizaron los datos correctamente.'
       }));
 
     else {

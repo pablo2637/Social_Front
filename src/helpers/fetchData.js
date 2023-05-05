@@ -64,7 +64,7 @@ export const fetchDataRegister = async (formData) => {
 
     if (response.ok) {
 
-        let user = response.data;
+        let user = response.user;
         user.alt = `Imagen de ${user.name}`;
         user.date = new Date(user.date).toLocaleString();
 

@@ -14,6 +14,7 @@ export const HomeUserPage = () => {
 
   const checkProfile = () => {
 
+    
     if (user.profile.length == 0) navigate('editPublicProfile');
 
   };

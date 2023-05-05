@@ -54,6 +54,12 @@ export const userAPI = async (data, formData) => {
             }
             break;
 
+
+        case 'getChats':
+            url = `${urlBack}/api/users/chats/${data._id}`;
+            break;
+
+
         case 'getInvites':
             url = `${urlBack}/api/users/invite`;
             break;
