@@ -8,6 +8,7 @@ export const socketSlice = createSlice({
 
     initialState: {
         chats: getLocalChats(),
+        newChats: false,
         isReceiving: false,
         isSending: false,
         isConnecting: false,
@@ -15,6 +16,10 @@ export const socketSlice = createSlice({
     },
 
     reducers: {
+
+        onNewChats: (state, { payload }) => {
+            state.newChats = payload;
+        },
 
         onSendMsg: (state, { payload }) => {
             state.chats[payload.ind].chat.push(payload.newMsg);
@@ -88,18 +93,23 @@ export const socketSlice = createSlice({
 
 
 export const {
+    onNewChats,
     onJoinChat,
     onLogoutChat,
-    onReconnectLimit,
+    onLoadChats,
     onUpdateID,
+
     onConnected,
     onConnectError,
     onConnecting,
+
     onDisconnect,
+
     onReconnectFailed,
     onReconnectAttempt,
     onReconnect,
+    onReconnectLimit,
+
     onSendMsg,
-    onLoadChats,
     onSending
 } = socketSlice.actions;

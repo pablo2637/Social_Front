@@ -1,5 +1,19 @@
 import { userAPI } from "../api/userAPI";
 
+
+/**
+ * @author Pablo
+ * @module fetchData
+ */
+
+
+/**
+ * Hace la consulta a la API para cargar en el state las invitaciones de los usuarios
+ * @method fetchLoadInvites
+ * @async
+ * @returns {json} OK e invites
+ * @throws {json} Error
+ */
 export const fetchLoadInvites = async () => {
 
     const data = {
@@ -26,6 +40,14 @@ export const fetchLoadInvites = async () => {
 };
 
 
+
+/**
+ * Hace la consulta a la API para cargar en el state los perfiles públicos de los usuarios
+ * @method fetchLoadProfiles
+ * @async
+ * @returns {json} OK y profiles
+ * @throws {json} Error
+ */
 export const fetchLoadProfiles = async () => {
 
     const data = {
@@ -54,6 +76,14 @@ export const fetchLoadProfiles = async () => {
 
 
 
+/**
+ * Hace la consulta a la API para crear un usuario nuevo
+ * @method fetchDataRegister
+ * @async
+ * @param {Object} formData Los elementos del formulario para crear el usuario sin serializar
+ * @returns {json} OK y user
+ * @throws {json} Error
+ */
 export const fetchDataRegister = async (formData) => {
 
     const data = {
@@ -84,6 +114,16 @@ export const fetchDataRegister = async (formData) => {
 };
 
 
+
+/**
+ * Esta función es llamada luego de crear el usuario con una cuenta de Google en Firebase y
+ * luego se la consulta a la API para crear el usuario nuevo en la base de datos propia
+ * @method fetchDataRegisterGoogle
+ * @async
+ * @param {Object} userData Los datos para crear el usuario
+ * @returns {json} OK y user
+ * @throws {json} Error
+ */
 export const fetchDataRegisterGoogle = async (userData) => {
 
     const data = {

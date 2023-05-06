@@ -1,6 +1,17 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+
+/**
+ * @author Pablo
+ * @module NavBarUser
+ */
+
+/**
+ * Componente que renderiza la barra de navegación de los usuarios registrados
+ * @method NavBarUser
+ * @returns La barra de navegación genéroca de la app
+ */
 export const NavBarUser = () => {
 
     const { user } = useSelector((state) => state.auth);

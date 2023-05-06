@@ -24,7 +24,10 @@ export const authSlice = createSlice({
         onLoginUser: (state, { payload }) => {
             state.isChecking = false;
             state.user = payload;
-            state.status = 'authenticated';
+            if (payload.isAdmin)
+                state.status = 'admin';
+            else
+                state.status = 'authenticated';
         },
 
         onLoading: (state) => {
@@ -37,6 +40,16 @@ export const authSlice = createSlice({
 
         onUpdateUser: (state, { payload }) => {
             state.user = payload;
+            state.isLoading = false;
+        },
+
+        onLoadFriends: (state, { payload }) => {
+            state.user.friends = payload;
+            state.isLoading = false;
+        },
+
+        onLoadMsgs: (state, { payload }) => {
+            state.user.msgs = payload;
             state.isLoading = false;
         },
 
@@ -61,6 +74,8 @@ export const authSlice = createSlice({
 
 
 export const {
+    onLoadFriends,
+    onLoadMsgs,
     onCheckingUser,
     onChecking,
     onComplete,

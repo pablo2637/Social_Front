@@ -203,7 +203,6 @@ export const fetchDataChats = async (_id) => {
     };
 
     const response = await userAPI(data);
-    console.log('response',response)
 
     if (!response.ok)
         return {
@@ -216,7 +215,81 @@ export const fetchDataChats = async (_id) => {
         ok: true,
         chats: response.data
     };
+};
 
 
 
+export const fetchDataFriends = async (_id) => {
+
+    const data = {
+        type: 'getFriends',
+        _id
+    };
+
+    const response = await userAPI(data);
+
+    if (!response.ok)
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+
+    return {
+        ok: true,
+        friends: response.data
+    };
+};
+
+
+export const fetchDataMsgs = async (_id) => {
+
+    const data = {
+        type: 'getMsgs',
+        _id
+    };
+
+    const response = await userAPI(data);
+
+    if (!response.ok)
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+
+    return {
+        ok: true,
+        msgs: response.data
+    };
+};
+
+
+
+
+export const fetchDataSendMsg = async (msg, from, _id) => {
+
+    const data = {
+        type: 'sendMsg',
+        body: {
+            from,
+            msg,
+            _id
+        }
+    };
+
+    const response = await userAPI(data);
+    console.log('response', response)
+
+    if (!response.ok)
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+
+    return {
+        ok: true,
+        chats: response.data
+    };
 };

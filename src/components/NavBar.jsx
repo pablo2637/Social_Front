@@ -1,5 +1,15 @@
 import { NavLink } from 'react-router-dom';
 
+/**
+ * @author Pablo
+ * @module NavBar
+ */
+
+/**
+ * Componente que renderiza la barra de navegación pública
+ * @metod NavBar
+ * @returns La barra de navegación genéroca de la app
+ */
 export const NavBar = () => {
 
     return (

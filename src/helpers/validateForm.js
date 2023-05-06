@@ -1,4 +1,18 @@
 
+/**
+ * @author Pablo
+ * @module validateForm
+ */
+
+
+
+/**
+ * Valida los datos del usuario del formulario de registro
+ * @method validateFormRegister
+ * @param {Object} data Los datos a validar
+ * @param {Hook} setValidate Hook para almacenar los datos del resultado de la validación
+ * @returns {Boolean} Con el resultado de la validación
+ */
 export const validateFormRegister = (data, setValidate) => {
 
 
@@ -47,6 +61,13 @@ export const validateFormRegister = (data, setValidate) => {
 
 
 
+/**
+ * Valida los datos del usuario del formulario de login
+ * @method validateFormLogin
+ * @param {Object} data Los datos a validar
+ * @param {Hook} setValidate Hook para almacenar los datos del resultado de la validación
+ * @returns {Boolean} Con el resultado de la validación
+ */
 export const validateFormLogin = (data, setValidate) => {
 
 
@@ -77,6 +98,12 @@ export const validateFormLogin = (data, setValidate) => {
 
 
 
+/**
+ * Valida los datos del usuario del formulario de edición del perfil
+ * @method validateFormProfile
+ * @param {Object} data Los datos a validar
+ * @returns {Boolean} Con el resultado de la validación
+ */
 export const validateFormProfile = (data) => {
 
     let rslt = true;
