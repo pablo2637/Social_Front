@@ -1,12 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
-import { fetchLoadInvites, fetchLoadProfiles } from "../helpers/fetchData";
-import { onLoginUser } from "../store/slice/authSlice";
-import { setLocal, setLocalChats, setLocalInvites, setLocalProfiles } from "../helpers/localStorage";
-import { fetchDataChats, fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
-import { onLoadChats } from "../store/slice/socketSlice";
-import { SocketContext } from "../contexts/SocketContext";
 import { useContext } from "react";
+
+import { onLoadUsers, onLoadingUsers, onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
+import { onLoadChats } from "../store/slice/socketSlice";
+import { onLoadFriends, onLoadMsgs, onLoginUser } from "../store/slice/authSlice";
+
+import { fetchLoadInvites, fetchLoadProfiles } from "../helpers/fetchData";
+import { setLocal, setLocalChats, setLocalFriends, setLocalInvites, setLocalMsgs, setLocalProfiles } from "../helpers/localStorage";
+import { fetchDataChats, fetchDataFriends, fetchDataMsgs, fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
+import { fetchGetUsers } from "../pages/admin/helpers/fetchDataAdmin";
+
+import { SocketContext } from "../contexts/SocketContext";
+import { useSocketStore } from "./useSocketStore";
+
 
 export const useUserStore = () => {
 
@@ -119,8 +125,79 @@ export const useUserStore = () => {
   };
 
 
+
+  const loadFriends = async (_id) => {
+
+    const friends = await fetchDataFriends(_id);
+
+    if (!friends.ok)
+      return {
+        ok: false,
+        response: friends.msg
+      };
+
+
+    dispatch(onLoadFriends(friends.friends));
+    setLocalFriends(friends.friends)
+
+    return {
+      ok: true
+    };
+
+  };
+
+
+  const loadMsgs = async (_id) => {
+
+    console.log('_id', _id)
+    const msgs = await fetchDataMsgs(_id);
+    console.log('msgs response', msgs)
+    if (!msgs.ok)
+      return {
+        ok: false,
+        response: msgs.msg
+      };
+
+
+    dispatch(onLoadMsgs(msgs.msgs));
+    setLocalMsgs(msgs.msgs)
+
+    return {
+      ok: true
+    };
+
+  };
+
+
+
+  const getUsers = async () => {
+
+    dispatch(onLoadingUsers());
+
+    const users = await fetchGetUsers();
+    console.log('users', users)
+
+    if (!users.ok)
+      return {
+        ok: false,
+        response: users.msg
+      };
+
+
+    dispatch(onLoadUsers(users.users));
+
+    return {
+      ok: true
+    };
+
+  };
+
+
   return {
+    getUsers,
     loadChats,
+    loadMsgs,
+    loadFriends,
     loadProfiles,
     loadInvites,
     updateUserProfile

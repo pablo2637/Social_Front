@@ -7,12 +7,19 @@ export const usersSlice = createSlice({
 
     initialState: {
         invites: getLocalInvites(),
+        newInvites: false,
         profiles: getLocalProfiles(),
+        newProfiles: false,
+        users: [],
         isLoading: false,
         userStatus: ''
     },
 
     reducers: {
+
+        onNewInvites: (state, { payload }) => {
+            state.newInvites = payload;
+        },
 
         onLoadInvites: (state, { payload }) => {
             state.invites = payload;
@@ -23,6 +30,27 @@ export const usersSlice = createSlice({
             state.isLoading = true;
         },
 
+        onLogoutInvites: (state) => {
+            state.invites = [];
+        },
+
+
+        onLoadUsers: (state, { payload }) => {
+            state.users = payload;
+            state.isLoading = false;
+        },
+
+        onLoadingUsers: (state) => {
+            state.isLoading = true;
+            state.users = [];
+            state.userStatus = 'loading';
+        },
+
+
+
+        onNewProfiles: (state, { payload }) => {
+            state.newProfiles = payload;
+        },
 
         onLoadingProfile: (state) => {
             state.isLoading = true;
@@ -53,9 +81,6 @@ export const usersSlice = createSlice({
             state.userStatus = 'updated';
         },
 
-        onLogoutInvites: (state) => {
-            state.invites = [];
-        },
 
         onError: (state, { payload }) => {
             state.isLoading = false;
@@ -67,14 +92,20 @@ export const usersSlice = createSlice({
 
 
 export const {
+    onLoadUsers, onLoadingUsers,
+
     onLogoutInvites,
+    onUpdatingInvites,
+    onUpdatingComplete,
+    onLoadInvites,
+    onNewInvites,
+
     onLoadingProfile,
+    onNewProfiles,
     onLoadProfile,
     onLoadProfileComplete,
     onUpdatingProfile,
     onUpdateProfile,
-    onUpdatingInvites,
-    onUpdatingComplete,
-    onLoadInvites,
+
     onError
 } = usersSlice.actions;

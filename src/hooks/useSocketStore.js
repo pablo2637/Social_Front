@@ -14,57 +14,59 @@ export const useSocketStore = () => {
 
     const { socket } = useContext(SocketContext);
 
-    const { loadInvites, loadProfiles, loadChats } = useUserStore();
-    const { loadUser } = useAuthStore();
+    const { loadInvites, loadMsgs, loadFriends, loadProfiles, loadChats } = useUserStore();
+    const { loadUser, logoutUser } = useAuthStore();
     const dispatch = useDispatch();
+
 
 
     const operations = () => {
 
-        socket.on('execute', async (data) => {
+        socket.on('execute', (data) => {
 
-            switch (data.command) {
-                case 'reload_profiles':
-                    await loadProfiles();
-                    break;
+            data.command.forEach(cmd => {
+                console.log('command:', cmd)
 
-                case 'reload_invites':
-                    await loadInvites();
-                    break;
+                switch (cmd) {
+                    case 'profiles':
+                        loadProfiles();
+                        break;
 
-                case 'reload_user':
-                    await loadUser(user.email);
-                    break;
+                    case 'invites':
+                        loadInvites();
+                        break;
 
-                case 'reload_chats':
-                    await loadChats(user._id);
-                    break;
+                    case 'user':
+                        if (!user.isAdmin) loadUser(user.email);
+                        break;
 
-                case 'reload_invites-profile':
-                    await loadInvites();
-                    await loadProfiles();
-                    break;
+                    case 'chats':
+                        loadChats(user._id);
+                        break;
 
-                case 'reload_user-profile':
-                    await loadUser(user.email);
-                    await loadProfiles();
-                    break;
+                    case 'msgs':
+                        loadMsgs(user._id)
+                        break;
 
-                case 'reload_user-invites':
-                    await loadUser(user.email);
-                    await loadInvites();
-                    break;
+                    case 'friends':
+                        loadFriends(user._id)
+                        break;
 
-                case 'reload_all':
-                    await loadUser(user.email);
-                    await loadInvites();
-                    await loadProfiles();
-                    break;
+                    case 'all':
+                        loadInvites();
+                        loadProfiles();
+                        loadChats(user, _id);
+                        if (!user.isAdmin) loadUser(user.email);
+                        break;
 
-            }
+                    case 'logout':
+                        logoutUser();
+                        break;
+                }
+
+            });
 
             console.log('execute command:', data.command)
-
         });
 
 
@@ -106,7 +108,9 @@ export const useSocketStore = () => {
 
         socket.on('whoAreYou', async () => {
             console.log('whoAreYou', user._id)
-            await socket.emit('whoAmI', { userID: user._id })
+
+            if (user)
+                await socket.emit('whoAmI', { userID: user._id })
         });
 
 
@@ -125,7 +129,7 @@ export const useSocketStore = () => {
 
         socket.on('msgFrom', async (data) => {
 
-            console.log('receive', data)
+            console.log('receive', data, 'user', user, 'chats', chats)
 
             const ind = findChat(data.sender, data.receiver);
             console.log('ind', ind, chats[ind])

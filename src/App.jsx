@@ -1,6 +1,5 @@
-import { NavBar } from './components/NavBar';
-import { NavBarUser } from './components/NavBarUser';
-import { AppRoutes, UserRoutes } from './routers'
+import { NavBarUser, NavBar, NavBarAdmin } from './components';
+import { AdminRoutes, AppRoutes, UserRoutes } from './routers'
 import { useSelector } from 'react-redux';
 import { SocketContext } from './contexts/SocketContext';
 import { useContext, useEffect, useState } from 'react';
@@ -49,14 +48,20 @@ function App() {
         (status === 'authenticated')
           ?
           <NavBarUser />
+
           :
-          <NavBar />
+          (status === 'admin')
+            ?
+            <NavBarAdmin />
+
+            :
+            <NavBar />
       }
 
-      <p>Status: {status} - isLoading: {isLoading.toString()} - isChecking: {isChecking.toString()} - user: {user.name}</p>
+      <p>Status: {status} - isChecking: {isChecking.toString()} - user: {user.name} - email: {user.email}</p>
 
       {(socket) && <p>socket.id: {socket.id}</p>}
-      <p>isReceiving: {isReceiving.toString()} - isSending: {isSending.toString()} - isConnecting: {isConnecting.toString()} - connState: {connState}</p>
+      <p>isConnecting: {isConnecting.toString()} - connState: {connState}</p>
       {
         (connState == 'stop') && <button>Conectar</button>
       }
@@ -71,11 +76,15 @@ function App() {
         {
           (status === 'authenticated')
             ?
-
             <UserRoutes />
 
             :
-            <AppRoutes />
+            (status === 'admin')
+              ?
+              <AdminRoutes />
+
+              :
+              <AppRoutes />
         }
 
       </main>

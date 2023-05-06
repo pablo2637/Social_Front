@@ -25,11 +25,6 @@ export const ChatBox = ({ _id, name }) => {
     const firstName = name.split(' ')[0];
     console.log('data chat', data)
     if (!data) return
-    //   setChat(data);
-    //   console.log('aqui');
-    //   return
-    // }
-    console.log('aca');
 
     data.chat.forEach(ch => {
 
@@ -74,6 +69,19 @@ export const ChatBox = ({ _id, name }) => {
       }
 
     });
+
+    if (data.userDeleted == data.sender || data.userDeleted == data.receiver) {
+
+      newChat.push({
+        type: 'spc',
+        content: ' '
+      });
+
+      newChat.push({
+        type: 'deleted',
+        content: 'Usuario eliminado...'
+      });
+    }
 
 
     setChat({
@@ -168,10 +176,12 @@ export const ChatBox = ({ _id, name }) => {
         <tfoot>
           <tr>
             <td>
+
               <form onSubmit={handleOnSubmit}>
                 <input type="text" name="text" placeholder="Escribe algo..." />
-                <input type="submit" value="Enviar" />
+                <input disabled={(chat.userDeleted) ? true : false} type="submit" value="Enviar" />
               </form>
+
             </td>
           </tr>
         </tfoot>
@@ -184,33 +194,3 @@ export const ChatBox = ({ _id, name }) => {
   );
 
 };
-
-/*
-<div className="App">
- {!showChat ? (
-   <div className="joinChatContainer">
-     <h3>Join A Chat</h3>
-     <input
-       type="text"
-       placeholder="John..."
-       onChange={(event) => {
-         setUsername(event.target.value);
-       }}
-     />
-     <button onClick={joinRoom}>Join A Room</button>
-   </div>
- ) : (
-   <Chat socket={socket} username={username} room={room} />
- )}
-</div> */
-
-  // const [username, setUsername] = useState("");
-  // const [room] = useState("1");
-  // const [showChat, setShowChat] = useState(false);
-
-  // const joinRoom = () => {
-  //   if (username !== "") {
-  //     socket.emit("join_room", room);
-  //     setShowChat(true);
-  //   }
-  // };

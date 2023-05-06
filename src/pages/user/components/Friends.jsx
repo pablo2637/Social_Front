@@ -32,17 +32,23 @@ export const Friends = () => {
 
       {
         friends.map(fr =>
-
           <article key={`fr-${fr._id}`} >
             <LittlePeople name={fr.name} image={fr.image} />
 
-            <button onClick={() => handleRemoveFriend(fr._id)}>Romper vínculo</button>
             {
-              (fr.show) ?
-                <button onClick={() => handleOnOpenChat(fr._id, false)}>Ocultar conversación</button>
-                :
-                <button onClick={() => handleOnOpenChat(fr._id, true)}>Abrir conversación</button>
+              (fr.name) &&
+              <>
+                <button onClick={() => handleRemoveFriend(fr._id)}>Romper vínculo</button>
+
+                {(fr.show)
+                  ?
+                  <button onClick={() => handleOnOpenChat(fr._id, false)}>Ocultar conversación</button>
+                  :
+                  <button onClick={() => handleOnOpenChat(fr._id, true)}>Abrir conversación</button>
+                }
+              </>
             }
+
 
             <p>{msg}</p>
 

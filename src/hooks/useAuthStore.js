@@ -10,6 +10,18 @@ import { useContext } from 'react';
 import { fetchDataChats, fetchDataEmail, fetchUpdateUser } from '../pages/user/helpers/fetchDataUser';
 import { useUserStore } from './useUserStore';
 
+
+
+/**
+ * @author Pablo
+ * @module useAuthStore
+ */
+
+
+/**
+ * Hook personalizado para almacenar el state de validación del usuairo
+ * @method useAuthStore
+ */
 export const useAuthStore = () => {
 
 
@@ -19,6 +31,13 @@ export const useAuthStore = () => {
     const dispatch = useDispatch();
 
 
+    /**
+     * Función para hacer el registro con una cuenta de Google, luego trae los datos del usuario de la base
+     * de datos de Mongo, si no existe los crea y finalmente recupera también las invitaciones y los chats
+     * @method loginGoogle
+     * @async
+     * @returns {json} OK
+     */
     const loginGoogle = async () => {
 
         dispatch(onCheckingUser());
@@ -68,6 +87,16 @@ export const useAuthStore = () => {
 
 
 
+    /**
+     * Función para hacer el login con email y contraseña, luego recupera los datos de usuario de la base de datos de Mongo
+     * y también las invitaciones y chats
+     * @method loginUser
+     * @async
+     * @param {String} email Email del usuario
+     * @param {String} password Password del usuario
+     * @param {Hook} setValidate Hook para almacenar posibles errores en el login
+     * @returns {json} OK
+     */
     const loginUser = async ({ email, password }, setValidate) => {
 
         dispatch(onCheckingUser());
@@ -100,35 +129,10 @@ export const useAuthStore = () => {
         }
 
 
-        // const data = await fetchDataEmail(email);
-
-        // if (!data.ok)
-        //     return {
-        //         ok: false,
-        //         response: data.user
-        //     };
-
-
-        // dispatch(onLoginUser(data.user));
-        // setLocal(data.user);
-
         const { user } = await loadUser(email);
         await loadInvites();
         await loadChats(user._id);
 
-        // const chats = await fetchDataChats(data.user._id);
-
-        // if (!chats.ok)
-        //     return {
-        //         ok: false,
-        //         response: chats.msg
-        //     };
-
-
-        // dispatch(onLoadChats(chats.chats));
-
-
-        // socket.emit('whoAmI', { userID: data.user._id });
 
         return {
             ok: true
@@ -138,6 +142,14 @@ export const useAuthStore = () => {
 
 
 
+    /**
+     * Devuelve los datos del usuario de la base de datos de Mongo, los almacena en el local y manda un mensaje
+     * a través del socket para identificar al usuario en el servidor del chat
+     * @method loadUser
+     * @async
+     * @param {String} email Email del usuario
+     * @returns {json} OK y user
+     */
     const loadUser = async (email) => {
 
         dispatch(onCheckingUser());
@@ -156,16 +168,6 @@ export const useAuthStore = () => {
         setLocal(data.user);
 
 
-        // const chats = await fetchDataChats(user._id);
-
-        // if (!chats.ok)
-        //     return {
-        //         ok: false,
-        //         response: chats.msg
-        //     };
-
-
-        // dispatch(onLoadChats(chats.chats));
         await socket.emit('whoAmI', { userID: data.user._id });
 
         return {
