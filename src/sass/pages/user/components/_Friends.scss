@@ -1,0 +1,29 @@
+@import '../../../base/settings';
+
+.secUserFriends {    
+    @include flexbox(left, row, 0);
+    background-color: $bg-img;
+
+    article {
+        cursor: pointer;
+
+        @import './LittlePeople';
+    }
+
+    .divBtnsChat {
+        text-align: center;
+
+        button {
+            @include boton-ico();
+            font-size: pixels-rem(20);
+        }
+
+        button:hover {
+            @include boton-ico-hover();
+        }
+    }
+
+    @import './ChatBox';
+
+
+}

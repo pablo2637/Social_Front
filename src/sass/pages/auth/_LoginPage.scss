@@ -1,0 +1,105 @@
+@import '../../base/settings';
+
+.secLogin,
+.secRegister {
+
+    color: $font-col;
+
+    h2 {
+        margin-top: pixels-rem(30);
+        padding: pixels-rem(25);
+    }
+
+    .errorForm {
+        color: $error-bad;
+        text-align: center;
+        font-size: pixels-rem(18);
+        margin-top: pixels-rem(15);
+    }
+
+    .divContainer {
+        @include container(85%, 0);
+
+        form {
+            @include grid(1fr, center, center, 0, 15);
+
+
+            // label {
+            //     text-align: right;
+
+            // }
+
+
+            input[type="submit"]:hover,
+            input[type="reset"]:hover {
+                @include boton-hover();
+            }
+
+            .errorLogin,
+            .errorRegister {
+                color: $error;
+                // grid-column: 1 / 3;
+                text-align: center;
+            }
+        }
+
+        .divGoogle {
+            margin-top: pixels-rem(30);
+            text-align: center;
+
+            button {
+                @include container(90%, 0);
+                @include border($bg, 15);
+                cursor: pointer;
+                background-color: whitesmoke;
+                padding: pixels-rem(10);
+                margin-top: pixels-rem(10);
+                box-shadow: 2px 2px 5px black;
+
+                i {
+                    color: green;
+                    font-size: pixels-rem(16);
+                }
+
+            }
+
+            p {
+                margin-top: pixels-rem(25);
+
+                a {
+                    text-decoration: none;
+                    color: $link;
+
+                }
+
+                a:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.secLogin {
+    .divContainer {
+        form {
+
+            input:not([type="submit"]) {
+                padding: pixels-rem(3);
+                @include container(80%, 0);
+
+            }
+
+
+
+            input[type="submit"] {
+                // grid-column: 1 / 3;
+                @include container(60%, 0);
+                @include boton();
+                padding: pixels-rem(5);
+                margin-top: pixels-rem(10);
+
+            }
+        }
+    }
+}

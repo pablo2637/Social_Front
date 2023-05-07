@@ -1,0 +1,41 @@
+@import './base/settings';
+
+header {
+
+    height: $header-height;
+    background-color: $bg;    
+
+    @include grid(0.7fr 0.3fr, left, center, 0, 0);
+
+    div:first-child {
+        @include flexbox(left, row, 10);
+        margin-left: pixels-rem(5);
+
+    }
+
+    div.divLogo,
+    .divUserImage {
+
+        width: pixels-rem(35);
+        height: pixels-rem(35);
+
+        img {
+            @include image(fill);
+        }
+    }
+
+    p {
+        font-size: pixels-rem(22);
+        color: $bg-font-col;
+    }
+
+    .divUserImage {
+        justify-self: right;
+        margin-right: pixels-rem(5);
+
+        img {
+            @include border($bg-font-col, 100);
+        }
+    }
+
+}

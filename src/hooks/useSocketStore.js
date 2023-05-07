@@ -1,12 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID } from '../store/slice/socketSlice';
+import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID, onNewChats } from '../store/slice/socketSlice';
 import { useUserStore } from './useUserStore';
 import { useAuthStore } from './useAuthStore';
 import { SocketContext } from '../contexts/SocketContext';
 import { useContext } from 'react';
 import { setLocalChats } from '../helpers/localStorage';
+import { onNewInvites } from '../store/slice/usersSlice';
+
+/**
+ * @author Pablo
+ * @module useSocketStore
+ */
 
 
+/**
+ * Hook personalizado para almacenar el state de conexión del socket y los chats
+ * @method useSocketStore
+ */
 export const useSocketStore = () => {
 
     const { user } = useSelector((state) => state.auth);
@@ -19,9 +29,17 @@ export const useSocketStore = () => {
     const dispatch = useDispatch();
 
 
-
+    /**
+     * Gestiona todos los eventos provenientes del socket, ya sea por temas de conexión o por eventos generados por el servidor
+     * @method operations
+     * @async
+     * @returns {json} OK
+     */
     const operations = () => {
 
+        /**
+         * Ejecuta instrucciones que llegan desde el servidor, para que el cliente vuelva a recargar información (ej: perfiles, invitaciones, chats, etc...)
+         */
         socket.on('execute', (data) => {
 
             data.command.forEach(cmd => {
@@ -34,6 +52,7 @@ export const useSocketStore = () => {
 
                     case 'invites':
                         loadInvites();
+                        dispatch(onNewInvites(true));
                         break;
 
                     case 'user':
@@ -102,10 +121,16 @@ export const useSocketStore = () => {
             dispatch(onReconnectAttempt());
 
             dispatch(onConnectError());
+
+            if (socket.io._reconnectionAttempts >= import.meta.env.VITE_RECONNECTION_ATTEMPTS)
+                dispatch(onReconnectLimit());
         });
 
 
-
+        /**
+         * Cuando un cliente se conecta al servidor, éste manda la petición para que se le envíe el ID para saber
+         * quíen es el usuario conectado y verificar las salas de chats
+         */
         socket.on('whoAreYou', async () => {
             console.log('whoAreYou', user._id)
 
@@ -115,7 +140,9 @@ export const useSocketStore = () => {
 
 
 
-
+        /**
+         * Modifica el _id del chat
+         */
         socket.on('chatID', ({ _id, sender, receiver }) => {
             console.log('chatID', _id, sender, receiver)
 
@@ -126,7 +153,9 @@ export const useSocketStore = () => {
         });
 
 
-
+        /**
+         * Gestiona la recepción de mensajes de otro usuario
+         */
         socket.on('msgFrom', async (data) => {
 
             console.log('receive', data, 'user', user, 'chats', chats)
@@ -140,19 +169,30 @@ export const useSocketStore = () => {
             else
                 await loadChats(user._id);
 
+
+            dispatch(onNewChats(true));
+
         });
 
 
-
+        /**
+         * Mensaje de error producido cuando se envía información errónea para crear un nuevo chat
+         */
         socket.on("NoChatData", (data) => {
             console.log('El servidor ha devuelto la solicitud de createChat, data:', data)
         });
+
 
     };
 
 
 
-
+    /**
+     * Devuelve el índice del chat donde esta almacenando la información que llega
+     * @method findChat
+     * @param {String} sender ID del usuario que envía la información
+     * @param {String} receiver ID del usuario que recibe la información
+     */
     const findChat = (sender, receiver) => {
 
         console.log('chats', chats, sender, receiver);
@@ -164,7 +204,13 @@ export const useSocketStore = () => {
 
 
 
-
+    /**
+     * Comprueba si ya existe el chat creado para este usuario y sino lo crea
+     * @async
+     * @param {String} sender ID del usuario que envía la información
+     * @param {String} receiver ID del usuario que recibe la información
+     * @returns {Number} índice del chat
+     */
     const openChat = async (sender, receiver) => {
 
         const ind = findChat(sender, receiver);

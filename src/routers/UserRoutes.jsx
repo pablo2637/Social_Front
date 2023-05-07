@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { EditPersonalData, EditProfile, HomeUserPage, LogoutPage, Meet, Profiles } from '../pages/user';
+import { EditPersonalData, EditPrivateProfile, EditProfile, HomeUserPage, LogoutPage, Meet, Profiles } from '../pages/user';
 
 export const UserRoutes = () => {
 
@@ -24,7 +24,7 @@ export const UserRoutes = () => {
 
         <Route
           path='editPrivateProfile'
-          element={<EditProfile />} //modificar
+          element={<EditPrivateProfile />}
         />
 
         <Route

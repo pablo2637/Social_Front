@@ -1,0 +1,29 @@
+@import './base/settings';
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: pixels-rem(15);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    min-width: 360px;
+    background-color: $body-bg;
+}
+
+
+@media screen and ($bp-mobile-landscape) {
+    body {
+        // font-size: pixels-rem(14);
+    }
+}
+
+@media screen and ($bp-tablet-landscape) {
+    body {
+        // font-size: pixels-rem(16);
+    }
+}

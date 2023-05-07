@@ -1,0 +1,26 @@
+@import '../../../base/settings';
+
+.divLittlePeople {
+
+    @include flexbox(center, column, 0);
+    background-color: transparent;
+    padding: pixels-rem(10);
+
+    .pLPName {
+        text-align: center;
+        color: $nav-font-col;
+        font-size: pixels-rem(12);
+        margin-bottom: pixels-rem(5);
+    }
+
+    div {
+        width: pixels-rem(40);
+        height: pixels-rem(40);
+
+        img {
+            @include image(contain);
+            @include border($body-bg, 100);
+        }
+    }
+
+}

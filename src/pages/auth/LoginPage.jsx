@@ -3,17 +3,27 @@ import { useState } from 'react';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import { validateFormLogin } from '../../helpers/validateForm';
 import { useNavigate } from 'react-router-dom';
-import { useUserStore } from '../../hooks/useUserStore';
 import { useSelector } from 'react-redux';
 
+/**
+ * @author Pablo
+ * @module HomePageAdmin
+ */
+
+/**
+ * Pagina de login de usuarios
+ * @metod LoginPage
+ * @returns La página para realizar el login
+ */
 export const LoginPage = () => {
 
   const { loginUser, loginGoogle } = useAuthStore();
 
-  const { status, user, isChecking } = useSelector((state) => state.auth);  
+  const { status, user, isChecking } = useSelector((state) => state.auth);
   const [form, setForm] = useState({});
   const [validate, setValidate] = useState({});
   const navigate = useNavigate();
+
 
 
   const serializeForm = (serialForm) => {
@@ -71,58 +81,72 @@ export const LoginPage = () => {
 
   return (
 
-    <section>
+    <section className='secLogin'>
 
-      <h2>Login</h2>
+      <h2>Loguéate para continuar:</h2>
+
+      <div className='divContainer'>
+
+        <form encType="multipart/form-data" onSubmit={handleOnSubmit}>
+
+          {/* <label htmlFor="email">Email:</label> */}
+          <input
+            type="text"
+            autoComplete='off'
+            autoFocus
+            name="email"
+            id="email"
+            placeholder='Email...'
+            onChange={handleOnChange}
+          />
+          {validate.email &&
+            <p className="errorLogin">{validate.email}</p>
+          }
+
+          {/* <label htmlFor="password">Contraseña:</label> */}
+          <input
+            type="password"
+            autoComplete='off'
+            name="password"
+            id="password"
+            placeholder='Contraseña...'
+            onChange={handleOnChange}
+          />
+          {validate.password &&
+            <p className="errorLogin">{validate.password}</p>
+          }
+
+          <input
+            type="submit"
+            value="Entrar"
+          />
+
+        </form>
 
 
-      {validate.msgError &&
-        <p className="errorLogin">ERROR: {validate.msgError}</p>
-      }
+        <div className='divGoogle'>
 
-      <form encType="multipart/form-data" onSubmit={handleOnSubmit}>
+          <button
+            onClick={handleOnLoginGoogle}
+          ><i className="fa-brands fa-google"></i> Entra con tu cuenta de Google</button>
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          autoComplete='off'
-          autoFocus
-          name="email"
-          id="email"
-          placeholder='Email...'
-          onChange={handleOnChange}
-        />
-        {validate.email &&
-          <p className="errorLogin">{validate.email}</p>
+          <p>Aún no tienes una cuenta? <NavLink to='/register'>Regístrate</NavLink></p>
+
+        </div>
+
+        {(isChecking) &&
+          < span className="loader"></span>
         }
 
-        <label htmlFor="password">Contraseña:</label>
-        <input
-          type="password"
-          autoComplete='off'
-          name="password"
-          id="password"
-          placeholder='Contraseña...'
-          onChange={handleOnChange}
-        />
-        {validate.password &&
-          <p className="errorLogin">{validate.password}</p>
+
+        {validate.msgError &&
+          <p className="errorForm">{validate.msgError}</p>
         }
 
-        <input
-          type="submit"
-          value="Entrar"
-        />
 
-        <p>Aún no tienes una cuenta? <NavLink to='/register'>Regístrate</NavLink></p>
+      </div>
 
-        <button
-          onClick={handleOnLoginGoogle}
-        >Entra con tu cuenta de Google</button>
-
-      </form>
-
-    </section>
+    </section >
 
   );
 };

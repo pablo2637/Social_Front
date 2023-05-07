@@ -8,7 +8,7 @@ import { validateFormProfile } from "../../helpers/validateForm";
 
 export const EditProfile = () => {
 
-    const { status, user, isChecking } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const { updateUserProfile } = useUserStore();
     const [form, setForm] = useState([]);
     const [order, setOrder] = useState([]);
@@ -94,7 +94,7 @@ export const EditProfile = () => {
             return
         }
 
-        if (!data){
+        if (!data) {
             setValidate('Tienes que agregar aunque sea 1 elemtento para continuar...');
 
             setTimeout(() => {
@@ -102,7 +102,6 @@ export const EditProfile = () => {
             }, 3000)
             return
         }
-
 
         const response = await updateUserProfile(formData);
         if (!response.ok) return
@@ -128,10 +127,10 @@ export const EditProfile = () => {
 
     const loadForm = () => {
 
-        const newForm = [...user.profile];
-        setForm(newForm);
-
         setOrder(user.profileOrder);
+        const newForm = [...user.profile];
+
+        setForm(newForm);
     };
 
 
@@ -143,13 +142,13 @@ export const EditProfile = () => {
 
     return (
 
-        <section>
+        <section className="secEditProfile">
 
-            <div>
-                <NavLink to='/'>Tu cuenta</NavLink><span> &gt; Editar perfil</span>
+            <div className='divRoot'>
+                <NavLink to='/'>&gt; Tu cuenta</NavLink><span> &gt; Editar perfil</span>
             </div>
 
-            <h2>Edita tu perfil:</h2>
+            <h2>Edita tu perfil Público:</h2>
 
             {validate &&
                 <p className="errorProfile">{validate}</p>
@@ -159,6 +158,7 @@ export const EditProfile = () => {
                 <input type="hidden" name="_id" value={user._id} />
                 <input type="hidden" name="uid" value={user.uid} />
                 <input type="hidden" name="profileOrder" value={order} />
+
 
                 {
                     form.map(el => (
@@ -219,7 +219,6 @@ export const EditProfile = () => {
                     <button onClick={() => handleOnClick('text')} >+ Texto</button>
                     <button onClick={() => handleOnClick('paragraph')} >+ Párrafo</button>
                     <button onClick={() => handleOnClick('image')} >+ Imagen</button>
-                    <button>+ Video</button>
                 </div>
 
                 {

@@ -164,6 +164,33 @@ export const fetchUpdateProfile = async (formData) => {
 
 
 
+export const fetchUpdatePrivateProfile = async (formData) => {
+
+    const data = {
+        type: 'updatePrivateProfile'
+    }
+
+    const response = await userAPI(data, formData);
+
+    if (response.ok) {
+
+        return {
+            ok: true,
+            user: response.user
+        };
+
+    } else {
+
+        return {
+            ok: false,
+            msg: response.msg
+        }
+
+    }
+};
+
+
+
 export const fetchDataEmail = async (email) => {
 
     const data = {

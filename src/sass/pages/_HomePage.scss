@@ -1,0 +1,24 @@
+@import '../base/settings';
+
+.secHomePage {
+
+    div {
+        @include container-img-texto($font-col, center, 45, 0);
+
+        h1 {
+            font-weight: bold;
+            text-shadow: 0 0 5px $bg-font-col;
+
+            a {
+                text-decoration: none;
+                color: $font-col;
+            }
+
+            a:hover {
+                color: $bg-font-col;
+                text-shadow: 0 0 5px $bg;
+            }
+        }
+
+    }
+}

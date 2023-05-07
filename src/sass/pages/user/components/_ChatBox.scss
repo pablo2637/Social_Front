@@ -1,0 +1,15 @@
+@import '../../../base/settings';
+
+.divChatBox {
+
+    position: fixed;
+    padding: pixels-rem(5);
+    box-shadow: 0 0 5px 1px black;
+    width: 100%;
+    left: 0;
+    margin-top: pixels-rem(10);
+    background-color: $bg;
+
+
+    z-index: 900;
+}
