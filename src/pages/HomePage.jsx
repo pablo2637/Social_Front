@@ -34,7 +34,7 @@ export const HomePage = () => {
     <section className="secHomePage">
 
       <div >
-        <img src="../../public/assets/bg1.png" alt="Imagen de portada" />
+        <img src="../../assets/bg1.png" alt="Imagen de portada" />
         <div>
           <h1> <NavLink to='/login'>Bienvenido a Social Connect</NavLink></h1>
         </div>

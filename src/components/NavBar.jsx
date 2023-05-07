@@ -34,12 +34,12 @@ export const NavBar = () => {
                     <div>
                         {
                             (status == 'authenticated') ?
-                                <img src="../../public/assets/lock-green.png" title="Usuario registrado" />
+                                <img src="../../assets/lock-green.png" title="Usuario registrado" />
                                 :
                                 (status == 'admin') ?
-                                    <img src="../../public/assets/lock-blue.png" title="Usuario administrador" />
+                                    <img src="../../assets/lock-blue.png" title="Usuario administrador" />
                                     :
-                                    <img src="../../public/assets/lock-gray.png" title="Usuario anónimo" />
+                                    <img src="../../assets/lock-gray.png" title="Usuario anónimo" />
                         }
                     </div>
 
@@ -48,19 +48,19 @@ export const NavBar = () => {
                             (isChecking || isConnecting) ?
                                 <img title={(isChecking)?"Comprobando...":"Intentando reconectar..."} src="../../public/assets/user-blue.png" />
                                 :
-                                <img src="../../public/assets/user-gray.png" />
+                                <img src="../../assets/user-gray.png" />
                         }
                     </div>
 
                     <div>
                         {
                             (connState == 'connected') ?
-                                <img title="Conectado al servidor..." src="../../public/assets/pc-green.png" />
+                                <img title="Conectado al servidor..." src="../../assets/pc-green.png" />
                                 :
                                 (isConnecting) ?
-                                    <img title="Error en la conexión..." src="../../public/assets/pc-red.png" />
+                                    <img title="Error en la conexión..." src="../../assets/pc-red.png" />
                                     :
-                                    <img title="Desconectado..." src="../../public/assets/pc-gray.png" />
+                                    <img title="Desconectado..." src="../../public/pc-gray.png" />
                         }
                     </div>
                 </div>

@@ -44,36 +44,36 @@ export const NavBarUser = () => {
                     <div>
                         {
                             (newInvites) ?
-                                <img src="../../public/assets/user-inv-green.png" title="Tienes nuevas invitaciones" />
+                                <img src="../../assets/user-inv-green.png" title="Tienes nuevas invitaciones" />
                                 :
-                                <img src="../../public/assets/user-inv-gray.png" title="No tienes invitaciones nuevas" />
+                                <img src="../../assets/user-inv-gray.png" title="No tienes invitaciones nuevas" />
                         }
                     </div>
 
                     <div>
                         {
                             (newChats) ?
-                                <img onClick={handleOnChat} src="../../public/assets/users-green.png" title="Tienes nuevos mensajes en tus chats" />
+                                <img onClick={handleOnChat} src="../../assets/users-green.png" title="Tienes nuevos mensajes en tus chats" />
                                 :
-                                <img onClick={handleOnChat} src="../../public/assets/users-gray.png" title="No hay nuevos mensajes en tus chats" />
+                                <img onClick={handleOnChat} src="../../assets/users-gray.png" title="No hay nuevos mensajes en tus chats" />
                         }
                     </div>
 
                     <div>
                         {
                             (newProfiles) ?
-                                <img src="../../public/assets/sc-ico-green.png" title="Hay nuevos perfiles de usuarios" />
+                                <img src="../../assets/sc-ico-green.png" title="Hay nuevos perfiles de usuarios" />
                                 :
-                                <img src="../../public/assets/sc-ico-gray.png" title="No hay nuevos perfiles de usuarios" />
+                                <img src="../../assets/sc-ico-gray.png" title="No hay nuevos perfiles de usuarios" />
                         }
                     </div>
 
                     <div>
                         {
                             (newMsgs) ?
-                                <img src="../../public/assets/user-msgs-green.png" title="Hay nuevos mensajes privados" />
+                                <img src="../../assets/user-msgs-green.png" title="Hay nuevos mensajes privados" />
                                 :
-                                <img src="../../public/assets/user-msgs-gray.png" title="No hay nuevos mensajes privados" />
+                                <img src="../../assets/user-msgs-gray.png" title="No hay nuevos mensajes privados" />
                         }
                     </div>
 
@@ -83,33 +83,33 @@ export const NavBarUser = () => {
                     <div>
                         {
                             (status == 'authenticated') ?
-                                <img src="../../public/assets/lock-green.png" title="Usuario registrado" />
+                                <img src="../../assets/lock-green.png" title="Usuario registrado" />
                                 :
                                 (status == 'admin') ?
-                                    <img src="../../public/assets/lock-blue.png" title="Usuario administrador" />
+                                    <img src="../../assets/lock-blue.png" title="Usuario administrador" />
                                     :
-                                    <img src="../../public/assets/lock-gray.png" title="Usuario anónimo" />
+                                    <img src="../../assets/lock-gray.png" title="Usuario anónimo" />
                         }
                     </div>
 
                     <div>
                         {
                             (isChecking || isConnecting) ?
-                                <img title={(isChecking) ? "Comprobando..." : "Intentando reconectar..."} src="../../public/assets/user-blue.png" />
+                                <img title={(isChecking) ? "Comprobando..." : "Intentando reconectar..."} src="../../assets/user-blue.png" />
                                 :
-                                <img src="../../public/assets/user-gray.png" />
+                                <img src="../../assets/user-gray.png" />
                         }
                     </div>
 
                     <div>
                         {
                             (connState == 'connected') ?
-                                <img title="Conectado al servidor..." src="../../public/assets/pc-green.png" />
+                                <img title="Conectado al servidor..." src="../../assets/pc-green.png" />
                                 :
                                 (isConnecting) ?
-                                    <img title="Error en la conexión..." src="../../public/assets/pc-red.png" />
+                                    <img title="Error en la conexión..." src="../../assets/pc-red.png" />
                                     :
-                                    <img title="Desconectado..." src="../../public/assets/pc-gray.png" />
+                                    <img title="Desconectado..." src="../../assets/pc-gray.png" />
                         }
                     </div>
                 </div>

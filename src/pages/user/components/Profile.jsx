@@ -53,7 +53,7 @@ export const Profile = ({ profile, _id = Date.now(), name, dateMod }) => {
                                         <img
                                             name={'i' + el.name}
                                             id={'i' + el.id}
-                                            src={(isLoading) ? '../../../public/assets/no-pic.png' : el.content}
+                                            src={(isLoading) ? '../../../assets/no-pic.png' : el.content}
                                         />
                                     </div>
                                 }
