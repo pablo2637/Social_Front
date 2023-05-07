@@ -1,0 +1,84 @@
+@import '../base/settings';
+
+nav {
+
+    background-color: $bg-nav;
+
+    .divNavContainer {
+        @include grid(1fr 1fr, left, center, 0, 0);
+        height: pixels-rem(35);
+        padding-left: pixels-rem(5);
+
+        .divBtnMenu {
+
+            width: pixels-rem(15);
+
+            button {
+                @include boton-ico();
+                font-size: pixels-rem(22);
+            }
+        }
+
+
+        .divBtnMenu button:hover {
+            @include boton-ico-hover();
+        }
+
+        .divStatus {
+
+            justify-self: right;
+            @include grid(1fr 1fr 1fr, right, center, 0, 2);
+
+            div {
+                width: pixels-rem(25);
+                height: pixels-rem(25);
+
+                img {
+                    @include image();
+                    @include border($bg-font-col, 0);
+                }
+            }
+        }
+
+    }
+
+
+    .divNav {
+
+        position: fixed;
+        padding: pixels-rem(5);
+        box-shadow: 0 0 5px 1px black;
+        width: 100%;
+        background-color: $bg;
+
+        transform: translate3d(-105%, 0px, 0px);
+        transition: transform 0.20s cubic-bezier(0.05, 1.04, 0.72, 0.98) 0s;
+        z-index: 1001;
+
+
+        ul {
+            list-style: none;
+
+            a {
+                padding: pixels-rem(5);
+                display: block;
+                text-decoration: none;
+                color: $nav-font-col;
+            }
+
+            a.isActive {
+                color: $nav-font-col-act;
+                @include border($nav-font-col, 5);
+            }
+
+            a:hover {
+                @include boton-hover();
+            }
+        }
+    }
+
+    .divNav.mostrar {
+        transform: translate3d(0px, 0px, 0px);
+    }
+
+}

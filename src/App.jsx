@@ -41,7 +41,24 @@ function App() {
 
     <>
       <header>
-        <p>Social Connect</p>
+        <div>
+
+          <div className='divLogo'>
+            <img src="../public/assets/logo.png" alt="Logo" />
+          </div>
+          <p>Social Connect</p>
+
+        </div>
+
+        {
+          (status === 'authenticated' || status === 'admin') &&
+
+          <div className='divUserImage'>
+            <img key={Date.now()} src={user.image} alt={`Foto de ${user.name}`} />
+          </div>
+
+        }
+
       </header>
 
       {
@@ -58,22 +75,20 @@ function App() {
             <NavBar />
       }
 
+      {/* 
       <p>Status: {status} - isChecking: {isChecking.toString()} - user: {user.name} - email: {user.email}</p>
 
       {(socket) && <p>socket.id: {socket.id}</p>}
-      <p>isConnecting: {isConnecting.toString()} - connState: {connState}</p>
+      <p>isConnecting: {isConnecting.toString()} - connState: {connState}</p> */}
       {
         (connState == 'stop') && <button>Conectar</button>
       }
 
-      {
-        (status === 'authenticated') && <img key={Date.now()} src={user.image} width={150} alt="" />
-
-      }
 
       <main>
 
         {
+
           (status === 'authenticated')
             ?
             <UserRoutes />
@@ -91,7 +106,7 @@ function App() {
 
 
       <footer>
-        <p>Footer</p>
+        <p>© Derechos reservados - Pablo Pace - 2023 </p>
       </footer>
 
     </>

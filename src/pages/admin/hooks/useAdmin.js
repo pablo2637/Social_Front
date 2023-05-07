@@ -2,6 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteUser } from "../helpers/fetchDataAdmin";
 import { useState } from "react";
 
+/**
+ * @author Pablo
+ * @module useAdmin
+ */
+
+
+/**
+ * Hook personalizado para gestionar las operacioens con del administrador con los usuarios
+ * @method useAuthStore
+ */
 export const useAdmin = () => {
 
     const { status, user, isChecking } = useSelector((state) => state.auth);

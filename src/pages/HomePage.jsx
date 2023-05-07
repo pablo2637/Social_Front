@@ -1,34 +1,44 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Profile } from "./user/components";
 import { useUserStore } from "../hooks/useUserStore";
+import { NavLink } from 'react-router-dom';
 
+/**
+ * @author Pablo
+ * @module HomePage
+ */
+
+/**
+ * Pagina de principal pública de usuarios
+ * @metod HomePage
+ * @returns La página para visualizar los perfiles públicos de los usuarios
+ */
 export const HomePage = () => {
 
-  const { profiles, isLoading, userStatus } = useSelector((state) => state.users);
-
   const { loadProfiles } = useUserStore();
+
 
   const getData = async () => {
 
     await loadProfiles();
   };
 
+
   useEffect(() => {
     getData();
 
   }, []);
 
+
   return (
 
-    <section>
+    <section className="secHomePage">
 
-      <h1>Bienvenido a Social Connect</h1>
-
-      {profiles.map(profile =>
-
-        <Profile key={profile._id} {...profile} />
-      )}
+      <div >
+        <img src="../../public/assets/bg1.png" alt="Imagen de portada" />
+        <div>
+          <h1> <NavLink to='/login'>Bienvenido a Social Connect</NavLink></h1>
+        </div>
+      </div>
 
     </section>
 

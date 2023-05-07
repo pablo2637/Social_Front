@@ -1,0 +1,14 @@
+$bp-mobile-plus: 'min-width:430px';
+$bp-mobile-landscape: 'min-width:640px';
+$bp-tablet: 'min-width:768px';
+$bp-tablet-landscape: 'min-width:992px';
+$bp-desktop: 'min-width:1200px';
+
+$header-height: pixels-rem(75);
+$footer-height: pixels-rem(30);
+$viewport-height: 100vh;
+
+@import './colors';
+@import './mixins';
+@import './functions';
+@import './anims';

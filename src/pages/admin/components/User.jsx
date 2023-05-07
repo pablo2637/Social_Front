@@ -3,6 +3,18 @@ import { useSelector } from "react-redux";
 import { Message, Profile } from "../../user/components/";
 import { useAdmin } from "../hooks/useAdmin";
 
+
+/**
+ * @author Pablo
+ * @module User
+ */
+
+/**
+ * Componente que renderiza un usuario
+ * @metod User
+ * @param {String} _id El ID del usuario a mostrar
+ * @returns Todos los datos del usuario, con opción de enviarle un mensaje o eliminarlo
+ */
 export const User = ({ _id }) => {
 
     const { users } = useSelector((state) => state.users);

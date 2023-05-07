@@ -152,7 +152,8 @@ export const signInWithCredentials = async (email, password) => {
         };
 
     } catch (e) {
-        console.log('signInWithCredentials error:', e);
+        if (!e.toString().includes('auth/email-already-in-use'))
+            console.log('signInWithCredentials error:', e);
 
         return {
             ok: false,

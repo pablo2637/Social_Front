@@ -26,13 +26,13 @@ export const validateFormRegister = (data, setValidate) => {
         email = 'Debes escribir un email válido';
         rslt = false;
     }
-
+    console.log('data image', data.image)
     if (data.name == '') {
         name = 'El nombre no puede estar vacío';
         rslt = false;
     }
 
-    if (data.image == '') {
+    if (data.image.name == '') {
         image = 'Debes elegir una imagen para mostrar';
         rslt = false;
     }
@@ -55,6 +55,11 @@ export const validateFormRegister = (data, setValidate) => {
         passwordR,
         image
     });
+
+
+    setTimeout(() => {
+        setValidate({});
+    }, 8000);
 
     return rslt;
 };
@@ -93,6 +98,10 @@ export const validateFormLogin = (data, setValidate) => {
         password
     });
 
+    setTimeout(() => {
+        setValidate({});
+    }, 8000);
+
     return rslt;
 };
 
@@ -111,6 +120,7 @@ export const validateFormProfile = (data) => {
     for (const [key, value] of Object.entries(data)) {
         if (data[key] == '') rslt = false;
     };
+
 
     return rslt;
 };

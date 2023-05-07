@@ -61,11 +61,15 @@ export const useAuthStore = () => {
 
             responseReg = await fetchDataRegisterGoogle(response.user);
 
-            if (!responseReg.ok)
+            if (!responseReg.ok) {
+
+                dispatch(onError());
                 return {
                     ok: false,
                     response: responseReg.msg
                 };
+            }
+
         }
 
 
@@ -118,9 +122,7 @@ export const useAuthStore = () => {
                 msgError
             }));
 
-
             dispatch(onError());
-
 
             return {
                 ok: false,
@@ -178,6 +180,17 @@ export const useAuthStore = () => {
     };
 
 
+
+
+    /**
+     * Registra un usuario en la base de datos de Firebase y de MongoDB
+     * @method registerUser
+     * @async
+     * @param {Object} formData Datos del formulario sin serializar
+     * @param {Object} data Datos del formulario serializado 
+     * @param {Hook} setValidate Hook para almacenar posibles errores en el registro
+     * @returns {json} OK y user
+     */
     const registerUser = async (formData, data, setValidate) => {
 
         dispatch(onCheckingUser());
@@ -198,6 +211,7 @@ export const useAuthStore = () => {
                 msgError
             }));
 
+            dispatch(onError());
             return { ok: false };
         }
 
@@ -211,6 +225,8 @@ export const useAuthStore = () => {
                 msgError
             }));
 
+
+            dispatch(onError());
             return { ok: false };
         }
 
@@ -218,11 +234,15 @@ export const useAuthStore = () => {
 
 
         const response = await fetchDataRegister(formData);
-        if (!response.ok)
+        if (!response.ok) {
+
+            dispatch(onError());
             return {
                 ok: false,
                 msg: response.msg
             }
+        }
+
 
 
         dispatch(onLoginUser(response.user));
@@ -238,6 +258,13 @@ export const useAuthStore = () => {
     };
 
 
+
+    /**
+     * Hace el logout de Firebase y borra los datos del local storage
+     * @method logoutUser
+     * @async
+     * @returns {json} OK
+     */
     const logoutUser = async () => {
 
         dispatch(onLogoutUser());
@@ -264,17 +291,28 @@ export const useAuthStore = () => {
 
 
 
+    /**
+     * Edita los datos del usuario: image y name
+     * @method updateUserData
+     * @async
+     * @param {Object} formData Datos del formulario sin serializar
+     * @returns {json} OK
+     */
     const updateUserData = async (formData) => {
 
         dispatch(onLoading());
 
         const response = await fetchUpdateUser(formData)
 
-        if (!response.ok)
+        if (!response.ok) {
+
+            dispatch(onError());
             return {
                 ok: false,
                 msg: response.msg
-            }
+            };
+        }
+
 
 
         dispatch(onUpdateUser(response.user));
@@ -286,6 +324,15 @@ export const useAuthStore = () => {
     };
 
 
+
+    /**
+     * Edita los datos del usuario: image y name
+     * @method updatePassword
+     * @async
+     * @param {Object} data Datos del formulario serializado 
+     * @param {Hook} setValidate Hook para almacenar posibles errores en el registro
+     * @returns {json} OK
+     */
     const updatePassword = async (data, setValidate) => {
 
         dispatch(onChecking());
@@ -307,6 +354,9 @@ export const useAuthStore = () => {
                 ...prevValidate,
                 msgErrorPass
             }));
+
+
+            dispatch(onError());
 
             return {
                 ok: false

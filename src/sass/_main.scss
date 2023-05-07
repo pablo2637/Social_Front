@@ -1,0 +1,8 @@
+@import './base/settings';
+
+main {
+    @include flexbox(start,  column, 0);
+    max-width: 992px;
+    min-height: calc($viewport-height - ($header-height - $footer-height));
+
+}

@@ -14,6 +14,17 @@ import { SocketContext } from "../contexts/SocketContext";
 import { useSocketStore } from "./useSocketStore";
 
 
+
+/**
+ * @author Pablo
+ * @module useUserStore
+ */
+
+
+/**
+ * Hook personalizado para almacenar el state de las invitaciones, perfiles y los usuarios pero para su gestión por el admin
+ * @method useUserStore
+ */
 export const useUserStore = () => {
 
   const { status, user, isChecking } = useSelector((state) => state.auth);
@@ -22,6 +33,12 @@ export const useUserStore = () => {
   const { socket } = useContext(SocketContext);
 
 
+  /**
+   * Hace el fetch para cargar los perfiles públicos
+   * @method loadProfiles
+   * @async
+   * @returns {json} ok
+   */
   const loadProfiles = async () => {
 
     dispatch(onLoadingProfile());
@@ -44,6 +61,12 @@ export const useUserStore = () => {
   };
 
 
+  /**
+  * Hace el fetch para cargar las invitaciones
+  * @method loadProfiles
+  * @async
+  * @returns {json} ok
+  */
   const loadInvites = async () => {
 
     dispatch(onUpdatingInvites());
@@ -65,6 +88,13 @@ export const useUserStore = () => {
   };
 
 
+  /**
+  * Hace el fetch para modificar los datos del perfil del usuario
+  * @method updateUserProfile
+  * @async
+  * @param {Object} formData Los datos del formulario sin serializar
+  * @returns {json} ok y user
+  */
   const updateUserProfile = async (formData) => {
 
     dispatch(onUpdatingProfile());
@@ -103,6 +133,13 @@ export const useUserStore = () => {
 
 
 
+  /**
+  * Hace el fetch para cargar los chats de un usuario
+  * @method loadChats
+  * @async
+  * @param {String} _id El ID del usuario para recuperar sus chats
+  * @returns {json} ok 
+  */
   const loadChats = async (_id) => {
 
     const chats = await fetchDataChats(_id);
@@ -125,7 +162,13 @@ export const useUserStore = () => {
   };
 
 
-
+  /**
+    * Hace el fetch para cargar los amigos de un usuario
+    * @method loadFriends
+    * @async
+    * @param {String} _id El ID del usuario para recuperar sus amigos
+    * @returns {json} ok 
+    */
   const loadFriends = async (_id) => {
 
     const friends = await fetchDataFriends(_id);
@@ -147,6 +190,13 @@ export const useUserStore = () => {
   };
 
 
+  /**
+    * Hace el fetch para cargar los mensajes de un usuario
+    * @method loadMsgs
+    * @async
+    * @param {String} _id El ID del usuario para recuperar sus mensajes
+    * @returns {json} ok 
+    */
   const loadMsgs = async (_id) => {
 
     console.log('_id', _id)
@@ -169,7 +219,12 @@ export const useUserStore = () => {
   };
 
 
-
+  /**
+    * Hace el fetch para cargar los usuarios para su gestión por parte del admin
+    * @method getUsers
+    * @async
+    * @returns {json} ok 
+    */
   const getUsers = async () => {
 
     dispatch(onLoadingUsers());

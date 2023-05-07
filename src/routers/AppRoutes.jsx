@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { LoginPage, RegisterPage } from '../pages/auth';
-import { HomePage } from '../pages';
+import { HomePage, PublicProfiles } from '../pages';
 
 
 export const AppRoutes = () => {
@@ -12,6 +12,12 @@ export const AppRoutes = () => {
             <Route
                 path='/'
                 element={<HomePage />}
+            />
+
+            <Route
+                path='profiles'
+                element={
+                    <PublicProfiles />}
             />
 
             <Route

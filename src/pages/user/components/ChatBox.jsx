@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux"
 import { useSocketStore } from "../../../hooks/useSocketStore";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 
 export const ChatBox = ({ _id, name }) => {
@@ -148,29 +149,29 @@ export const ChatBox = ({ _id, name }) => {
 
         <tbody>
 
+          <ScrollToBottom>
+            {(chat) ?
 
-          {(chat) ?
+              (chat.chat) &&
 
-            (chat.chat) &&
+              chat.chat.map((ch, ind) =>
 
-            chat.chat.map((ch, ind) =>
+                <tr key={ind + Date.now()}>
+                  <td>
+                    {
+                      ch.content
+                    }
+                  </td>
+                </tr>
 
-              <tr key={ind + Date.now()}>
-                <td>
-                  {
-                    ch.content
-                  }
-                </td>
-              </tr>
+              )
 
-            )
+              :
 
-            :
+              <h2>NO hay chats</h2>
 
-            <h2>NO hay chats</h2>
-
-          }
-
+            }
+          </ScrollToBottom>
         </tbody>
 
         <tfoot>

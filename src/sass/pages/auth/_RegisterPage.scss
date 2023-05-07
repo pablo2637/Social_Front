@@ -1,0 +1,33 @@
+@import '../../base/settings';
+
+.secRegister {
+
+    form {
+
+        input[type="text"],
+        input[type="password"] {
+            padding: pixels-rem(3);
+            @include container(80%, 0);
+
+        }
+
+        input[type="file"] {
+            padding: pixels-rem(3);
+            @include boton();
+        }
+
+
+        .divFormBtns {
+            @include grid(1fr 1fr, center, center, 5, 5);
+
+            input[type="submit"],
+            input[type="reset"] {
+                @include boton();
+                padding: pixels-rem(5);
+                margin-top: pixels-rem(10);
+
+            }
+        }
+    }
+
+}
