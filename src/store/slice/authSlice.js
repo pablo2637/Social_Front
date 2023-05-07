@@ -8,12 +8,17 @@ export const authSlice = createSlice({
 
     initialState: {
         user: getLocal().user,
+        newMsgs: false,
         status: getLocal().status,
         isChecking: false,
         isLoading: false,
     },
 
     reducers: {
+
+        onNewMsgs: (state, { payload }) => {
+            state.newMsgs = payload;
+        },
 
         onCheckingUser: (state) => {
             state.isChecking = true;
@@ -76,6 +81,7 @@ export const authSlice = createSlice({
 export const {
     onLoadFriends,
     onLoadMsgs,
+    onNewMsgs,
     onCheckingUser,
     onChecking,
     onComplete,

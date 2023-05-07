@@ -136,7 +136,7 @@ export const ChatBox = ({ _id, name }) => {
 
   return (
 
-    <div>
+    <div className="divChatBox">
 
       <table>
         <thead>

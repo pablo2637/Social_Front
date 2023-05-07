@@ -1,17 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useContext } from "react";
 
-import { onLoadUsers, onLoadingUsers, onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile } from '../store/slice/usersSlice';
+import { onLoadUsers, onLoadingUsers, onLoadInvites, onUpdatingInvites, onLoadProfile, onLoadProfileComplete, onLoadingProfile, onUpdateProfile, onUpdatingComplete, onUpdatingProfile, onNewProfiles, onNewInvites } from '../store/slice/usersSlice';
 import { onLoadChats } from "../store/slice/socketSlice";
-import { onLoadFriends, onLoadMsgs, onLoginUser } from "../store/slice/authSlice";
+import { onLoadFriends, onLoadMsgs, onLoginUser, onNewMsgs } from "../store/slice/authSlice";
 
 import { fetchLoadInvites, fetchLoadProfiles } from "../helpers/fetchData";
 import { setLocal, setLocalChats, setLocalFriends, setLocalInvites, setLocalMsgs, setLocalProfiles } from "../helpers/localStorage";
-import { fetchDataChats, fetchDataFriends, fetchDataMsgs, fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
+import { fetchDataChats, fetchDataFriends, fetchDataMsgs, fetchUpdatePrivateProfile, fetchUpdateProfile } from "../pages/user/helpers/fetchDataUser";
 import { fetchGetUsers } from "../pages/admin/helpers/fetchDataAdmin";
 
 import { SocketContext } from "../contexts/SocketContext";
-import { useSocketStore } from "./useSocketStore";
 
 
 
@@ -27,7 +26,6 @@ import { useSocketStore } from "./useSocketStore";
  */
 export const useUserStore = () => {
 
-  const { status, user, isChecking } = useSelector((state) => state.auth);
   const { profiles } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const { socket } = useContext(SocketContext);
@@ -54,6 +52,7 @@ export const useUserStore = () => {
     dispatch(onLoadProfile(response.profiles));
     setLocalProfiles(response.profiles);
 
+    dispatch(onNewProfiles());
     dispatch(onLoadProfileComplete());
 
     return { ok: true };
@@ -89,13 +88,13 @@ export const useUserStore = () => {
 
 
   /**
-  * Hace el fetch para modificar los datos del perfil del usuario
+  * Hace el fetch para modificar los datos del perfil público del usuario
   * @method updateUserProfile
   * @async
   * @param {Object} formData Los datos del formulario sin serializar
   * @returns {json} ok y user
   */
-  const updateUserProfile = async (formData) => {
+  const updateUserProfile = async (formData,) => {
 
     dispatch(onUpdatingProfile());
 
@@ -121,6 +120,51 @@ export const useUserStore = () => {
 
     dispatch(onUpdateProfile(newProfile));
     setLocalProfiles(newProfile);
+
+    dispatch(onUpdatingComplete());
+
+    return {
+      ok: true,
+      user: response.user
+    };
+
+  };
+
+
+
+  /**
+  * Hace el fetch para modificar los datos del perfil privado del usuario
+  * @method updateUserPrivateProfile
+  * @async
+  * @param {Object} formData Los datos del formulario sin serializar
+  * @returns {json} ok y user
+  */
+  const updateUserPrivateProfile = async (formData,) => {
+
+    dispatch(onUpdatingProfile());
+
+    const response = await fetchUpdatePrivateProfile(formData);
+
+    if (!response.ok)
+      return {
+        ok: false,
+        msg: response
+      };
+
+    dispatch(onLoginUser(response.user));
+    setLocal(response.user);
+
+    // const newProfile = profiles.filter(profile => profile._id != response.user._id);
+    // newProfile.push({
+    //   _id: response.user._id,
+    //   name: response.user.name,
+    //   email: response.user.email,
+    //   profileOrder: response.user.profileOrder,
+    //   profile: response.user.profile
+    // });
+
+    // dispatch(onUpdateProfile(newProfile));
+    // setLocalProfiles(newProfile);
 
     dispatch(onUpdatingComplete());
 
@@ -212,6 +256,8 @@ export const useUserStore = () => {
     dispatch(onLoadMsgs(msgs.msgs));
     setLocalMsgs(msgs.msgs)
 
+    dispatch(onNewMsgs(true));
+
     return {
       ok: true
     };
@@ -255,6 +301,7 @@ export const useUserStore = () => {
     loadFriends,
     loadProfiles,
     loadInvites,
-    updateUserProfile
+    updateUserProfile,
+    updateUserPrivateProfile
   };
 };

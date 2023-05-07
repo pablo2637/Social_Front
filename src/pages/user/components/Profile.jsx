@@ -1,64 +1,72 @@
+import { useSelector } from "react-redux";
 
 export const Profile = ({ profile, _id = Date.now(), name, dateMod }) => {
 
+    const { profiles, isLoading, userStatus } = useSelector((state) => state.users);
+
+
     return (
-        <section key={'sec' + _id}>
+        <section className="secProfile" key={'sec' + _id}>
 
             {(name) &&
-                <>
-                    <h2>{name}</h2>
-                    <p>Ult. mod.: {dateMod}</p>
-                </>
+                <div className="divName">
+                    <h3>{name}</h3>
+                    <p className="pDate">Ult. mod.: {dateMod}</p>
+                </div>
             }
 
-            {
-                (profile.length > 0) ?
+            <div className="divProfile">
+                {
+                    (profile.length > 0) ?
 
-                    profile.map(el => (
-                        <article key={'a' + el.id}>
+                        profile.map(el => (
+                            <article key={'a' + el.id}>
 
-                            {(el.typeInput == 'text') &&
-                                <p
-                                    name={'p' + el.name}
-                                    id={'p' + el.id}
-                                >{el.content}
-                                </p>}
-
-
-                            {(el.typeInput == 'title') &&
-                                <h3
-                                    name={'t' + el.name}
-                                    id={'t' + el.id}
-                                >{el.content}
-                                </h3>}
-
-                            {(el.typeInput == 'paragraph') &&
-                                <textarea
-                                    name={'g' + el.name}
-                                    id={'g' + el.id}
-                                    defaultValue={el.content}>
-                                </textarea>}
+                                {(el.typeInput == 'text') &&
+                                    <p
+                                        className="pText"
+                                        name={'p' + el.name}
+                                        id={'p' + el.id}
+                                    >{el.content}
+                                    </p>}
 
 
-                            {(el.typeInput == 'image') &&
-                                <div key={'d' + el.id} className="imageContainer">
-                                    <img
-                                        name={'i' + el.name}
-                                        id={'i' + el.id}
-                                        src={el.content}
-                                        width={150}
-                                    />
-                                </div>
-                            }
+                                {(el.typeInput == 'title') &&
+                                    <p
+                                        className="pTitle"
+                                        name={'t' + el.name}
+                                        id={'t' + el.id}
+                                    >{el.content}
+                                    </p>}
 
-                        </article>
-                    ))
+                                {(el.typeInput == 'paragraph') &&
+                                    <p
+                                        className="pParagraph"
+                                        name={'g' + el.name}
+                                        id={'g' + el.id}
+                                    >{`"${el.content}"`}
+                                    </p>}
 
-                    :
 
-                    (name) && <h3>Pendiente de crear perfil...</h3>
+                                {(el.typeInput == 'image') &&
+                                    <div key={'d' + el.id} className="divImageContainer">
+                                        <img
+                                            name={'i' + el.name}
+                                            id={'i' + el.id}
+                                            src={(isLoading) ? '../../../public/assets/no-pic.png' : el.content}
+                                        />
+                                    </div>
+                                }
 
-            }
+                            </article>
+                        ))
+
+                        :
+
+                        (name) && <h3>Pendiente de crear perfil...</h3>
+
+                }
+            </div>
 
         </section>
     );

@@ -58,6 +58,8 @@ export const Invites = () => {
 
         <section >
 
+            <h2>Invitaciones:</h2>
+
 
             <p>{msg}</p>
 

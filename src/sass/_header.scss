@@ -20,7 +20,7 @@ header {
         height: pixels-rem(35);
 
         img {
-            @include image();
+            @include image(fill);
         }
     }
 

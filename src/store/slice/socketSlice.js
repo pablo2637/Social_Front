@@ -81,6 +81,7 @@ export const socketSlice = createSlice({
         },
 
         onReconnectLimit: (state) => {
+            state.isConnecting = false;
             state.connState = 'stop'
         },
 

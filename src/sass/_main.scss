@@ -1,8 +1,30 @@
 @import './base/settings';
 
 main {
-    @include flexbox(start,  column, 0);
+    @include flexbox(start, column, 0);
     max-width: 992px;
-    min-height: calc($viewport-height - ($header-height - $footer-height));
+    max-height: calc($viewport-height - ($header-height + $navBar-height + $footer-height));
+    overflow-y: scroll;
+
+    .divReconnect {
+        width: 100%;
+        padding: pixels-rem(5);
+        background-color: $error-bad;
+        color: $input-bg;
+        @include flexbox(center, row, 5);
+
+        p {
+            display: inline;
+        }
+
+        button {
+            @include boton();
+            padding: pixels-rem(5);
+        }
+
+        button:hover {
+            @include boton-hover();
+        }
+    }
 
 }

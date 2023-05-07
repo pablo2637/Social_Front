@@ -1,0 +1,74 @@
+@import '../../../base/settings';
+
+.secProfile {
+    // @include border($bg, 6);
+    border-radius: pixels-rem(10);
+    border: 2px ridge $bg;
+    margin: pixels-rem(25) auto;
+    padding: pixels-rem(5);
+    background-color: $bg-prof;
+
+    .divName {
+
+        h3 {
+            text-align: right;
+            font-size: pixels-rem(25);
+            color: $user-name;
+            border-bottom: 1px dotted $bg ;
+        }
+
+        p {
+            padding: pixels-rem(5);
+            color: $user-date;
+            font-style: italic;
+            text-align: right;
+            font-size: pixels-rem(11);
+        }
+    }
+
+    .divProfile {
+
+        article {
+
+            .pText {
+                margin: pixels-rem(5) 0;
+                text-align: left;
+                text-indent: pixels-rem(3);
+                font-size: pixels-rem(15);
+                color: $prof-text;
+            }
+
+            .pTitle {
+                margin-top: pixels-rem(10);
+                font-weight: bold;
+                text-align: center;
+                font-size: pixels-rem(20);
+                color: $prof-title;
+            }
+
+            .pParagraph {
+                padding: 0 pixels-rem(10);
+                margin-top: pixels-rem(5);
+                font-style: italic;
+                text-align: justify;
+                font-size: pixels-rem(14);
+                color: $prof-title;
+            }
+
+            .divImageContainer {
+                margin: pixels-rem(5) auto;
+                @include border($user-name, 5);
+                background-color: $bg-img;
+                width: 98%;
+                height: pixels-rem(250);
+
+                img {
+                    @include image(contain);
+                    padding: pixels-rem(5);
+                }
+
+            }
+        }
+
+    }
+}

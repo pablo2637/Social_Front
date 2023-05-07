@@ -14,7 +14,7 @@ export const HomeUserPage = () => {
 
   const checkProfile = () => {
 
-    
+
     if (user.profile.length == 0) navigate('editPublicProfile');
 
   };
@@ -26,17 +26,19 @@ export const HomeUserPage = () => {
 
   return (
 
-    <section>
-      <div>
-        <p>Tu cuenta</p>
+    <section className='secHomeUser'>
+
+      <div className='divRoot'>
+        <p>&gt; Tu cuenta</p>
       </div>
 
-      <h1>Hola, {user.name}</h1>
+      <h1>Hola, {user.name}!</h1>
 
-      <section>
+      <section className='secUserProfiles'>
 
-        <h2>Perfiles:</h2>
-        <section>
+        <h2>Tus Perfiles:</h2>
+
+        <section className='secUserProfile'>
 
           <h3>Público:</h3>
           <Profile profile={user.profile} />
@@ -45,25 +47,22 @@ export const HomeUserPage = () => {
 
         </section>
 
-
-        <section>
+        <section className='secUserProfile'>
 
           <h3>Privado:</h3>
+          <Profile profile={user.privateProfile} />
 
           <NavLink to='/editPrivateProfile'>Edita tu perfil privado</NavLink>
 
         </section>
 
       </section>
-
+      {/* 
       <NavLink to='/editData'>Edita tus datos personales</NavLink>
-      <NavLink to='/meet'>Conocer Gente</NavLink>
+      <NavLink to='/meet'>Conocer Gente</NavLink> */}
 
-      <h2>Invitaciones</h2>
-      <Invites />
+      {/* <Invites /> */}
 
-      <h2>Mis relaciones:</h2>
-      <Friends />
 
 
     </section>

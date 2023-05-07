@@ -5,3 +5,4 @@ export * from './Friends';
 export * from './Invites';
 export * from './LittlePeople';
 export * from './Message';
+export * from './Chats';

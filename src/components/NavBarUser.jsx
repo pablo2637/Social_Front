@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Chats, Friends } from '../pages/user/components';
 
 
 /**
@@ -15,12 +16,19 @@ import { NavLink } from 'react-router-dom';
  */
 export const NavBarUser = () => {
 
-    const [show, setShow] = useState(false)
-    const { status, user, isLoading, isChecking } = useSelector((state) => state.auth);
-    const { isReceiving, isSending, isConnecting, connState } = useSelector((state) => state.socket)
+    const [show, setShow] = useState(false);
+    const [showChat, setShowChat] = useState(false);
+
+    const navigate = useNavigate();
+
+    const { status, user, newMsgs, isLoading, isChecking } = useSelector((state) => state.auth);
+    const { newInvites, newProfiles } = useSelector((state) => state.users);
+    const { newChats, isReceiving, isSending, isConnecting, connState } = useSelector((state) => state.socket)
 
 
-    const handleOnClick = () => setShow(!show);
+    const handleOnShow = () => setShow(!show);
+
+    const handleOnChat = () => setShowChat(!showChat);
 
 
     return (
@@ -28,7 +36,47 @@ export const NavBarUser = () => {
         <nav>
             <div className='divNavContainer'>
                 <div className='divBtnMenu'>
-                    <button onClick={handleOnClick}><i className={(show) ? "fa-solid fa-xmark fa-fade" : "fa-solid fa-bars"}></i></button>
+                    <button onClick={handleOnShow}><i className={(show) ? "fa-solid fa-xmark fa-fade" : "fa-solid fa-bars"}></i></button>
+                </div>
+
+
+                <div className='divNotifications'>
+                    <div>
+                        {
+                            (newInvites) ?
+                                <img src="../../public/assets/user-inv-green.png" title="Tienes nuevas invitaciones" />
+                                :
+                                <img src="../../public/assets/user-inv-gray.png" title="No tienes invitaciones nuevas" />
+                        }
+                    </div>
+
+                    <div>
+                        {
+                            (newChats) ?
+                                <img onClick={handleOnChat} src="../../public/assets/users-green.png" title="Tienes nuevos mensajes en tus chats" />
+                                :
+                                <img onClick={handleOnChat} src="../../public/assets/users-gray.png" title="No hay nuevos mensajes en tus chats" />
+                        }
+                    </div>
+
+                    <div>
+                        {
+                            (newProfiles) ?
+                                <img src="../../public/assets/sc-ico-green.png" title="Hay nuevos perfiles de usuarios" />
+                                :
+                                <img src="../../public/assets/sc-ico-gray.png" title="No hay nuevos perfiles de usuarios" />
+                        }
+                    </div>
+
+                    <div>
+                        {
+                            (newMsgs) ?
+                                <img src="../../public/assets/user-msgs-green.png" title="Hay nuevos mensajes privados" />
+                                :
+                                <img src="../../public/assets/user-msgs-gray.png" title="No hay nuevos mensajes privados" />
+                        }
+                    </div>
+
                 </div>
 
                 <div className="divStatus">
@@ -46,8 +94,8 @@ export const NavBarUser = () => {
 
                     <div>
                         {
-                            (isChecking) ?
-                                <img title="Comprobando" src="../../public/assets/user-blue.png" />
+                            (isChecking || isConnecting) ?
+                                <img title={(isChecking) ? "Comprobando..." : "Intentando reconectar..."} src="../../public/assets/user-blue.png" />
                                 :
                                 <img src="../../public/assets/user-gray.png" />
                         }
@@ -59,7 +107,7 @@ export const NavBarUser = () => {
                                 <img title="Conectado al servidor..." src="../../public/assets/pc-green.png" />
                                 :
                                 (isConnecting) ?
-                                    <img title="Estableciendo conexión..." src="../../public/assets/pc-red.png" />
+                                    <img title="Error en la conexión..." src="../../public/assets/pc-red.png" />
                                     :
                                     <img title="Desconectado..." src="../../public/assets/pc-gray.png" />
                         }
@@ -67,11 +115,17 @@ export const NavBarUser = () => {
                 </div>
             </div>
 
+
+            <div className={`divChat${(showChat) ? ' mostrarChat' : ''}`}>
+                <Friends />
+
+            </div>
+
             <div className={`divNav${(show) ? ' mostrar' : ''}`}>
 
                 <div>
 
-                    <ul onClick={handleOnClick} id='navContainer'>
+                    <ul onClick={handleOnShow} id='navContainer'>
                         {
                             (user.profile.length > 0) ?
                                 <>

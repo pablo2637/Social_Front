@@ -8,7 +8,9 @@ export const PublicProfiles = () => {
 
     return (
 
-        <section>
+        <section className="secPublicProfiles">
+
+            <h2>Perfiles Públicos:</h2>
             {
                 profiles.map(profile =>
 

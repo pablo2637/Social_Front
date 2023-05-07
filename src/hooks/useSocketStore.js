@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID } from '../store/slice/socketSlice';
+import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID, onNewChats } from '../store/slice/socketSlice';
 import { useUserStore } from './useUserStore';
 import { useAuthStore } from './useAuthStore';
 import { SocketContext } from '../contexts/SocketContext';
 import { useContext } from 'react';
 import { setLocalChats } from '../helpers/localStorage';
+import { onNewInvites } from '../store/slice/usersSlice';
 
 /**
  * @author Pablo
@@ -51,6 +52,7 @@ export const useSocketStore = () => {
 
                     case 'invites':
                         loadInvites();
+                        dispatch(onNewInvites(true));
                         break;
 
                     case 'user':
@@ -119,6 +121,9 @@ export const useSocketStore = () => {
             dispatch(onReconnectAttempt());
 
             dispatch(onConnectError());
+
+            if (socket.io._reconnectionAttempts >= import.meta.env.VITE_RECONNECTION_ATTEMPTS)
+                dispatch(onReconnectLimit());
         });
 
 
@@ -164,6 +169,9 @@ export const useSocketStore = () => {
             else
                 await loadChats(user._id);
 
+
+            dispatch(onNewChats(true));
+
         });
 
 
@@ -173,6 +181,7 @@ export const useSocketStore = () => {
         socket.on("NoChatData", (data) => {
             console.log('El servidor ha devuelto la solicitud de createChat, data:', data)
         });
+
 
     };
 

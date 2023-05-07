@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { validateFormProfile } from "../../helpers/validateForm";
 
-export const EditProfile = () => {
+export const EditPrivateProfile = () => {
 
     const { user } = useSelector((state) => state.auth);
-    const { updateUserProfile } = useUserStore();
+    const { updateUserPrivateProfile } = useUserStore();
     const [form, setForm] = useState([]);
     const [order, setOrder] = useState([]);
     const [validate, setValidate] = useState('');
@@ -103,7 +103,8 @@ export const EditProfile = () => {
             return
         }
 
-        const response = await updateUserProfile(formData);
+        const response = await updateUserPrivateProfile(formData);
+
         if (!response.ok) return
 
         navigate('/');
@@ -127,8 +128,8 @@ export const EditProfile = () => {
 
     const loadForm = () => {
 
-        setOrder(user.profileOrder);
-        const newForm = [...user.profile];
+        setOrder(user.privateProfileOrder);
+        const newForm = [...user.privateProfile];
 
         setForm(newForm);
     };
@@ -148,7 +149,7 @@ export const EditProfile = () => {
                 <NavLink to='/'>&gt; Tu cuenta</NavLink><span> &gt; Editar perfil</span>
             </div>
 
-            <h2>Edita tu perfil Público:</h2>
+            <h2>Edita tu perfil Privado:</h2>
 
             {validate &&
                 <p className="errorProfile">{validate}</p>
@@ -157,7 +158,7 @@ export const EditProfile = () => {
             <form onSubmit={handleOnSubmit}>
                 <input type="hidden" name="_id" value={user._id} />
                 <input type="hidden" name="uid" value={user.uid} />
-                <input type="hidden" name="profileOrder" value={order} />
+                <input type="hidden" name="privateProfileOrder" value={order} />
 
 
                 {
@@ -229,7 +230,7 @@ export const EditProfile = () => {
                 }
 
                 {
-                    (user.profile.length > 0) && <NavLink to='/'>Cancelar</NavLink>
+                    (user.privateProfile.length > 0) && <NavLink to='/'>Cancelar</NavLink>
                 }
             </form>
 

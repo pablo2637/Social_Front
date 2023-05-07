@@ -13,20 +13,54 @@ function App() {
 
   const { socket, setSocket } = useContext(SocketContext);
   const { operations, onConnect } = useSocketStore();
+  const [reconnect, setReconnect] = useState(false);
 
-  useEffect(() => {
+
+
+  const handleOnReconnect = (ev) => {
+    ev.target.disabled = true;
+
+    setReconnect(true);
+
+  };
+
+
+  const newConnection = () => {
 
     const newSocket = io.connect(import.meta.env.VITE_URL_CHAT_BACK, {
       reconnection: true,
-      reconnectionAttempts: 30,
+      reconnectionAttempts: import.meta.env.VITE_RECONNECTION_ATTEMPTS,
       reconnectionDelay: 4000
     });
 
     setSocket(newSocket);
     onConnect();
 
+    return newSocket;
+
+  }
+
+
+
+  useEffect(() => {
+
+    const newSocket = newConnection();
+
     return () => newSocket.disconnect();
   }, []);
+
+
+
+
+  useEffect(() => {
+
+    if (!reconnect) return
+
+    setReconnect(false);
+    const newSocket = newConnection();
+
+    return () => newSocket.disconnect();
+  }, [reconnect]);
 
 
   useEffect(() => {
@@ -75,17 +109,14 @@ function App() {
             <NavBar />
       }
 
-      {/* 
-      <p>Status: {status} - isChecking: {isChecking.toString()} - user: {user.name} - email: {user.email}</p>
-
-      {(socket) && <p>socket.id: {socket.id}</p>}
-      <p>isConnecting: {isConnecting.toString()} - connState: {connState}</p> */}
-      {
-        (connState == 'stop') && <button>Conectar</button>
-      }
-
-
       <main>
+        {
+          (connState == 'stop') &&
+          <div className='divReconnect'>
+            <p>Fallo en la conexión al servidor</p>
+            <button onClick={handleOnReconnect}><i class="fa-solid fa-arrows-rotate"></i> Reconectar</button>
+          </div>
+        }
 
         {
 

@@ -147,9 +147,18 @@ const getURLs = (data, formData) => {
             break;
 
 
-
+            
         case 'updateProfile':
             url = `${urlBack}/api/users/profile`;
+            options = {
+                method: 'PUT',
+                body: formData
+            }
+            break;
+
+
+        case 'updatePrivateProfile':
+            url = `${urlBack}/api/users/privateprofile`;
             options = {
                 method: 'PUT',
                 body: formData
