@@ -78,7 +78,7 @@ function App() {
         <div>
 
           <div className='divLogo'>
-            <img src="../public/assets/logo.png" alt="Logo" />
+            <img src="../assets/logo.png" alt="Logo" />
           </div>
           <p>Social Connect</p>
 

@@ -46,7 +46,7 @@ export const NavBar = () => {
                     <div>
                         {
                             (isChecking || isConnecting) ?
-                                <img title={(isChecking)?"Comprobando...":"Intentando reconectar..."} src="../../public/assets/user-blue.png" />
+                                <img title={(isChecking)?"Comprobando...":"Intentando reconectar..."} src="../../assets/user-blue.png" />
                                 :
                                 <img src="../../assets/user-gray.png" />
                         }
@@ -60,7 +60,7 @@ export const NavBar = () => {
                                 (isConnecting) ?
                                     <img title="Error en la conexión..." src="../../assets/pc-red.png" />
                                     :
-                                    <img title="Desconectado..." src="../../public/pc-gray.png" />
+                                    <img title="Desconectado..." src="../../pc-gray.png" />
                         }
                     </div>
                 </div>
