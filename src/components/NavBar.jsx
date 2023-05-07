@@ -60,7 +60,7 @@ export const NavBar = () => {
                                 (isConnecting) ?
                                     <img title="Error en la conexión..." src="../../assets/pc-red.png" />
                                     :
-                                    <img title="Desconectado..." src="../../pc-gray.png" />
+                                    <img title="Desconectado..." src="../../assets/pc-gray.png" />
                         }
                     </div>
                 </div>
