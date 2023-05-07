@@ -47,7 +47,7 @@ export const NavBarAdmin = () => {
                     <div>
                         {
                             (isChecking || isConnecting) ?
-                                <img title={(isChecking) ? "Comprobando..." : "Intentando reconectar..."} src="../../public/assets/user-blue.png" />
+                                <img title={(isChecking) ? "Comprobando..." : "Intentando reconectar..."} src="../../assets/user-blue.png" />
                                 :
                                 <img src="../../assets/user-gray.png" />
                         }
