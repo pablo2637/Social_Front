@@ -24,10 +24,9 @@
             @include grid(1fr, center, center, 0, 15);
 
 
-            // label {
-            //     text-align: right;
-
-            // }
+            label {
+                display: none;
+            }
 
 
             input[type="submit"]:hover,

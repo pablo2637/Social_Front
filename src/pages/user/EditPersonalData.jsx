@@ -6,7 +6,7 @@ import { useAuthStore } from '../../hooks/useAuthStore';
 
 export const EditPersonalData = () => {
 
-  const { status, user, isChecking } = useSelector((state) => state.auth);
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   const { updateUserData, updatePassword } = useAuthStore();
   const [form, setForm] = useState(user);
@@ -74,6 +74,11 @@ export const EditPersonalData = () => {
       }));
     }
 
+    setTimeout(() => {
+
+      setValidate({});
+    }, 5000);
+
 
   };
 
@@ -89,10 +94,10 @@ export const EditPersonalData = () => {
 
   return (
 
-    <section>
+    <section className='secEditPersonalData'>
 
-      <div>
-        <NavLink to='/'>Tu cuenta</NavLink><span> &gt; Editar datos personales</span>
+      <div className='divRoot'>
+        <NavLink to='/'>&gt; Tu cuenta</NavLink><span> &gt; Edita tu info:</span>
       </div>
 
       <h2>Edita tus datos personales:</h2>
@@ -103,52 +108,65 @@ export const EditPersonalData = () => {
       }
 
 
-      <form encType='multipart/form-data' onSubmit={handleOnSubmit}>
+      <div className='divContainer'>
+
+        <h3>Nombre e Imagen:</h3>
+
+        <form encType='multipart/form-data' onSubmit={handleOnSubmit}>
 
 
-        <input type="hidden" name="_id" value={user._id} />
-        <input type="hidden" name="uid" value={user.uid} />
+          <input type="hidden" name="_id" value={user._id} />
+          <input type="hidden" name="uid" value={user.uid} />
 
 
-        <label htmlFor="name">Nombre:</label>
-        <input
-          type="text"
-          autoComplete='off'
-          name="name"
-          id="name"
-          autoFocus
-          placeholder='Nombre...'
-          value={form.name}
-          onChange={handleOnChange}
-        />
-        {validate.name &&
-          <p className="errorEditData">{validate.name}</p>
+          <label htmlFor="name">Nombre:</label>
+          <input
+            type="text"
+            autoComplete='off'
+            name="name"
+            id="name"
+            autoFocus
+            placeholder='Nombre...'
+            value={form.name}
+            onChange={handleOnChange}
+          />
+          {validate.name &&
+            <p className="errorEditData">{validate.name}</p>
+          }
+
+          <label className='labelImg' htmlFor="imageURL">Foto elegida:</label>
+          <input
+            type="text"
+            name="imageURL"
+            id="imageURL"
+            onChange={handleOnChange}
+            value={(form.image.length < 1000) ? form.image : '...'}
+          />
+          <input
+            type="file"
+            name="image"
+            id="image"
+            onChange={handleOnChange}
+          />
+          {validate.image &&
+            <p className="errorEditData">{validate.image}</p>
+          }
+
+          <input
+            disabled={(isLoading) ? true : false}
+            type="submit"
+            value="Guardar Cambios"
+          />
+
+        </form>
+
+
+        {
+          (isLoading) &&
+          < span className="loader"></span>
         }
 
-        <label htmlFor="imageURL">Foto elegida:</label>
-        <input
-          type="text"
-          name="imageURL"
-          id="imageURL"          
-          onChange={handleOnChange}
-          value={(form.image.length < 1000) ? form.image : '...'}
-        />
-        <input
-          type="file"
-          name="image"
-          id="image"
-          onChange={handleOnChange}
-        />
-        {validate.image &&
-          <p className="errorEditData">{validate.image}</p>
-        }
-
-        <input
-          type="submit"
-          value="Guardar Cambios"
-        />
-
-      </form>
+      </div>
 
 
 
@@ -156,61 +174,70 @@ export const EditPersonalData = () => {
         <p className="errorEditData">{validate.msgErrorPass}</p>
       }
 
-      <form encType='multipart/form-data' onSubmit={(ev) => handleOnSubmit(ev, 'password')}>
+      <div className='divContainer'>
+
+        <h3>Contraseña:</h3>
+        <form encType='multipart/form-data' onSubmit={(ev) => handleOnSubmit(ev, 'password')}>
 
 
-        <input type="hidden" name="_id" value={user._id} />
-        <input type="hidden" name="uid" value={user.uid} />
+          <input type="hidden" name="_id" value={user._id} />
+          <input type="hidden" name="uid" value={user.uid} />
 
 
-        <label htmlFor="password">Contraseña Actual:</label>
-        <input
-          type="password"
-          autoComplete='off'
-          name="oldPassword"
-          id="oldPassword"
-          placeholder='Contraseña anterior...'
-          onChange={handleOnChange}
-        />
-        {validate.password &&
-          <p className="errorEditData">{validate.oldPassword}</p>
+          <label htmlFor="password">Contraseña Actual:</label>
+          <input
+            type="password"
+            autoComplete='off'
+            name="oldPassword"
+            id="oldPassword"
+            placeholder='Contraseña anterior...'
+            onChange={handleOnChange}
+          />
+          {validate.password &&
+            <p className="errorEditData">{validate.oldPassword}</p>
+          }
+
+
+          <label htmlFor="password">Nueva Contraseña:</label>
+          <input
+            type="password"
+            autoComplete='off'
+            name="password"
+            id="password"
+            placeholder='Nueva contraseña...'
+            onChange={handleOnChange}
+          />
+          {validate.password &&
+            <p className="errorEditData">{validate.password}</p>
+          }
+
+          <label htmlFor="passwordR">Repite la Contraseña Nueva:</label>
+          <input
+            type="password"
+            name="passwordR"
+            id="passwordR"
+            placeholder='Repite la contraseña nueva...'
+            onChange={handleOnChange}
+          />
+          {validate.passwordR &&
+            <p className="errorEditData">{validate.passwordR}</p>
+          }
+
+          <input
+            disabled={(isLoading) ? true : false}
+            type="submit"
+            value="Cambiar Contraseña"
+          />
+
+        </form>
+
+        {
+          (isLoading) &&
+          < span className="loader"></span>
         }
 
+      </div>
 
-        <label htmlFor="password">Nueva Contraseña:</label>
-        <input
-          type="password"
-          autoComplete='off'
-          name="password"
-          id="password"
-          placeholder='Nueva contraseña...'
-          onChange={handleOnChange}
-        />
-        {validate.password &&
-          <p className="errorEditData">{validate.password}</p>
-        }
-
-        <label htmlFor="passwordR">Repite la Contraseña Nueva:</label>
-        <input
-          type="password"
-          name="passwordR"
-          id="passwordR"
-          placeholder='Repite la contraseña nueva...'
-          onChange={handleOnChange}
-        />
-        {validate.passwordR &&
-          <p className="errorEditData">{validate.passwordR}</p>
-        }
-
-        <input
-          type="submit"
-          value="Cambiar Contraseña"
-        />
-
-
-      </form>
-
-      <NavLink to='/'>Volver a la pantalla principal</NavLink>
     </section>
 
   );

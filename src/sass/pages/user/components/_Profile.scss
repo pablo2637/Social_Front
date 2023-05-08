@@ -31,7 +31,7 @@
         article {
 
             .pText {
-                margin: pixels-rem(5) 0;
+                margin: pixels-rem(15) 0;
                 text-align: left;
                 text-indent: pixels-rem(3);
                 font-size: pixels-rem(15);
@@ -39,7 +39,10 @@
             }
 
             .pTitle {
-                margin-top: pixels-rem(10);
+                margin-top: pixels-rem(20);
+                background-color: $bg-title;
+                padding: pixels-rem(6) 0;
+                border-radius: pixels-rem(10);
                 font-weight: bold;
                 text-align: center;
                 font-size: pixels-rem(20);
@@ -52,11 +55,11 @@
                 font-style: italic;
                 text-align: justify;
                 font-size: pixels-rem(14);
-                color: $prof-title;
+                color: $prof-para;
             }
 
             .divImageContainer {
-                margin: pixels-rem(5) auto;
+                margin: pixels-rem(30) auto;
                 @include border($user-name, 5);
                 background-color: $bg-img;
                 width: 98%;
@@ -64,7 +67,7 @@
 
                 img {
                     @include image(contain);
-                    padding: pixels-rem(5);
+                    padding: pixels-rem(5);                    
                 }
 
             }

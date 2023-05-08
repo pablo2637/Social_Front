@@ -9,7 +9,10 @@ import { validateFormProfile } from "../../helpers/validateForm";
 export const EditProfile = () => {
 
     const { user } = useSelector((state) => state.auth);
+    const { isLoading } = useSelector((state) => state.users);
+
     const { updateUserProfile } = useUserStore();
+
     const [form, setForm] = useState([]);
     const [order, setOrder] = useState([]);
     const [validate, setValidate] = useState('');
@@ -197,6 +200,7 @@ export const EditProfile = () => {
                                     </label>
                                     <input
                                         type="text"
+                                        className="selected"
                                         readOnly
                                         name={`${el.name}_imageURL`}
                                         value={(el.content.length < 1000) ? el.content : '...'}
@@ -214,22 +218,40 @@ export const EditProfile = () => {
                         </div>
                     ))
                 }
-                <div>
-                    <button onClick={() => handleOnClick('title')} >+ Título</button>
-                    <button onClick={() => handleOnClick('text')} >+ Texto</button>
-                    <button onClick={() => handleOnClick('paragraph')} >+ Párrafo</button>
-                    <button onClick={() => handleOnClick('image')} >+ Imagen</button>
+
+
+                <div className="divBtnsForm">
+
+                    <p>Agregar elemento:</p>
+                    <div>
+                        <button onClick={() => handleOnClick('title')} >Título</button>
+                        <button onClick={() => handleOnClick('text')} >Texto</button>
+                        <button onClick={() => handleOnClick('paragraph')} >Párrafo</button>
+                        <button onClick={() => handleOnClick('image')} >Imagen</button>
+                    </div>
                 </div>
 
-                {
-                    (form.length == 0) ?
-                        <input type="submit" disabled={true} value="Guardar" />
-                        :
-                        <input type="submit" value="Guardar" />
-                }
+                <div className="divSubmit">
+                    {
+                        (form.length == 0) ?
+                            <input
+                                type="submit"
+                                disabled={true}
+                                value="Guardar" />
+                            :
+                            <input
+                                disabled={(isLoading) ? true : false}
+                                type="submit"
+                                value="Guardar" />
+                    }
 
+                    {
+                        (user.profile.length > 0) && <NavLink to='/'>Cancelar</NavLink>
+                    }
+                </div>
                 {
-                    (user.profile.length > 0) && <NavLink to='/'>Cancelar</NavLink>
+                    (isLoading) &&
+                    < span className="loader"></span>
                 }
             </form>
 

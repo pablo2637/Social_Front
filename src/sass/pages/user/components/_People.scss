@@ -1,0 +1,32 @@
+@import '../../../base/settings';
+
+article {
+
+    margin-bottom: pixels-rem(15);
+    @include border($nav-font-col, 15);
+    background-color: $bg-title;
+
+    @import './LittlePeople';
+
+    div {
+
+        @include flexbox(center, column, 0);
+
+        button {
+            width: 95%;
+            @include boton-multi();
+            padding: pixels-rem(5);
+            margin-bottom: pixels-rem(10);
+            font-size: pixels-rem(20);
+
+            i {
+                color: $error-bad;
+            }
+        }
+
+        button:hover {
+            @include boton-multi-hover();
+        }
+    }
+
+}

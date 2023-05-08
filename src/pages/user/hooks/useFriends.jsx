@@ -10,6 +10,7 @@ export const useFriends = () => {
     const { profiles } = useSelector((state) => state.users);
     const { user } = useSelector((state) => state.auth);
     const [msg, setMsg] = useState(null);
+    const [lastChat, setLastChat] = useState(null);
 
     const [friends, setFriends] = useState([]);
 
@@ -35,16 +36,33 @@ export const useFriends = () => {
 
         const newFriends = [...friends];
 
-        newFriends.map(fr => fr._id == friendID ? fr.show = show : fr.show = fr.show)
+        newFriends.map(fr => {
+            if (fr._id == friendID) {
+                fr.show = show //: fr.show = fr.show)
+                setLastChat(fr._id);
+            }
+
+        })
+
         setFriends(newFriends);
     };
 
 
+
+    const handleChangeChat = async () => {
+
+        const newFriends = [...friends];
+
+        newFriends.map(fr => fr._id == lastChat ? fr.show = false : fr.show = fr.show)
+
+        setFriends(newFriends);
+    };
+
+
+
     const handleRemoveFriend = async (friendID) => {
 
-        console.log('friendID', friendID)
         const response = await fetchRemoveFriend(user._id, friendID);
-        console.log('reponse remove', response)
 
         if (!response.ok) {
             setMsg('Algo ha ido mal al eliminar esta persona...');
@@ -63,8 +81,10 @@ export const useFriends = () => {
 
     return {
         handleRemoveFriend,
+        handleChangeChat,
         handleGetFriends,
         handleOnOpenChat,
+        lastChat,
         friends,
         msg
     };

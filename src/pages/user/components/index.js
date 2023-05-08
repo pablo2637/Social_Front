@@ -6,3 +6,5 @@ export * from './Invites';
 export * from './LittlePeople';
 export * from './Message';
 export * from './Chats';
+export * from './ProfileElement';
+export * from './PrivateProfile';

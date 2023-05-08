@@ -2,7 +2,7 @@
 
 main {
     @include flexbox(start, column, 0);
-    max-width: 992px;
+    max-width: 992px;    
     max-height: calc($viewport-height - ($header-height + $navBar-height + $footer-height));
     overflow-y: scroll;
 

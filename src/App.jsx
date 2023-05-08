@@ -17,8 +17,8 @@ function App() {
 
 
 
-  const handleOnReconnect = (ev) => {
-    ev.target.disabled = true;
+  const handleOnReconnect = ({ target }) => {
+    target.disabled = true;
 
     setReconnect(true);
 
@@ -88,7 +88,7 @@ function App() {
           (status === 'authenticated' || status === 'admin') &&
 
           <div className='divUserImage'>
-            <img key={Date.now()} src={user.image} alt={`Foto de ${user.name}`} />
+              <img key={Date.now()} src={user.image} title={`Foto de ${user.name}`} alt={`Foto de ${user.name}`} />
           </div>
 
         }
@@ -114,7 +114,7 @@ function App() {
           (connState == 'stop') &&
           <div className='divReconnect'>
             <p>Fallo en la conexión al servidor</p>
-            <button onClick={handleOnReconnect}><i class="fa-solid fa-arrows-rotate"></i> Reconectar</button>
+            <button onClick={handleOnReconnect}><i className="fa-solid fa-arrows-rotate"></i> Reconectar</button>
           </div>
         }
 
@@ -137,7 +137,7 @@ function App() {
 
 
       <footer>
-        <p>© Derechos reservados - Pablo Pace - 2023 </p>
+        <p>© Pablo Pace - 2023 {`- (${(socket) && socket.id})`} </p>
       </footer>
 
     </>

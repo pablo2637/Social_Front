@@ -14,8 +14,8 @@
     }
 
     div {
-        width: pixels-rem(40);
-        height: pixels-rem(40);
+        width: pixels-rem(50);
+        height: pixels-rem(50);
 
         img {
             @include image(contain);

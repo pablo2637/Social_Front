@@ -8,9 +8,10 @@ export const People = ({ profile, isFriend }) => {
 
 
     const { user } = useSelector((state) => state.auth);
-    const { invites } = useSelector((state) => state.users);
+    const { invites, isLoading } = useSelector((state) => state.users);
     const [sent, setSent] = useState(null);
     const [received, setReceived] = useState(null);
+
 
     const {
         handleRemove,
@@ -47,25 +48,48 @@ export const People = ({ profile, isFriend }) => {
 
         <article>
             <LittlePeople name={profile.name} image={profile.image} />
+            <div>
 
-            {
-                (!isFriend) ?
+                {
 
-                    (!received) ?
+                    (!isLoading) ?
 
-                        (!sent) ?
-                            <button onClick={() => handleSend(profile._id)}>Conocer</button>
+                        (!isFriend) ?
+
+                            (!received) ?
+
+                                (!sent) ?
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleSend(profile._id)}
+                                    ><i className="fa-regular fa-handshake"></i> Conocer</button>
+                                    :
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleRemove(sent)}
+                                    ><i className="fa-solid fa-heart-crack"></i> Retirar solicitud</button>
+                                :
+                                <>
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleRespond(profile._id, user._id, received, true)}
+                                    ><i className="fa-solid fa-heart  fa-beat-fade"></i> Aceptar</button>
+
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleRespond(profile._id, user._id, received, false)}
+                                    ><i className="fa-solid fa-skull-crossbones"></i> Rechazar</button>
+                                </>
+
                             :
-                            <button onClick={() => handleRemove(sent)}>Retirar solicitud</button>
-                        :
-                        <div>
-                            <button onClick={() => handleRespond(profile._id, user._id, received, true)} >Aceptar</button>
-                            <button onClick={() => handleRespond(profile._id, user._id, received, false)} >Rechazar</button>
-                        </div>
-                    :
 
-                    <button>Abrir conversación</button>
-            }
+                            <button>Abrir conversación</button>
+                        :
+
+                        (isLoading) &&
+                        < span className="loader-light"></span>
+                }
+            </div>
 
             <p>{msg}</p>
         </article>
