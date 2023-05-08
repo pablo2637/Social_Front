@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useUserStore } from '../../../hooks/useUserStore';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchRemoveInvite, fetchRespondInvite, fetchSendInvite } from '../helpers/fetchDataUser';
 import { useAuthStore } from '../../../hooks/useAuthStore';
 
@@ -8,10 +8,10 @@ export const useInvites = () => {
 
 
     const { user } = useSelector((state) => state.auth);
-    const { loadInvites } = useUserStore();
+    const { loadInvites, loadFriends } = useUserStore();
     const { loadUser } = useAuthStore();
     const [msg, setMsg] = useState(null);
-
+    const dispatch = useDispatch();
 
     const handleSend = async (_id) => {
 
@@ -54,14 +54,14 @@ export const useInvites = () => {
         }, 3000)
 
         await loadInvites();
-        // await loadUser(user.email);
+        await loadFriends(receiver);
     };
 
 
     const handleRespond = async (sender, receiver, _id, accept) => {
 
         const invite = { sender, receiver, _id, accept };
-
+        console.log('respond invite', invite);
         const response = await fetchRespondInvite(invite);
 
         if (!response.ok) {
@@ -76,7 +76,7 @@ export const useInvites = () => {
         }, 3000)
 
         await loadInvites();
-        await loadUser(user.email);
+        await loadFriends(receiver);
     };
 
 

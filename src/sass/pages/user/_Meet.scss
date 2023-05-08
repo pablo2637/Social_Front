@@ -1,0 +1,48 @@
+@import '../../base/settings';
+
+.secMeet {
+
+    @include container(95%, 0);
+
+    h2 {
+        font-size: pixels-rem(25);
+        margin-top: pixels-rem(10);
+        padding: pixels-rem(10);
+        border-bottom: 1px dotted $bg;
+    }
+
+    .divRoot {
+        margin-top: pixels-rem(15);
+        font-weight: bold;
+
+        a {
+            text-decoration: none;
+            color: $font-col;
+        }
+
+    }
+
+    div {
+        @include container(100%, 0);
+
+        img {
+            @include image(contain);
+        }
+    }
+
+    h3 {
+        font-size: pixels-rem(18);
+        background-color: $nav-font-col;
+        text-align: center;
+        box-shadow: 0 0 10px $bg-title;
+        color: $bg;
+        margin: pixels-rem(30) 0;
+        padding: pixels-rem(5);
+        border-bottom: 1px dotted $bg;
+        border-radius: pixels-rem(5);
+    }
+
+
+    @import './components/People';
+
+}

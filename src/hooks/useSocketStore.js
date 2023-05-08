@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID, onNewChats } from '../store/slice/socketSlice';
+import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID, onNewChats, onChatActive } from '../store/slice/socketSlice';
 import { useUserStore } from './useUserStore';
 import { useAuthStore } from './useAuthStore';
 import { SocketContext } from '../contexts/SocketContext';
 import { useContext } from 'react';
-import { setLocalChats } from '../helpers/localStorage';
+import { getLocal, setLocalChats } from '../helpers/localStorage';
 import { onNewInvites } from '../store/slice/usersSlice';
+import { onUpdateUser } from '../store/slice/authSlice';
 
 /**
  * @author Pablo
@@ -69,6 +70,12 @@ export const useSocketStore = () => {
 
                     case 'friends':
                         loadFriends(user._id)
+                        break;
+
+                    case 'identify':
+                        console.log('user id', user._id)
+                        if (user._id)
+                            socket.emit('whoAmI', { userID: user._id })
                         break;
 
                     case 'all':
@@ -135,7 +142,10 @@ export const useSocketStore = () => {
             console.log('whoAreYou', user._id)
 
             if (user)
-                await socket.emit('whoAmI', { userID: user._id })
+                await socket.emit('whoAmI', { userID: user._id });
+
+            else
+                dispatch(onUpdateUser(getLocal()));
         });
 
 
@@ -148,8 +158,10 @@ export const useSocketStore = () => {
 
             const ind = findChat(sender, receiver);
 
-            if (ind != -1)
+            if (ind != -1) {
                 dispatch(onUpdateID({ _id, ind }));
+                dispatch(onChatActive(_id));
+            }
         });
 
 
@@ -216,8 +228,13 @@ export const useSocketStore = () => {
         const ind = findChat(sender, receiver);
         console.log('ind', ind, chats[ind])
 
-        if (ind != -1)
+        if (ind != -1) {
+
+            dispatch(onChatActive(chats[ind]._id));
             return ind
+        }
+
+
 
         const newChatRoom = {
             sender,

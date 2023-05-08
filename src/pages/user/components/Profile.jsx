@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { ProfileElement } from "./";
 
 export const Profile = ({ profile, _id = Date.now(), name, dateMod }) => {
 
@@ -20,51 +21,12 @@ export const Profile = ({ profile, _id = Date.now(), name, dateMod }) => {
                     (profile.length > 0) ?
 
                         profile.map(el => (
-                            <article key={'a' + el.id}>
-
-                                {(el.typeInput == 'text') &&
-                                    <p
-                                        className="pText"
-                                        name={'p' + el.name}
-                                        id={'p' + el.id}
-                                    >{el.content}
-                                    </p>}
-
-
-                                {(el.typeInput == 'title') &&
-                                    <p
-                                        className="pTitle"
-                                        name={'t' + el.name}
-                                        id={'t' + el.id}
-                                    >{el.content}
-                                    </p>}
-
-                                {(el.typeInput == 'paragraph') &&
-                                    <p
-                                        className="pParagraph"
-                                        name={'g' + el.name}
-                                        id={'g' + el.id}
-                                    >{`"${el.content}"`}
-                                    </p>}
-
-
-                                {(el.typeInput == 'image') &&
-                                    <div key={'d' + el.id} className="divImageContainer">
-                                        <img
-                                            name={'i' + el.name}
-                                            id={'i' + el.id}
-                                            src={(isLoading) ? '../../../assets/no-pic.png' : el.content}
-                                        />
-                                    </div>
-                                }
-
-                            </article>
+                            <ProfileElement key={'a' + el.id} el={el} />
                         ))
 
                         :
 
-                        (name) && <h3>Pendiente de crear perfil...</h3>
-
+                        (name) && <h3>Pendiente de crear perfil público...</h3>
                 }
             </div>
 

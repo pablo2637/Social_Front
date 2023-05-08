@@ -1,0 +1,84 @@
+@import '../../base/settings';
+
+.secEditPersonalData {
+    @include container(95%, 10);
+    color: $font-col;
+
+    .divRoot {
+        margin-top: pixels-rem(15);
+        font-weight: bold;
+
+        a {
+            text-decoration: none;
+            color: $font-col;
+        }
+
+    }
+
+    h2 {
+        font-size: pixels-rem(25);
+        margin-top: pixels-rem(10);
+        padding: pixels-rem(10);
+        border-bottom: 1px dotted $bg;
+    }
+
+    .errorEditData {
+        color: $error-bad;
+        text-align: center;
+        font-size: pixels-rem(18);
+        margin-top: pixels-rem(15);
+    }
+
+    .divContainer {
+        @include container(85%, 0);
+
+        h3 {
+            font-size: pixels-rem(18);          
+            text-align: center;            
+            color: $bg;
+            margin: pixels-rem(30) 0;
+            padding: pixels-rem(5);
+            border-bottom: 1px dotted $bg;
+        }
+
+
+        form {
+            @include grid(1fr, center, center, 0, 5);
+            margin: pixels-rem(20) 0;
+
+
+            label:not(.labelImg) {
+                display: none;
+            }
+
+            input:not([type="submit"]) {
+                width: 100%;
+                margin: pixels-rem(5) 0;
+                padding: pixels-rem(5);
+                border-radius: pixels-rem(5);
+                font-size: pixels-rem(12);
+                text-indent: pixels-rem(5);
+                @include border($bg, 5);
+
+            }
+
+            input[type="submit"],
+            a {
+                @include boton();
+                padding: pixels-rem(5);
+                margin-top: pixels-rem(10);
+                text-decoration: none;
+                font-size: pixels-rem(15);
+                width: 100%;
+                text-align: center;
+            }
+
+            input[type="submit"]:hover,
+            a:hover {
+                @include boton-hover();
+            }
+        }
+    }
+
+
+}

@@ -9,7 +9,88 @@
     left: 0;
     margin-top: pixels-rem(10);
     background-color: $bg;
-
-
     z-index: 900;
+
+    height: pixels-rem(300);
+    @include border($bg-font-col, 5);
+
+    p {
+        padding: pixels-rem(5);
+        @include border($bg, 5);
+        background-color: $bg-font-col;
+
+        font-size: pixels-rem(15);
+    }
+
+    div {
+        height: pixels-rem(230);
+        overflow-y: scroll;
+
+        table {
+
+
+            @include border($bg, 5);
+            background-color: $input-bg;
+
+            @include container(98%, auto);
+
+            tbody {
+
+                tr {
+                    width: 100%;
+
+                    .chat-spc {
+                        padding-bottom: pixels-rem(5);
+                    }
+
+
+                    .chat-name {
+                        font-size: pixels-rem(20);
+                        font-weight: bold;
+                        padding-bottom: pixels-rem(5);
+                    }
+
+                    .chat-date {
+                        font-size: pixels-rem(9);
+                        color: $prof-text;
+                    }
+
+                    .chat-msg {
+                        font-size: pixels-rem(17);
+                        color: $user-name;
+                    }
+
+
+                    .chLeft {
+                        text-align: left;
+                    }
+
+                    .chRight {
+                        text-align: right;
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    form {
+
+        @include border($bg, 5);
+        background-color: $bg-font-col;
+
+        @include grid(0.8fr 0.2fr, center, center, 1, 2);
+
+        input {
+            padding: pixels-rem(3);
+        }
+
+    }
+
+
+}
+
+.divChatBox.ocultar {
+    display: none;
 }

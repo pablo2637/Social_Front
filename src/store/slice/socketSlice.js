@@ -9,6 +9,7 @@ export const socketSlice = createSlice({
     initialState: {
         chats: getLocalChats(),
         newChats: false,
+        chatActive: '',
         isReceiving: false,
         isSending: false,
         isConnecting: false,
@@ -16,6 +17,10 @@ export const socketSlice = createSlice({
     },
 
     reducers: {
+
+        onChatActive: (state, { payload }) => {
+            state.chatActive = payload;
+        },
 
         onNewChats: (state, { payload }) => {
             state.newChats = payload;
@@ -98,6 +103,7 @@ export const {
     onJoinChat,
     onLogoutChat,
     onLoadChats,
+    onChatActive,
     onUpdateID,
 
     onConnected,

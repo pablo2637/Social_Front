@@ -6,7 +6,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 export const ChatBox = ({ _id, name }) => {
 
-  const { chats } = useSelector((state) => state.socket);
+  const { chats, chatActive } = useSelector((state) => state.socket);
   const { user } = useSelector((state) => state.auth);
   const { profiles } = useSelector((state) => state.users);
 
@@ -22,6 +22,7 @@ export const ChatBox = ({ _id, name }) => {
 
     const newChat = [];
     let lastSender;
+    let orientation;
 
     const firstName = name.split(' ')[0];
     console.log('data chat', data)
@@ -29,15 +30,19 @@ export const ChatBox = ({ _id, name }) => {
 
     data.chat.forEach(ch => {
 
+      orientation = ch.msgSender == _id ? "chLeft" : "chRight";
+
       if (ch.msgSender == lastSender) {
 
         newChat.push({
           type: 'msg',
+          orientation,
           content: ch.msg
         });
 
         newChat.push({
           type: 'date',
+          orientation,
           content: ch.date
         });
 
@@ -47,22 +52,26 @@ export const ChatBox = ({ _id, name }) => {
 
         newChat.push({
           type: 'spc',
+          orientation,
           content: ' '
         });
 
         newChat.push({
           type: 'name',
-          content: ch.msgSender == _id ? `${firstName}:` : 'Tú:'
+          content: ch.msgSender == _id ? `${firstName}:` : 'Tú:',
+          orientation
         });
 
         newChat.push({
           type: 'msg',
-          content: ch.msg
+          content: ch.msg,
+          orientation
         });
 
         newChat.push({
           type: 'date',
-          content: ch.date
+          content: ch.date,
+          orientation
         });
 
         lastSender = ch.msgSender;
@@ -136,62 +145,62 @@ export const ChatBox = ({ _id, name }) => {
 
   return (
 
-    <div className="divChatBox">
+    <div className="divChatBox" >
+    
+      {/* <div className={`divChatBox${(chatActive != chat._id) ? " ocultar" : ""}`}> */}
 
-      <table>
-        <thead>
-          <tr>
-            <th>{name}</th>
-            {/* <th>{JSON.stringify(chat)}</th> */}
-          </tr>
 
-        </thead>
 
-        <tbody>
 
-          <ScrollToBottom>
-            {(chat) ?
 
-              (chat.chat) &&
+        <p>{name}</p>
+        <div>
 
-              chat.chat.map((ch, ind) =>
+          <ScrollToBottom className="stb">
+            < table >
 
-                <tr key={ind + Date.now()}>
-                  <td>
-                    {
-                      ch.content
-                    }
-                  </td>
-                </tr>
+              <thead>
+              </thead>
 
-              )
+              <tbody>
+                {(chat) ?
 
-              :
+                  (chat.chat) &&
 
-              <h2>NO hay chats</h2>
+                  chat.chat.map((ch, ind) =>
 
-            }
+                    <tr key={ind + Date.now()} >
+                      <td className={`${ch.orientation} chat-${ch.type}`}>
+                        {
+                          ch.content
+                        }
+                      </td>
+                    </tr>
+                  )
+                  :
+
+                  <h2>NO hay chats</h2>
+                }
+
+              </tbody>
+
+              <tfoot>
+              </tfoot>
+
+            </table >
+
           </ScrollToBottom>
-        </tbody>
+        </div>
 
-        <tfoot>
-          <tr>
-            <td>
-
-              <form onSubmit={handleOnSubmit}>
-                <input type="text" name="text" placeholder="Escribe algo..." />
-                <input disabled={(chat.userDeleted) ? true : false} type="submit" value="Enviar" />
-              </form>
-
-            </td>
-          </tr>
-        </tfoot>
-
-      </table>
+        <form onSubmit={handleOnSubmit}>
+          <input autoComplete="off" type="text" name="text" placeholder="Escribe algo..." />
+          <input disabled={(chat.userDeleted) ? true : false} type="submit" value="Enviar" />
+        </form>
 
 
-    </div>
 
-  );
+      </div >
+
+      );
 
 };

@@ -20,6 +20,13 @@ export const validateFormEditData = (data, setValidate) => {
         image
     });
 
+    
+    setTimeout(() => {
+
+        setValidate({});
+      }, 8000);
+  
+
     return rslt;
 };
 
@@ -52,6 +59,11 @@ export const validateFormChangePassword = (data, setValidate) => {
         passwordR,
         oldPassword
     });
+
+    setTimeout(() => {
+
+        setValidate({});
+      }, 8000);
 
     return rslt;
 };

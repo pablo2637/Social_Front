@@ -33,6 +33,21 @@
     cursor: pointer;
 }
 
+@mixin boton-multi() {
+    background-color: $bg-prof;
+    box-shadow: 0 0 5px black;
+    border-radius: 15px;
+    border: none;
+    color: $bg;
+    cursor: pointer;
+}
+
+@mixin boton-multi-hover() {
+    background-color: $bg;
+    color: $bg-prof;
+    box-shadow: 0 0 1px black;
+}
+
 @mixin boton-ico() {
     border-radius: pixels-rem(5);
     border: none;

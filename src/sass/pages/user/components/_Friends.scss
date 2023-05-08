@@ -2,7 +2,7 @@
 
 .secUserFriends {    
     @include flexbox(left, row, 0);
-    background-color: $bg-img;
+    background-color: $bg-chat;
 
     article {
         cursor: pointer;
