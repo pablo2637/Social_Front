@@ -36,13 +36,9 @@ export const HomePageAdmin = () => {
     <section>
       <h1>Dashboard:</h1>
 
-      <h2>Usuarios:</h2>
-      {/* {(users) &&
-        users.map(u =>
-          <User key={`${u._id}${Date.now()}`} _id={u._id} />
-        )
-      } */}
-
+      <div>
+        <img src="../../assets/admin.png" alt="Imagen de portada" />
+      </div>
 
     </section>
 

@@ -22,6 +22,14 @@
         border-bottom: 1px dotted $bg;
     }
 
+    div {
+        @include container(100%, 0);
+
+        img {
+            @include image(contain);
+        }
+    }
+
     .errorProfile {
         padding: pixels-rem(10);
         text-align: center;
@@ -62,6 +70,10 @@
                     @include boton-multi();
                     width: pixels-rem(120);
                     padding: pixels-rem(5);
+
+                    i {
+                        color: $error-bad;
+                    }
                 }
 
                 button:hover {

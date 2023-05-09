@@ -52,6 +52,10 @@
             font-size: pixels-rem(12);
             padding: pixels-rem(5);
             width: pixels-rem(95);
+
+            i {
+                color: $error-bad;
+            }
         }
 
         button:hover {

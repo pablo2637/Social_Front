@@ -366,6 +366,19 @@ nav .divChat .secUserFriends article .divLittlePeople .pLPName {
   font-size: 0.75rem;
   margin-bottom: 0.3125rem;
 }
+nav .divChat .secUserFriends article .divLittlePeople .pLPDate {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 0.75rem;
+  margin-bottom: 0.3125rem;
+}
+nav .divChat .secUserFriends article .divLittlePeople .pLPSender,
+nav .divChat .secUserFriends article .divLittlePeople .pLPReceiver {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 1.0625rem;
+  margin-bottom: 0.3125rem;
+}
 nav .divChat .secUserFriends article .divLittlePeople div {
   width: 3.125rem;
   height: 3.125rem;
@@ -1210,18 +1223,29 @@ nav .divNav.mostrar {
     box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
 }
-.secHomeUser .secUserFriends {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  flex-direction: row;
-  gap: 0rem;
-  background-color: rgb(20, 20, 20);
+.secHomeUser .secInvites {
+  width: 95%;
+  margin: 0 auto;
 }
-.secHomeUser .secUserFriends article {
-  cursor: pointer;
+.secHomeUser .secInvites h2 {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-top: 0.625rem;
+  padding: 0.625rem;
+  border-bottom: 1px dotted rgb(33, 57, 75);
 }
-.secHomeUser .secUserFriends article .loader {
+.secHomeUser .secInvites .divInvSent,
+.secHomeUser .secInvites .divInvReceived {
+  margin: 1.5625rem 0;
+}
+.secHomeUser .secInvites .divInvSent h3,
+.secHomeUser .secInvites .divInvReceived h3 {
+  font-size: 1.375rem;
+  color: rgb(9, 68, 136);
+  border-bottom: 1px dotted rgb(33, 57, 75);
+}
+.secHomeUser .secInvites .divInvSent article .loader,
+.secHomeUser .secInvites .divInvReceived article .loader {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -1232,7 +1256,8 @@ nav .divNav.mostrar {
   box-sizing: border-box;
   animation: animloader 1s linear infinite;
 }
-.secHomeUser .secUserFriends article .loader-light {
+.secHomeUser .secInvites .divInvSent article .loader-light,
+.secHomeUser .secInvites .divInvReceived article .loader-light {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -1260,7 +1285,8 @@ nav .divNav.mostrar {
     box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
 }
-.secHomeUser .secUserFriends article .divLittlePeople {
+.secHomeUser .secInvites .divInvSent article .divLittlePeople,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1269,151 +1295,110 @@ nav .divNav.mostrar {
   background-color: transparent;
   padding: 0.625rem;
 }
-.secHomeUser .secUserFriends article .divLittlePeople .pLPName {
+.secHomeUser .secInvites .divInvSent article .divLittlePeople .pLPName,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople .pLPName {
   text-align: center;
   color: rgb(90, 175, 196);
   font-size: 0.75rem;
   margin-bottom: 0.3125rem;
 }
-.secHomeUser .secUserFriends article .divLittlePeople div {
+.secHomeUser .secInvites .divInvSent article .divLittlePeople .pLPDate,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople .pLPDate {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 0.75rem;
+  margin-bottom: 0.3125rem;
+}
+.secHomeUser .secInvites .divInvSent article .divLittlePeople .pLPSender,
+.secHomeUser .secInvites .divInvSent article .divLittlePeople .pLPReceiver,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople .pLPSender,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople .pLPReceiver {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 1.0625rem;
+  margin-bottom: 0.3125rem;
+}
+.secHomeUser .secInvites .divInvSent article .divLittlePeople div,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople div {
   width: 3.125rem;
   height: 3.125rem;
 }
-.secHomeUser .secUserFriends article .divLittlePeople div img {
+.secHomeUser .secInvites .divInvSent article .divLittlePeople div img,
+.secHomeUser .secInvites .divInvReceived article .divLittlePeople div img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   border: 1px solid rgb(236, 250, 253);
   border-radius: 6.25rem;
 }
-.secHomeUser .secUserFriends .divBtnsChat {
-  text-align: center;
+.secHomeUser .secInvites .divInvSent article .divBtns,
+.secHomeUser .secInvites .divInvReceived article .divBtns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 0.3125rem;
 }
-.secHomeUser .secUserFriends .divBtnsChat button {
-  border-radius: 0.3125rem;
+.secHomeUser .secInvites .divInvSent article .divBtns button,
+.secHomeUser .secInvites .divInvReceived article .divBtns button {
+  background-color: rgb(241, 247, 250);
+  box-shadow: 0 0 5px black;
+  border-radius: 15px;
   border: none;
-  color: rgb(169, 204, 216);
-  font-size: pìxels-rem(8);
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-}
-.secHomeUser .secUserFriends .divBtnsChat button:hover {
-  color: rgb(16, 63, 75);
-  box-shadow: 0 0 1px rgb(33, 57, 75);
-}
-.secHomeUser .secUserFriends .loader {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: block;
-  margin: 15px auto;
-  position: relative;
   color: rgb(33, 57, 75);
-  box-sizing: border-box;
-  animation: animloader 1s linear infinite;
-}
-.secHomeUser .secUserFriends .loader-light {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: block;
-  margin: 15px auto;
-  position: relative;
-  color: rgb(169, 204, 216);
-  box-sizing: border-box;
-  animation: animloader 1s linear infinite;
-}
-@keyframes animloader {
-  0% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-  25% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
-  }
-  50% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
-  }
-  75% {
-    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-  100% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-}
-.secHomeUser .secUserFriends .divChatBox {
-  position: fixed;
+  cursor: pointer;
+  text-align: center;
   padding: 0.3125rem;
-  box-shadow: 0 0 5px 1px black;
-  width: 100%;
-  left: 0;
-  margin-top: 0.625rem;
+  width: 7.5rem;
+}
+.secHomeUser .secInvites .divInvSent article .divBtns button i,
+.secHomeUser .secInvites .divInvReceived article .divBtns button i {
+  color: rgb(177, 8, 8);
+}
+.secHomeUser .secInvites .divInvSent article .divBtns button:hover,
+.secHomeUser .secInvites .divInvReceived article .divBtns button:hover {
   background-color: rgb(33, 57, 75);
-  z-index: 900;
-  height: 18.75rem;
-  border: 1px solid rgb(169, 204, 216);
-  border-radius: 0.3125rem;
+  color: rgb(241, 247, 250);
+  box-shadow: 0 0 1px black;
 }
-.secHomeUser .secUserFriends .divChatBox p {
+.secHomeUser .secInvites .divInvSent .divNoInv,
+.secHomeUser .secInvites .divInvReceived .divNoInv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.3125rem;
+}
+.secHomeUser .secInvites .divInvSent .divNoInv p,
+.secHomeUser .secInvites .divInvReceived .divNoInv p {
+  margin: 0.9375rem 0;
+  font-style: italic;
+  color: rgb(10, 17, 22);
+}
+.secHomeUser .secInvites .divInvSent .divNoInv a,
+.secHomeUser .secInvites .divInvReceived .divNoInv a {
+  display: block;
+  background-color: rgb(241, 247, 250);
+  box-shadow: 0 0 5px black;
+  border-radius: 15px;
+  border: none;
+  color: rgb(33, 57, 75);
+  cursor: pointer;
+  text-align: center;
   padding: 0.3125rem;
-  border: 1px solid rgb(33, 57, 75);
-  border-radius: 0.3125rem;
-  background-color: rgb(169, 204, 216);
+  width: 12.5rem;
+  text-decoration: none;
   font-size: 0.9375rem;
 }
-.secHomeUser .secUserFriends .divChatBox div {
-  height: 14.375rem;
-  overflow-y: scroll;
+.secHomeUser .secInvites .divInvSent .divNoInv a i,
+.secHomeUser .secInvites .divInvReceived .divNoInv a i {
+  color: rgb(177, 8, 8);
 }
-.secHomeUser .secUserFriends .divChatBox div table {
-  border: 1px solid rgb(33, 57, 75);
-  border-radius: 0.3125rem;
-  background-color: rgb(237, 237, 237);
-  width: 98%;
-  margin: auto auto;
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr {
-  width: 100%;
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr .chat-spc {
-  padding-bottom: 0.3125rem;
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr .chat-name {
-  font-size: 1.25rem;
-  font-weight: bold;
-  padding-bottom: 0.3125rem;
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr .chat-date {
-  font-size: 0.5625rem;
-  color: rgb(25, 93, 129);
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr .chat-msg {
-  font-size: 1.0625rem;
-  color: rgb(9, 68, 136);
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr .chLeft {
-  text-align: left;
-}
-.secHomeUser .secUserFriends .divChatBox div table tbody tr .chRight {
-  text-align: right;
-}
-.secHomeUser .secUserFriends .divChatBox form {
-  border: 1px solid rgb(33, 57, 75);
-  border-radius: 0.3125rem;
-  background-color: rgb(169, 204, 216);
-  display: grid;
-  grid-template-columns: 0.8fr 0.2fr;
-  justify-content: center;
-  align-items: center;
-  padding: 0.0625rem;
-  gap: 0.125rem;
-}
-.secHomeUser .secUserFriends .divChatBox form input {
-  padding: 0.1875rem;
-}
-.secHomeUser .secUserFriends .divChatBox.ocultar {
-  display: none;
+.secHomeUser .secInvites .divInvSent .divNoInv a:hover,
+.secHomeUser .secInvites .divInvReceived .divNoInv a:hover {
+  background-color: rgb(33, 57, 75);
+  color: rgb(241, 247, 250);
+  box-shadow: 0 0 1px black;
 }
 
 .loader {
@@ -1643,6 +1628,15 @@ nav .divNav.mostrar {
   padding: 0.625rem;
   border-bottom: 1px dotted rgb(33, 57, 75);
 }
+.secEditProfile div {
+  width: 100%;
+  margin: 0 auto;
+}
+.secEditProfile div img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .secEditProfile .errorProfile {
   padding: 0.625rem;
   text-align: center;
@@ -1690,6 +1684,9 @@ nav .divNav.mostrar {
   cursor: pointer;
   width: 7.5rem;
   padding: 0.3125rem;
+}
+.secEditProfile form .divBtnsForm div button i {
+  color: rgb(177, 8, 8);
 }
 .secEditProfile form .divBtnsForm div button:hover {
   background-color: rgb(33, 57, 75);
@@ -1999,6 +1996,19 @@ nav .divNav.mostrar {
   text-align: center;
   color: rgb(90, 175, 196);
   font-size: 0.75rem;
+  margin-bottom: 0.3125rem;
+}
+.secMeet article .divLittlePeople .pLPDate {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 0.75rem;
+  margin-bottom: 0.3125rem;
+}
+.secMeet article .divLittlePeople .pLPSender,
+.secMeet article .divLittlePeople .pLPReceiver {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 1.0625rem;
   margin-bottom: 0.3125rem;
 }
 .secMeet article .divLittlePeople div {
@@ -2438,6 +2448,9 @@ nav .divNav.mostrar {
   padding: 0.3125rem;
   width: 5.9375rem;
 }
+.secRelations .secBigPeople .divBtns button i {
+  color: rgb(177, 8, 8);
+}
 .secRelations .secBigPeople .divBtns button:hover {
   background-color: rgb(33, 57, 75);
   color: rgb(241, 247, 250);
@@ -2783,6 +2796,406 @@ nav .divNav.mostrar {
   background-color: rgb(33, 57, 75);
   color: rgb(241, 247, 250);
   box-shadow: 0 0 1px black;
+}
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(33, 57, 75);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+
+.loader-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(169, 204, 216);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+.secMessages {
+  width: 95%;
+  margin: 0 auto;
+}
+.secMessages h2 {
+  font-size: 1.5625rem;
+  margin-top: 0.625rem;
+  padding: 0.625rem;
+  border-bottom: 1px dotted rgb(33, 57, 75);
+}
+.secMessages .divRoot {
+  margin-top: 0.9375rem;
+  font-weight: bold;
+}
+.secMessages .divRoot a {
+  text-decoration: none;
+  color: rgb(21, 41, 60);
+}
+.secMessages div {
+  width: 100%;
+  margin: 0 auto;
+}
+.secMessages div img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.secMessages h3 {
+  font-size: 1.125rem;
+  background-color: rgb(90, 175, 196);
+  text-align: center;
+  box-shadow: 0 0 10px rgb(44, 44, 44);
+  color: rgb(33, 57, 75);
+  margin: 1.875rem 0;
+  padding: 0.3125rem;
+  border-bottom: 1px dotted rgb(33, 57, 75);
+  border-radius: 0.3125rem;
+}
+.secMessages .divCont {
+  display: grid;
+  grid-template-columns: 0.3fr 0.7fr;
+  justify-content: center;
+  align-items: start;
+  padding: 0.125rem;
+  gap: 0rem;
+  border: 1px solid black;
+}
+.secMessages .divCont .divChild1 {
+  grid-column: 1/2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0rem;
+}
+.secMessages .divCont .divChild1 .loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(33, 57, 75);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+.secMessages .divCont .divChild1 .loader-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(169, 204, 216);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+.secMessages .divCont .divChild1 .divLittlePeople {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0rem;
+  background-color: transparent;
+  padding: 0.625rem;
+}
+.secMessages .divCont .divChild1 .divLittlePeople .pLPName {
+  text-align: center;
+  color: rgb(90, 175, 196);
+  font-size: 0.75rem;
+  margin-bottom: 0.3125rem;
+}
+.secMessages .divCont .divChild1 .divLittlePeople .pLPDate {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 0.75rem;
+  margin-bottom: 0.3125rem;
+}
+.secMessages .divCont .divChild1 .divLittlePeople .pLPSender,
+.secMessages .divCont .divChild1 .divLittlePeople .pLPReceiver {
+  text-align: center;
+  color: rgb(2, 92, 83);
+  font-size: 1.0625rem;
+  margin-bottom: 0.3125rem;
+}
+.secMessages .divCont .divChild1 .divLittlePeople div {
+  width: 3.125rem;
+  height: 3.125rem;
+}
+.secMessages .divCont .divChild1 .divLittlePeople div img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 1px solid rgb(236, 250, 253);
+  border-radius: 6.25rem;
+}
+.secMessages .divCont .divChild1 button {
+  width: 90%;
+  background-color: rgb(241, 247, 250);
+  box-shadow: 0 0 5px black;
+  border-radius: 15px;
+  border: none;
+  color: rgb(33, 57, 75);
+  cursor: pointer;
+  padding: 0.3125rem;
+  margin-bottom: 0.625rem;
+  font-size: 0.9375rem;
+}
+.secMessages .divCont .divChild1 button i {
+  color: rgb(177, 8, 8);
+}
+.secMessages .divCont .divChild1 button:hover {
+  background-color: rgb(33, 57, 75);
+  color: rgb(241, 247, 250);
+  box-shadow: 0 0 1px black;
+}
+.secMessages .divCont .loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(33, 57, 75);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+.secMessages .divCont .loader-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(169, 204, 216);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+.secMessages .divCont .divMsgs {
+  width: 95%;
+  margin: 5 auto;
+}
+.secMessages .divCont .divMsgs .loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(33, 57, 75);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+.secMessages .divCont .divMsgs .loader-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(169, 204, 216);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+.secMessages .divCont .divMsgs .secMessage {
+  border-top: 1px solid rgb(33, 57, 75);
+  padding: 0.3125rem;
+}
+.secMessages .divCont .divMsgs .secMessage h4 {
+  font-size: 1.0625rem;
+  text-align: center;
+  margin: 0.625rem 0;
+  color: rgb(50, 79, 102);
+}
+.secMessages .divCont .divMsgs .secMessage p span {
+  font-weight: bold;
+  font-style: italic;
+}
+.secMessages .divCont .divMsgs .secMessage form {
+  padding: 0.3125rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  flex-direction: column;
+  gap: 0rem;
+}
+.secMessages .divCont .divMsgs .secMessage form textarea {
+  width: 100%;
+  height: 3.75rem;
+  text-indent: 0.3125rem;
+  border: 1px solid rgb(33, 57, 75);
+  border-radius: 0.3125rem;
+}
+.secMessages .divCont .divMsgs .secMessage form input {
+  margin: 0.5rem 0;
+  background-color: rgb(33, 57, 75);
+  border-radius: 5px;
+  border: none;
+  color: rgb(90, 175, 196);
+  cursor: pointer;
+  padding: 0.3125rem;
+}
+.secMessages .divCont .divMsgs .secMessage form input:hover {
+  color: rgb(16, 63, 75);
+  background-color: rgb(134, 184, 196);
+  box-shadow: 0 0 1px rgb(33, 57, 75);
+}
+.secMessages .divCont .divMsgs .secMessage .pMsgSent {
+  text-align: center;
+  color: rgb(177, 8, 8);
+}
+.secMessages .divCont .divMsgs section {
+  height: 11.25rem;
+  overflow-y: scroll;
+}
+.secMessages .divCont .divMsgs section div .loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(33, 57, 75);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+.secMessages .divCont .divMsgs section div .loader-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: rgb(169, 204, 216);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+.secMessages .divCont .divMsgs section div .divMessage {
+  border: 1px solid rgb(33, 57, 75);
+  border-radius: 0.625rem;
+  padding: 0.3125rem;
+  margin: 0.5rem 0;
+}
+.secMessages .divCont .divMsgs section div .divMessage .divHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: left;
+  align-items: center;
+  padding: 0.3125rem;
+  gap: 0rem;
+  border-bottom: 1px dotted rgb(33, 57, 75);
+}
+.secMessages .divCont .divMsgs section div .divMessage .divHeader p:first-child {
+  font-style: italic;
+  font-weight: bold;
+}
+.secMessages .divCont .divMsgs section div .divMessage .divHeader p:last-child {
+  font-size: 0.75rem;
+  text-align: right;
+}
+.secMessages .divCont .divMsgs section div .divMessage .divMsg {
+  margin-top: 0.3125rem;
+}
+.secMessages .divCont .divMsgs section div .divMessage .divMsg p {
+  text-indent: 0.3125rem;
+  color: rgb(90, 175, 196);
+}
+.secMessages .divCont .divMsgs {
+  grid-column: 2/3;
 }
 
 .loader {

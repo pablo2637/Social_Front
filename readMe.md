@@ -1,6 +1,6 @@
 # Social Connect: Front
 
-Esta es una web SPA creada con Node y React. Cuenta con 3 tipos de vistas:
+Esta es una web SPA creada con NodeJS y React. Cuenta con 3 tipos de vistas:
 - Pública: cualquier usuario puede ver el contenido
 - Privada: se puede ver contenido adicional y también crear contenido nuevo
 - Administración: un usuario administrador se encarga de supervisar todo el contenido creado en la web y gestionarlo
@@ -52,6 +52,11 @@ Toda la información se guarda en servicios en la nube, por lo que estan accesib
 * Las credenciales de acceso en el servidor de **Firebase**
 
 ---
+Autenticación:
+Se utiliza *Firebase* para gestionar los usuarios. Una vez superado el registro los datos se almacenan también la base de datos propia de la aplicación (**MongoDB**). 
+Los usuarios tienen posibilidad de utilizar una cuenta de **Google** para loguearse directamente sin necesidad de registrarse, aunque internamente el mecanismo sería igual que un registro normal, es decir, que el usuario se crea y almacena en la base de datos propia.
+
+---
 ## .env:
 
 - *Todos los datos de configuración que proporciona Firebase:*
@@ -69,4 +74,4 @@ VITE_URL_CHAT_BACK=
 - *La cantidad de reconexiones permitida por el socket.io*
 VITE_RECONNECTION_ATTEMPTS=
 
-*Todos esta información se pasará en un archivo adjunto.
+*Todos estos datos se pasarán en un archivo adjunto.
