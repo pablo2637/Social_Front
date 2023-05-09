@@ -7,7 +7,7 @@ export const Profile = ({ profile, _id = Date.now(), name, dateMod }) => {
 
 
     return (
-        <section className="secProfile" key={'sec' + _id}>
+        <section data-aos="fade-in" className="secProfile" key={'sec' + _id}>
 
             {(name) &&
                 <div className="divName">

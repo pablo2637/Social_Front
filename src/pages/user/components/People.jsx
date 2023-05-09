@@ -44,11 +44,12 @@ export const People = ({ profile, isFriend }) => {
     }, [invites]);
 
 
+
     return (
 
         <article>
             <LittlePeople name={profile.name} image={profile.image} />
-            <div>
+            <div  >
 
                 {
 

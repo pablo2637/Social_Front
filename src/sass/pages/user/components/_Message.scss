@@ -1,0 +1,47 @@
+@import '../../../base/settings';
+
+.secMessage {
+    border-top: 1px solid $bg;
+    padding: pixels-rem(5);
+
+    h4 {
+        font-size: pixels-rem(17);
+        text-align: center;
+        margin: pixels-rem(10) 0;
+        color: $bg-nav;
+    }
+
+    p {
+        span {
+            font-weight: bold;
+            font-style: italic;
+        }
+    }
+
+    form {
+        padding: pixels-rem(5) 0;
+        @include flexbox(right, column, 0);
+
+        textarea {
+            width: 100%;
+            height: pixels-rem(60);
+            text-indent: pixels-rem(5);
+            @include border($bg, 5);
+        }
+
+        input {
+            margin: pixels-rem(8) 0;
+            @include boton();
+            padding: pixels-rem(5);
+        }
+
+        input:hover {
+            @include boton-hover();
+        }
+    }
+
+    .pMsgSent {
+        text-align: center;
+        color: $error-bad;
+    }
+}

@@ -1,5 +1,16 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { EditPersonalData, EditPrivateProfile, EditProfile, HomeUserPage, LogoutPage, Meet, Profiles } from '../pages/user';
+import {
+  EditPersonalData,
+  EditPrivateProfile,
+  EditProfile,
+  HomeUserPage,
+  LogoutPage,
+  Meet,
+  Messages,
+  Profiles,
+  Relations
+} from '../pages/user';
+
 
 export const UserRoutes = () => {
 
@@ -29,7 +40,12 @@ export const UserRoutes = () => {
 
         <Route
           path='relations'
-          element={<EditProfile />} //modificar
+          element={<Relations />}
+        />
+
+        <Route
+          path='messages'
+          element={<Messages />}
         />
 
         <Route

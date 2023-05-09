@@ -1,0 +1,33 @@
+@import '../../../base/settings';
+
+.divMessage {
+    @include border($bg, 10);
+    padding: pixels-rem(5);
+    margin: pixels-rem(8) 0;
+    
+
+    .divHeader {
+        @include grid(1fr 1fr, left, center, 5, 0);
+        border-bottom: 1px dotted $bg;
+
+        p:first-child {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        p:last-child {
+            font-size: pixels-rem(12);
+            text-align: right;
+        }
+    }
+
+    .divMsg {
+        margin-top: pixels-rem(5);
+
+        p {
+            text-indent: pixels-rem(5);
+            color: $nav-font-col;
+        }
+    }
+
+}

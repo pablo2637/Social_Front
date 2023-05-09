@@ -63,7 +63,7 @@ export const Friends = () => {
               <div className="divBtnsChat">
                 {/* <button onClick={() => handleRemoveFriend(fr._id)}><i className="fa-solid fa-heart-crack"></i> Romper vínculo</button> */}
 
-                {(fr.show || lastChat != fr._id)
+                {(fr.show)// || lastChat != fr._id)
                   ?
                   <button onClick={() => handleOnOpenChat(fr._id, false)}><i className="fa-solid fa-rectangle-xmark"></i></button>
                   :
