@@ -18,7 +18,7 @@ export const Users = () => {
 
     return (
 
-        <section>
+        <section className="secUsers">
 
             <h2>Usuarios:</h2>
 

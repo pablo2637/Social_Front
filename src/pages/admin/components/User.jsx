@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Message, Profile } from "../../user/components/";
+import { Message, Profile } from "../../user/components";
 import { useAdmin } from "../hooks/useAdmin";
 
 
