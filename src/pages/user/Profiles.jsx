@@ -29,7 +29,7 @@ export const Profiles = () => {
             {profiles.map(profile =>
                 (profile._id != user._id) &&
                 <>
-                    <Profile key={profile._id} {...profile} />
+                    <Profile key={Date.now() + profile._id} {...profile} />
                     {
                         (profile.privateProfile) &&
                         <PrivateProfile key={'pp' + profile._id} {...profile} />

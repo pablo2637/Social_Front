@@ -148,9 +148,25 @@ export const NavBarUser = () => {
 
                                     <li>
                                         <NavLink
+                                            to='/meet'
+                                            className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                        >Conocer Gente
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink
                                             to='/relations'
                                             className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
                                         >Mis Relaciones
+                                        </NavLink>
+                                    </li>
+                                    
+                                    <li>
+                                        <NavLink
+                                            to='/messages'
+                                            className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
+                                        >Mis Mensajes
                                         </NavLink>
                                     </li>
 
@@ -158,7 +174,7 @@ export const NavBarUser = () => {
                                         <NavLink
                                             to='/editPublicProfile'
                                             className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                                        >Tu Perfil Público
+                                        >Editar Perfil Público
                                         </NavLink>
                                     </li>
 
@@ -166,7 +182,7 @@ export const NavBarUser = () => {
                                         <NavLink
                                             to='/editPrivateProfile'
                                             className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                                        >Tu Perfil Privado
+                                        >Editar Perfil Privado
                                         </NavLink>
                                     </li>
 
@@ -179,13 +195,6 @@ export const NavBarUser = () => {
                                     </li>
 
 
-                                    <li>
-                                        <NavLink
-                                            to='/meet'
-                                            className={({ isActive }) => `nav-link ${isActive ? 'isActive' : ''}`}
-                                        >Conocer Gente
-                                        </NavLink>
-                                    </li>
 
                                     <li>
                                         <NavLink

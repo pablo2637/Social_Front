@@ -306,7 +306,6 @@ export const fetchDataSendMsg = async (msg, from, _id) => {
     };
 
     const response = await userAPI(data);
-    console.log('response', response)
 
     if (!response.ok)
         return {
@@ -317,6 +316,6 @@ export const fetchDataSendMsg = async (msg, from, _id) => {
 
     return {
         ok: true,
-        chats: response.data
+        msgs: response.data.msgs
     };
 };

@@ -47,11 +47,11 @@ export const useSocketStore = () => {
                 console.log('command:', cmd)
 
                 switch (cmd) {
-                    case 'profiles':
+                    case 'profiles':                        
                         loadProfiles();
                         break;
 
-                    case 'invites':
+                    case 'invites':                        
                         loadInvites();
                         dispatch(onNewInvites(true));
                         break;
@@ -61,21 +61,23 @@ export const useSocketStore = () => {
                         break;
 
                     case 'chats':
+                        if (!user) dispatch(onUpdateUser(getLocal()));
                         loadChats(user._id);
                         break;
 
                     case 'msgs':
+                        if (!user) dispatch(onUpdateUser(getLocal()));
                         loadMsgs(user._id)
                         break;
 
                     case 'friends':
+                        if (!user) dispatch(onUpdateUser(getLocal()));
                         loadFriends(user._id)
                         break;
 
                     case 'identify':
-                        console.log('user id', user._id)
-                        if (user._id)
-                            socket.emit('whoAmI', { userID: user._id })
+                        if (!user) dispatch(onUpdateUser(getLocal()));
+                        socket.emit('whoAmI', { userID: user._id })
                         break;
 
                     case 'all':

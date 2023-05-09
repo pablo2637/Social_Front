@@ -1,6 +1,7 @@
 
 export const LittlePeople = ({ date, name, image, sender, receiver }) => {
 
+
     return (
 
         <div className="divLittlePeople">

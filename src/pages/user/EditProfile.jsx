@@ -224,10 +224,10 @@ export const EditProfile = () => {
 
                     <p>Agregar elemento:</p>
                     <div>
-                        <button onClick={() => handleOnClick('title')} >Título</button>
-                        <button onClick={() => handleOnClick('text')} >Texto</button>
-                        <button onClick={() => handleOnClick('paragraph')} >Párrafo</button>
-                        <button onClick={() => handleOnClick('image')} >Imagen</button>
+                        <button onClick={() => handleOnClick('title')} ><i className="fa-solid fa-t"></i> Título</button>
+                        <button onClick={() => handleOnClick('paragraph')} ><i className="fa-solid fa-paragraph"></i> Párrafo</button>
+                        <button onClick={() => handleOnClick('text')} ><i className="fa-solid fa-i-cursor"></i> Texto</button>
+                        <button onClick={() => handleOnClick('image')} ><i className="fa-regular fa-image"></i>Imagen</button>
                     </div>
                 </div>
 

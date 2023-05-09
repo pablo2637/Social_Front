@@ -1,4 +1,3 @@
-const urlBack = import.meta.env.VITE_URL_BACK;
 
 /**
  * @author Pablo
@@ -17,6 +16,8 @@ const urlBack = import.meta.env.VITE_URL_BACK;
  */
 const getURLs = (data, formData) => {
 
+    const urlBack = import.meta.env.VITE_URL_BACK;
+    //"http://localhost:3000"
 
     let url, options = {};
     switch (data.type) {

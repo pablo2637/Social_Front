@@ -1,10 +1,17 @@
-export * from './Profile';
+export * from './Chats';
 export * from './ChatBox';
+
+export * from './LittlePeople';
 export * from './People';
+export * from './BigPeople';
+
 export * from './Friends';
 export * from './Invites';
-export * from './LittlePeople';
+
 export * from './Message';
-export * from './Chats';
+export * from './Msg';
+export * from './Msgs';
+
 export * from './ProfileElement';
 export * from './PrivateProfile';
+export * from './Profile';

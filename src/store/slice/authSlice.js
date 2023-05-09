@@ -20,6 +20,10 @@ export const authSlice = createSlice({
             state.newMsgs = payload;
         },
 
+        onAddNewMsg: (state, { payload }) => {
+            state.user.msgs.push(payload);
+        },
+
         onCheckingUser: (state) => {
             state.isChecking = true;
             state.user = {};
@@ -79,6 +83,7 @@ export const authSlice = createSlice({
 
 
 export const {
+    onAddNewMsg,
     onLoadFriends,
     onLoadMsgs,
     onNewMsgs,

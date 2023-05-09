@@ -25,7 +25,7 @@ export const ChatBox = ({ _id, name }) => {
     let orientation;
 
     const firstName = name.split(' ')[0];
-    console.log('data chat', data)
+
     if (!data) return
 
     data.chat.forEach(ch => {
@@ -146,61 +146,57 @@ export const ChatBox = ({ _id, name }) => {
   return (
 
     <div className="divChatBox" >
-    
+
       {/* <div className={`divChatBox${(chatActive != chat._id) ? " ocultar" : ""}`}> */}
 
+      <p>{name}</p>
+      <div>
+
+        <ScrollToBottom className="stb">
+          < table >
+
+            <thead>
+            </thead>
+
+            <tbody>
+              {(chat) ?
+
+                (chat.chat) &&
+
+                chat.chat.map((ch, ind) =>
+
+                  <tr key={ind + Date.now()} >
+                    <td className={`${ch.orientation} chat-${ch.type}`}>
+                      {
+                        ch.content
+                      }
+                    </td>
+                  </tr>
+                )
+                :
+
+                <h2>NO hay chats</h2>
+              }
+
+            </tbody>
+
+            <tfoot>
+            </tfoot>
+
+          </table >
+
+        </ScrollToBottom>
+      </div>
+
+      <form onSubmit={handleOnSubmit}>
+        <input autoComplete="off" type="text" name="text" placeholder="Escribe algo..." />
+        <input disabled={(chat.userDeleted) ? true : false} type="submit" value="Enviar" />
+      </form>
 
 
 
+    </div >
 
-        <p>{name}</p>
-        <div>
-
-          <ScrollToBottom className="stb">
-            < table >
-
-              <thead>
-              </thead>
-
-              <tbody>
-                {(chat) ?
-
-                  (chat.chat) &&
-
-                  chat.chat.map((ch, ind) =>
-
-                    <tr key={ind + Date.now()} >
-                      <td className={`${ch.orientation} chat-${ch.type}`}>
-                        {
-                          ch.content
-                        }
-                      </td>
-                    </tr>
-                  )
-                  :
-
-                  <h2>NO hay chats</h2>
-                }
-
-              </tbody>
-
-              <tfoot>
-              </tfoot>
-
-            </table >
-
-          </ScrollToBottom>
-        </div>
-
-        <form onSubmit={handleOnSubmit}>
-          <input autoComplete="off" type="text" name="text" placeholder="Escribe algo..." />
-          <input disabled={(chat.userDeleted) ? true : false} type="submit" value="Enviar" />
-        </form>
-
-
-
-      </div >
-
-      );
+  );
 
 };

@@ -1,0 +1,23 @@
+@import '../../../base/settings';
+
+.divMsgs {
+
+    @include container(95%, 5);
+
+    @import './Message';
+
+
+    section {
+
+        height: pixels-rem(180);
+
+        overflow-y: scroll;
+
+        div {
+
+            @import './Msg';
+        }
+    }
+
+
+}

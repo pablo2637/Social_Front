@@ -7,12 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "jsdoc": "jsdoc -c jsdoc.conf.json",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "@react-firebase/auth": "^0.2.10",
     "@reduxjs/toolkit": "^1.9.5",
     "firebase": "^9.20.0",
+    "jsdoc-react": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -21,14 +24,24 @@
     "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-react": "^7.18.6",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0-beta.0",
+    "babel-jest": "^29.5.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "jsdoc": "^4.0.2",
     "sass": "^1.62.1",
-    "vite": "^4.3.0"
+    "vite": "^4.3.0",
+    "whatwg-fetch": "^3.6.2"
   }
 }

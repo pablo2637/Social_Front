@@ -39,7 +39,7 @@ export const useFriends = () => {
         newFriends.map(fr => {
             if (fr._id == friendID) {
                 fr.show = show //: fr.show = fr.show)
-                setLastChat(fr._id);
+                // setLastChat(fr._id);
             }
 
         })

@@ -57,9 +57,6 @@ export const HomeUserPage = () => {
         </section>
 
       </section>
-      {/* 
-      <NavLink to='/editData'>Edita tus datos personales</NavLink>
-      <NavLink to='/meet'>Conocer Gente</NavLink> */}
 
       <Invites />
 
