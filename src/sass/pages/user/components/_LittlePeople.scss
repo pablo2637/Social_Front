@@ -13,6 +13,21 @@
         margin-bottom: pixels-rem(5);
     }
 
+    .pLPDate {
+        text-align: center;
+        color: $user-date;
+        font-size: pixels-rem(12);
+        margin-bottom: pixels-rem(5);
+    }
+
+    .pLPSender,
+    .pLPReceiver {
+        text-align: center;
+        color: $user-date;
+        font-size: pixels-rem(17);
+        margin-bottom: pixels-rem(5);
+    }
+
     div {
         width: pixels-rem(50);
         height: pixels-rem(50);

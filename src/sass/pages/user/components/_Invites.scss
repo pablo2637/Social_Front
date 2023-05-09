@@ -1,0 +1,81 @@
+@import '../../../base/settings';
+
+.secInvites {
+
+    @include container (95%, 0);
+
+    h2 {
+        text-align: center;
+        font-size: pixels-rem(28);
+        margin-top: pixels-rem(10);
+        padding: pixels-rem(10);
+        border-bottom: 1px dotted $bg;
+    }
+
+    .divInvSent,
+    .divInvReceived {
+        margin: pixels-rem(25) 0;
+
+        h3 {
+            font-size: pixels-rem(22);
+            color: $user-name;
+            border-bottom: 1px dotted $bg ;
+        }
+
+        article {
+
+            @import "./LittlePeople";
+
+            .divBtns {
+                @include flexbox(center, row, 5);
+
+                button {
+                    @include boton-multi();
+                    text-align: center;
+                    padding: pixels-rem(5);
+                    width: pixels-rem(120);
+
+                    i {
+                        color: $error-bad;
+                    }
+                }
+
+
+                button:hover {
+                    @include boton-multi-hover();
+                }
+            }
+        }
+
+        .divNoInv {
+
+            @include flexbox(center, column, 5);
+
+            p {
+                margin: pixels-rem(15) 0;
+                font-style: italic;
+                color: $error;
+            }
+
+            a {
+                display: block;
+                @include boton-multi();
+                text-align: center;
+                padding: pixels-rem(5);
+                width: pixels-rem(200);
+                text-decoration: none;
+                font-size: pixels-rem(15);
+
+                i {
+                    color: $error-bad;
+                }
+            }
+
+            a:hover {
+                @include boton-multi-hover();
+            }
+        }
+
+    }
+
+}

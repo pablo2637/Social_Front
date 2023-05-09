@@ -153,6 +153,11 @@ export const EditProfile = () => {
 
             <h2>Edita tu perfil Público:</h2>
 
+
+            <div>
+                <img src="../../assets/bg-chat.png" alt="Imagen de portada de perfiles" />
+            </div>
+
             {validate &&
                 <p className="errorProfile">{validate}</p>
             }

@@ -1,0 +1,48 @@
+@import '../../base/settings';
+
+
+.secUsers {
+
+    @include container(95%, 0);
+
+    h2 {
+        font-size: pixels-rem(25);
+        margin-top: pixels-rem(10);
+        padding: pixels-rem(10);
+        border-bottom: 1px dotted $bg;
+    }
+
+    article {
+
+
+        @import '../user/components/Profile';
+        @import '../user/components/Message';
+
+        p {
+            padding: pixels-rem(5);
+        }
+
+
+
+
+        div {
+
+            @include grid(1fr, center, center, 5, 2);
+
+            div {
+                img {
+                    @include image(contain);                    
+                }
+            }
+
+
+            button {
+                @include boton-multi();
+                padding: pixels-rem(5);
+            }
+        }
+
+    }
+
+
+}

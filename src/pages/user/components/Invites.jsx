@@ -5,12 +5,14 @@ import { useInvites } from "../hooks/useInvites";
 import { NavLink } from "react-router-dom";
 import { LittlePeople } from "./";
 
+
 export const Invites = () => {
 
     const { invites, profiles } = useSelector((state) => state.users);
-    const { user } = useSelector((state) => state.auth);
+    const { user, isLoading } = useSelector((state) => state.auth);
     const [myInvitesSent, setMyInvitesSent] = useState([]);
     const [myInvitesReceived, setMyInvitesReceived] = useState([]);
+
     const {
         handleRemove,
         handleRespond,
@@ -20,8 +22,6 @@ export const Invites = () => {
 
     const filterInvites = () => {
 
-        // if (invites && user._id) {
-        //     console.log('invite && user', invites, user)
         const filterS = [];
         const filterR = [];
         invites.forEach(inv => {
@@ -44,7 +44,6 @@ export const Invites = () => {
 
         setMyInvitesSent(filterS);
         setMyInvitesReceived(filterR);
-        // }
 
     };
 
@@ -56,55 +55,79 @@ export const Invites = () => {
 
     return (
 
-        <section >
+        <section className="secInvites">
 
             <h2>Invitaciones:</h2>
 
-
             <p>{msg}</p>
 
-            <h3>Enviadas:</h3>
 
-            {
-                (myInvitesSent.length > 0) ?
+            <div className="divInvSent">
 
-                    myInvitesSent.map(inv =>
+                <h3>Enviadas:</h3>
 
-                        < article key={`iS-${inv._id + Date.now()}`} >
-                            <LittlePeople date={inv.date} receiver={inv.name} image={inv.image} />
+                {
+                    (myInvitesSent.length > 0) ?
 
-                            <button onClick={() => handleRemove(inv._id)}>Retirar</button>
-                        </article>
-                    )
+                        myInvitesSent.map(inv =>
 
-                    :
-                    <div>
-                        <p>No has enviado solicitudes aún...</p>
+                            < article key={`iS-${inv._id + Date.now()}`} >
+                                <LittlePeople date={inv.date} receiver={inv.name} image={inv.image} />
 
-                        <NavLink to='/meet'>Conocer Gente</NavLink>
-                    </div>
-            }
 
-            <h3>Recibidas:</h3>
+                                <div className="divBtns">
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleRemove(inv._id)}
+                                    ><i className="fa-solid fa-heart-crack"></i> Retirar solicitud</button>
+                                </div>
+                            </article>
+                        )
 
-            {
-                (myInvitesReceived.length > 0) ?
+                        :
 
-                    myInvitesReceived.map(inv =>
+                        <div className="divNoInv">
+                            <p>No has enviado solicitudes aún...</p>
 
-                        < article key={`iR-${inv._id + Date.now()}`} >
-                            <LittlePeople date={inv.date} sender={inv.name} image={inv.image} />
+                            <NavLink to='/meet'><i className="fa-regular fa-handshake"></i> Conocer Gente</NavLink>
+                        </div>
+                }
+            </div>
 
-                            <button onClick={() => handleRespond(inv.sender, user._id, inv._id, true)} >Aceptar</button>
-                            <button onClick={() => handleRespond(inv.sender, user._id, inv._id, false)} >Rechazar</button>
-                        </article>
-                    )
 
-                    :
-                    <div>
-                        <p>No tienes invitaciones pendientes...</p>
-                    </div>
-            }
+            <div className="divInvReceived">
+
+                <h3>Recibidas:</h3>
+
+                {
+                    (myInvitesReceived.length > 0) ?
+
+                        myInvitesReceived.map(inv =>
+
+                            < article key={`iR-${inv._id + Date.now()}`} >
+                                <LittlePeople date={inv.date} sender={inv.name} image={inv.image} />
+
+                                <div className="divBtns">
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleRespond(inv.sender, user._id, inv._id, true)}
+                                    ><i className="fa-solid fa-heart  fa-beat-fade"></i> Aceptar</button>
+                                    <button
+                                        disabled={(isLoading) ? true : false}
+                                        onClick={() => handleRespond(inv.sender, user._id, inv._id, false)}
+                                    ><i className="fa-solid fa-skull-crossbones"></i> Rechazar</button>
+                                </div>
+                            </article>
+                        )
+
+                        :
+
+                        <div className="divNoInv">
+                            <p>No tienes invitaciones pendientes...</p>
+                        </div>
+                }
+
+            </div>
 
 
         </section >

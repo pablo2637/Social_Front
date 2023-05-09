@@ -1,0 +1,82 @@
+@import '../../base/settings';
+
+.secMessages {
+    @include container(95%, 0);
+
+    h2 {
+        font-size: pixels-rem(25);
+        margin-top: pixels-rem(10);
+        padding: pixels-rem(10);
+        border-bottom: 1px dotted $bg;
+    }
+
+    .divRoot {
+        margin-top: pixels-rem(15);
+        font-weight: bold;
+
+        a {
+            text-decoration: none;
+            color: $font-col;
+        }
+
+    }
+
+    div {
+        @include container(100%, 0);
+
+        img {
+            @include image(contain);
+        }
+    }
+
+    h3 {
+        font-size: pixels-rem(18);
+        background-color: $nav-font-col;
+        text-align: center;
+        box-shadow: 0 0 10px $bg-title;
+        color: $bg;
+        margin: pixels-rem(30) 0;
+        padding: pixels-rem(5);
+        border-bottom: 1px dotted $bg;
+        border-radius: pixels-rem(5);
+    }
+
+    .divCont {
+        @include grid(0.3fr 0.7fr, center, start, 2, 0);
+        border: 1px solid black;
+
+        .divChild1 {
+            @import './components/LittlePeople';
+            grid-column: 1 / 2;
+            @include flexbox(center, column, 0);
+
+
+            button {
+                width: 90%;
+                @include boton-multi();
+                padding: pixels-rem(5);
+                margin-bottom: pixels-rem(10);
+                font-size: pixels-rem(15);
+
+                i {
+                    color: $error-bad;
+                }
+            }
+
+            button:hover {
+                @include boton-multi-hover();
+            }
+        }
+
+
+        // .divChild2 {
+            @import './components/Msgs';
+            .divMsgs {
+                grid-column: 2 / 3;
+                // grid-row: 1 / -1;                
+            }
+        //     @include flexbox(start, column, 0);
+        // }
+    }
+
+}
