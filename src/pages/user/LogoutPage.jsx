@@ -9,8 +9,8 @@ export const LogoutPage = () => {
 
     const { socket } = useContext(SocketContext);
 
-    const logout = () => {
-        logoutUser();
+    const logout = async () => {
+        await logoutUser();
         socket.emit('byeBye');
     }
 

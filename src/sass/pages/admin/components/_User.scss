@@ -1,0 +1,158 @@
+@import '../../../base/settings';
+
+.artUser {
+
+    border-bottom: 1px dotted $bg;
+    margin: pixels-rem(30) 0 pixels-rem(50);
+    background-image: linear-gradient(transparent, $bg-font-col, transparent);
+
+    header {
+        border-radius: pixels-rem(10);
+        background-image: linear-gradient(to right, $user-bg-header, transparent);
+        height: pixels-rem(75);
+        box-shadow: 0px 3px 10px black;
+
+        h3 {
+            font-size: pixels-rem(22);
+            text-indent: pixels-rem(5);
+            color: $bg;
+            padding: pixels-rem(15);
+        }
+
+        .divUserImage {
+            border-radius: 100px;
+            box-shadow: 0px 3px 10px black;
+            position: static;
+            transform: translate(pixels-rem(-5), pixels-rem(-25));
+            float: right;
+            width: pixels-rem(80);
+            height: pixels-rem(80);
+
+            img {
+                @include border($bg, 100);
+                @include image(contain);
+            }
+        }
+    }
+
+    main {
+        margin: pixels-rem(10) 0;
+
+        // margin-bottom: pixels-rem(15);
+
+        .divUser {
+            @include container(95%, 0);
+
+            p {
+                font-size: pixels-rem(12);
+                padding: pixels-rem(5);
+            }
+
+            h4 {
+                font-size: pixels-rem(18);
+                color: $prof-text;
+                margin-top: pixels-rem(15);
+            }
+
+            ul {
+
+                margin: pixels-rem(10) 0;
+
+                li {
+                    margin-left: pixels-rem(25);
+
+                    a {
+                        @include boton();
+                        padding: pixels-rem(5);
+                        width: pixels-rem(150);
+                        margin-top: pixels-rem(5);
+                        display: block;
+                        text-decoration: none;
+                    }
+
+                    a:hover {
+                        @include boton-hover();
+                    }
+                }
+            }
+
+
+            .secInvites {
+
+                article {
+                    @include grid(0.5fr 0.4fr 0.1fr, left, center, 0, 0);
+                    border-bottom: 1px dotted $bg;
+
+                    p a {
+                        @include boton();
+                        padding: pixels-rem(5);
+                        width: pixels-rem(150);
+                        display: inline-block;
+                        text-decoration: none;
+                    }
+
+                    p a:hover {
+                        @include boton-hover();
+                    }
+
+                    button {
+                        @include boton-ico();
+                        color: $error-bad;
+                    }
+
+                    button:hover {
+                        @include boton-ico-hover();
+                    }
+                }
+
+                h5 {
+                    font-size: pixels-rem(14);
+                    text-indent: pixels-rem(5);
+                    margin: pixels-rem(10) 0;
+                }
+
+
+            }
+
+            @import '../../user/components/Profile';
+
+        }
+
+
+        .divWarning {
+
+
+            p {
+                color: $error-bad;
+                margin-top: pixels-rem(15);
+                text-align: center;
+            }
+        }
+
+
+        @import '../../user/components/Message';
+
+    }
+
+
+
+    .divBtns {
+        margin-top: pixels-rem(15);
+        @include grid(1fr 1fr, center, center, 5, 2);
+
+        button {
+            @include boton-multi();
+            padding: pixels-rem(5);
+            margin: 0 auto;
+            width: 90%;
+
+            i {
+                color: $error-bad;
+            }
+        }
+
+        button:hover {
+            @include boton-multi-hover();
+        }
+    }
+}

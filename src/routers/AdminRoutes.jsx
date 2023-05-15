@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { HomePageAdmin, Users } from '../pages/admin';
+import { HomePageAdmin, UserDetail, Users } from '../pages/admin';
 import { LogoutPage } from '../pages/user';
 
 
@@ -18,6 +18,12 @@ export const AdminRoutes = () => {
                     path='users'
                     element={<Users />}
                 />
+
+                <Route
+                    path='detail/:_id'
+                    element={<UserDetail />}
+                />
+
 
                 <Route
                     path='logout'

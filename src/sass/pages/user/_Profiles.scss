@@ -22,13 +22,7 @@
 
     }
 
-    div {
-        @include container(100%, 0);
-
-        img {
-            @include image(contain);
-        }        
-    }
+   @include img-front();
 
     @import './components/Profile';
 }

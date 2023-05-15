@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 /**
  * Pagina de login de usuarios
- * @metod LoginPage
+ * @method LoginPage
  * @returns La página para realizar el login
  */
 export const LoginPage = () => {
@@ -84,6 +84,7 @@ export const LoginPage = () => {
     <section className='secLogin'>
 
       <h2>Loguéate para continuar:</h2>
+
 
       <div className='divContainer'>
 

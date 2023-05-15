@@ -82,11 +82,14 @@ export const fetchRespondInvite = async (invite) => {
 };
 
 
-export const fetchRemoveInvite = async (_id) => {
+export const fetchRemoveInvite = async (_id, isAdmin) => {
 
     const data = {
         type: 'removeInvite',
-        body: _id
+        body: {
+            _id,
+            isAdmin
+        }
     }
 
     const response = await userAPI(data);
@@ -294,14 +297,15 @@ export const fetchDataMsgs = async (_id) => {
 
 
 
-export const fetchDataSendMsg = async (msg, from, _id) => {
+export const fetchDataSendMsg = async (msg, from, _id, isAdmin) => {
 
     const data = {
         type: 'sendMsg',
         body: {
             from,
             msg,
-            _id
+            _id,
+            isAdmin
         }
     };
 

@@ -1,4 +1,3 @@
-export * from './Chats';
 export * from './ChatBox';
 
 export * from './LittlePeople';
@@ -15,3 +14,4 @@ export * from './Msgs';
 export * from './ProfileElement';
 export * from './PrivateProfile';
 export * from './Profile';
+export * from './UserDetail';

@@ -1,17 +1,25 @@
 @import '../../../base/settings';
 
 .secMessage {
-    border-top: 1px solid $bg;
+    width: pixels-rem(400);
+    margin: 0 auto;
+    position: static;
+    background-color: $msg-bg;
+    @include border($bg, 5);
+    box-shadow: 2px 2px 10px black;
     padding: pixels-rem(5);
+    z-index: 100;
 
     h4 {
         font-size: pixels-rem(17);
         text-align: center;
         margin: pixels-rem(10) 0;
-        color: $bg-nav;
+        color: $nav-font-col;
     }
 
     p {
+        color: $nav-font-col-act;
+
         span {
             font-weight: bold;
             font-style: italic;
@@ -26,13 +34,15 @@
             width: 100%;
             height: pixels-rem(60);
             text-indent: pixels-rem(5);
+            padding: pixels-rem(5);
             @include border($bg, 5);
         }
 
         input {
             margin: pixels-rem(8) 0;
-            @include boton();
+            @include boton-multi();
             padding: pixels-rem(5);
+            width: pixels-rem(120);
         }
 
         input:hover {
@@ -42,6 +52,6 @@
 
     .pMsgSent {
         text-align: center;
-        color: $error-bad;
+        color: $msg-sent;
     }
 }

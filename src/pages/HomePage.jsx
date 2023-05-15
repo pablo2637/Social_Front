@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 /**
  * Pagina de principal pública de usuarios
- * @metod HomePage
+ * @method HomePage
  * @returns La página para visualizar los perfiles públicos de los usuarios
  */
 export const HomePage = () => {
@@ -36,7 +36,7 @@ export const HomePage = () => {
       <div >
         <img src="../../assets/bg1.png" alt="Imagen de portada" />
         <div>
-          <h1> <NavLink to='/login'>Bienvenido a Social Connect</NavLink></h1>
+          <h1> <NavLink to='/login'>Social Connect</NavLink></h1>
         </div>
       </div>
 

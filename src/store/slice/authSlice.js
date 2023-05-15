@@ -58,7 +58,7 @@ export const authSlice = createSlice({
         },
 
         onLoadMsgs: (state, { payload }) => {
-            state.user.msgs = payload;
+            state.user.msgs = payload;            
             state.isLoading = false;
         },
 

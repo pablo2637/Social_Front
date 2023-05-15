@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Message, Profile } from "../../user/components";
+import { Message } from "../../user/components";
 import { useAdmin } from "../hooks/useAdmin";
+import { getUserData } from "../../user/helpers/getUserData";
+import { useInvites } from "../../user/hooks/useInvites";
+import { NavLink } from "react-router-dom";
 
 
 /**
@@ -11,14 +14,21 @@ import { useAdmin } from "../hooks/useAdmin";
 
 /**
  * Componente que renderiza un usuario
- * @metod User
+ * @method User
  * @param {String} _id El ID del usuario a mostrar
  * @returns Todos los datos del usuario, con opción de enviarle un mensaje o eliminarlo
  */
 export const User = ({ _id }) => {
 
-    const { users } = useSelector((state) => state.users);
+    const { users, invites, profiles } = useSelector((state) => state.users);
     const [userAdm, setUserAdmn] = useState([]);
+
+    const [myInvitesSent, setMyInvitesSent] = useState([]);
+    const [myInvitesReceived, setMyInvitesReceived] = useState([]);
+
+    const {
+        handleRemove
+    } = useInvites();
 
     const {
         msg,
@@ -29,12 +39,42 @@ export const User = ({ _id }) => {
         warning
     } = useAdmin();
 
+
     const getFriendName = friendID => {
 
         const friend = users.find(u => u._id == friendID)?.name;
 
         return friend;
     };
+
+
+    const filterInvites = () => {
+
+        const filterS = [];
+        const filterR = [];
+        invites.forEach(inv => {
+
+            if (inv.sender == _id) {
+                const data = getUserData(inv.receiver, profiles);
+                if (!data) return
+                const { name, image } = data
+                filterS.push({ ...inv, name, image })
+
+
+            } else if (inv.receiver == _id) {
+                const data = getUserData(inv.sender, profiles);
+                if (!data) return
+                const { name, image } = data
+                filterR.push({ ...inv, name, image })
+            }
+
+        });
+
+        setMyInvitesSent(filterS);
+        setMyInvitesReceived(filterR);
+
+    };
+
 
 
     const loadUser = async () => {
@@ -56,64 +96,177 @@ export const User = ({ _id }) => {
 
 
     useEffect(() => {
-        loadUser();
+        console.log('filter')
+        filterInvites();
 
-    }, []);
+    }, [invites]);
+
+
+    useEffect(() => {
+        loadUser();
+        filterInvites();
+
+    }, [_id]);
 
 
     return (
-        <article key={Date.now()}>
 
-            <p>{msg}</p>
+        <article className="artUser" key={`adminUser${_id}`}>
 
             {(userAdm._id) &&
                 <>
-                    <div>
+                    <header>
 
-                        <h3>Nombre: {userAdm.name}</h3>
-                        <p>_ID: {userAdm._id}</p>
-                        <p>UID: {userAdm.uid}</p>
-                        <p>Email: {userAdm.email}</p>
-                        <p>Relaciones:</p>
-                        <ul>
-                            {
-                                (userAdm.friends) &&
-                                userAdm.friends.map(fr =>
-                                    <li key={`a${fr}${Date.now()}`}><button>{getFriendName(fr)}</button></li>
-                                )
-                            }
-                        </ul>
-                        <div>
-                            <img src={userAdm.image} alt={`Imagen de ${userAdm.name}`} width={50} />
+                        <h3>{userAdm.name}</h3>
+                        <div className="divUserImage">
+                            <NavLink to={`/detail/${_id}`} >
+                                <img src={userAdm.image} alt={`Imagen de ${userAdm.name}`} />
+                            </NavLink>
                         </div>
 
-                        <Profile key={`pd${userAdm.uid}${Date.now()}`} profile={userAdm.profile} />
+                    </header>
 
 
-                    </div>
-                    <div>
-                        {
-                            (sendMsg) ?
-                                <button onClick={handleOnWriteMessage} >Cancelar Mensaje</button>
-                                :
-                                <button onClick={handleOnWriteMessage} >Enviar Mensaje</button>
+                    <main>
+
+                        <div className="divUser">
+
+                            <p>_ID: {userAdm._id}</p>
+                            <p>UID: {userAdm.uid}</p>
+                            <p>Email: {userAdm.email}</p>
+
+                            <h4>Relaciones:</h4>
+
+                            <ul>
+                                {
+                                    (userAdm.friends) &&
+                                    userAdm.friends.map(fr =>
+                                        <li key={`a${fr}${Date.now()}`}><NavLink to={`/detail/${fr}`} >{getFriendName(fr)}</NavLink></li>
+                                    )
+                                }
+                            </ul>
+
+
+                            <h4>Invitaciones:</h4>
+
+                            <section className="secInvites">
+
+                                <h5>Enviadas:</h5>
+                                {
+                                    (myInvitesSent.length > 0) ?
+
+                                        myInvitesSent.map(inv =>
+
+                                            <article key={inv.receiver + inv._id}>
+                                                <p>A: <NavLink to={`/detail/${inv.receiver}`} >{inv.name}</NavLink></p>
+                                                <p>{new Date(inv.date).toLocaleString()} hrs.</p>
+
+                                                <button
+                                                    onClick={() => handleRemove(inv._id, true)}
+                                                ><i className="fa-solid fa-trash"></i>
+                                                </button>
+                                            </article>
+
+                                        )
+
+                                        :
+                                        <p>---</p>
+                                }
+
+
+                            </section>
+
+
+                            <section className="secInvites">
+
+                                <h5>Recibidas:</h5>
+
+                                {
+
+                                    (myInvitesReceived.length > 0) ?
+
+                                        myInvitesReceived.map(inv =>
+
+                                            <article key={inv.sender + inv._id}>
+                                                <p>De: <NavLink to={`/detail/${inv.sender}`} >{inv.name}</NavLink></p>
+                                                <p>{new Date(inv.date).toLocaleString()} hrs.</p>
+
+                                                <button
+                                                    onClick={() => handleRemove(inv._id, true)}
+                                                ><i className="fa-solid fa-trash"></i>
+                                                </button>
+                                            </article>
+
+                                        )
+
+                                        :
+                                        <p>---</p>
+                                }
+
+                            </section>
+
+
+                        </div>
+
+                        <div className="divBtns">
+                            {
+                                (sendMsg) ?
+
+                                    <button
+                                        onClick={handleOnWriteMessage}
+                                    ><i className="fa-solid fa-rectangle-xmark"></i> Cancelar Envío
+                                    </button>
+
+                                    :
+
+                                    <button
+                                        onClick={handleOnWriteMessage}
+                                    ><i className="fa-solid fa-envelope"></i> Enviar Mensaje
+                                    </button>
+                            }
+
+                            {
+                                (warning) ?
+
+                                    <button
+                                        onClick={handleOnAttemptToRemove}
+                                    ><i className="fa-solid fa-rectangle-xmark"></i> Cancelar Eliminar
+                                    </button>
+
+                                    :
+
+                                    <button
+                                        onClick={handleOnAttemptToRemove}
+                                    ><i className="fa-solid fa-user-minus"></i> Eliminar Usuario
+                                    </button>
+                            }
+
+
+                        </div>
+
+                        {(warning) &&
+                            <div className="divWarning">
+                                <p>¿Estas seguro de eliminar a este usuario?</p>
+
+                                <div className="divBtns">
+                                    <button
+                                        onClick={() => handleOnRemoveUser(userAdm._id, userAdm.uid)}
+                                    >Sí <i className="fa-solid fa-skull-crossbones"></i>
+                                    </button>
+                                    <button
+                                        onClick={handleOnAttemptToRemove}
+                                    >No <i className="fa-solid fa-rectangle-xmark"></i>
+                                    </button>
+                                </div>
+                            </div>
                         }
 
-                        <button disabled={(warning) ? true : false} onClick={handleOnAttemptToRemove} >Eliminar Usuario</button>
-                    </div>
+                        {
+                            (sendMsg) &&
+                            <Message {...userAdm} isAdmin={true} />
+                        }
+                    </main>
 
-                    {(warning) &&
-                        <div>
-                            <p>¿Estas seguro de eliminar a este usuario?</p>
-                            <button onClick={() => handleOnRemoveUser(userAdm._id, userAdm.uid)}>Sí, Eliminar</button>
-                            <button onClick={handleOnAttemptToRemove} >No, Cancelar</button>
-                        </div>
-                    }
-
-                    {
-                        (sendMsg) &&
-                        <Message {...userAdm} />
-                    }
                 </>
             }
 

@@ -10,11 +10,11 @@ export const ChatBox = ({ _id, name }) => {
   const { user } = useSelector((state) => state.auth);
   const { profiles } = useSelector((state) => state.users);
 
-  const [chatIndex, setChatIndex] = useState(0);
+  const [chatIndex, setChatIndex] = useState(null);
   const [chat, setChat] = useState([]);
   const [lastLine, setLastLine] = useState(0)
 
-  const { openChat, sendMsg } = useSocketStore();
+  const { openChat, sendMsg, findChat } = useSocketStore();
 
 
 
@@ -107,8 +107,8 @@ export const ChatBox = ({ _id, name }) => {
     ev.preventDefault();
 
     if (ev.target.text.value == '') return
-
-    sendMsg(ev.target.text.value, chatIndex, _id);
+    console.log('send ', ev.target.text.value, chatIndex, _id, user._id)
+    sendMsg(ev.target.text.value, chatIndex, _id, user._id);
     ev.target.reset();
 
     // prepChat(chats[chatIndex]);
@@ -117,15 +117,22 @@ export const ChatBox = ({ _id, name }) => {
 
 
 
-  const getIndex = async () => {
+  const getIndex = () => {
 
-    const ind = await openChat(user._id, _id);
-    console.log('ind', ind)
+    // const ind = openChat(user._id, _id);
+    const ind = findChat(user._id, _id);
+    console.log('getindex ind', ind)
     setChatIndex(ind);
     prepChat(chats[ind]);
 
   };
 
+  useEffect(() => {
+    console.log('effect chatindex', chatIndex)
+    if (chatIndex == -1 || !chatIndex)
+      getIndex();
+
+  }, [chats]);
 
 
   useEffect(() => {
@@ -138,7 +145,8 @@ export const ChatBox = ({ _id, name }) => {
 
 
   useEffect(() => {
-    getIndex();
+    // getIndex();
+    openChat(user._id, _id);
 
   }, []);
 
@@ -165,7 +173,7 @@ export const ChatBox = ({ _id, name }) => {
 
                 chat.chat.map((ch, ind) =>
 
-                  <tr key={ind + Date.now()} >
+                  <tr key={ind + 'chat'} >
                     <td className={`${ch.orientation} chat-${ch.type}`}>
                       {
                         ch.content

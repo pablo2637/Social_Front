@@ -37,9 +37,9 @@ export const useInvites = () => {
     };
 
 
-    const handleRemove = async (_id) => {
+    const handleRemove = async (_id, isAdmin) => {
 
-        const response = await fetchRemoveInvite({ _id });
+        const response = await fetchRemoveInvite(_id, isAdmin);
         console.log('reponse remove', response)
 
         if (!response.ok) {
@@ -54,7 +54,7 @@ export const useInvites = () => {
         }, 3000)
 
         await loadInvites();
-        await loadFriends(receiver);
+        // await loadFriends(receiver);
     };
 
 

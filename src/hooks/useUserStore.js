@@ -27,6 +27,7 @@ import { SocketContext } from "../contexts/SocketContext";
 export const useUserStore = () => {
 
   const { profiles } = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { socket } = useContext(SocketContext);
 
@@ -94,7 +95,7 @@ export const useUserStore = () => {
   * @param {Object} formData Los datos del formulario sin serializar
   * @returns {json} ok y user
   */
-  const updateUserProfile = async (formData,) => {
+  const updateUserProfile = async (formData) => {
 
     dispatch(onUpdatingProfile());
 
@@ -139,7 +140,7 @@ export const useUserStore = () => {
   * @param {Object} formData Los datos del formulario sin serializar
   * @returns {json} ok y user
   */
-  const updateUserPrivateProfile = async (formData,) => {
+  const updateUserPrivateProfile = async (formData) => {
 
     dispatch(onUpdatingProfile());
 
@@ -181,7 +182,6 @@ export const useUserStore = () => {
   * Hace el fetch para cargar los chats de un usuario
   * @method loadChats
   * @async
-  * @param {String} _id El ID del usuario para recuperar sus chats
   * @returns {json} ok 
   */
   const loadChats = async (_id) => {
@@ -210,7 +210,6 @@ export const useUserStore = () => {
     * Hace el fetch para cargar los amigos de un usuario
     * @method loadFriends
     * @async
-    * @param {String} _id El ID del usuario para recuperar sus amigos
     * @returns {json} ok 
     */
   const loadFriends = async (_id) => {
@@ -238,14 +237,12 @@ export const useUserStore = () => {
     * Hace el fetch para cargar los mensajes de un usuario
     * @method loadMsgs
     * @async
-    * @param {String} _id El ID del usuario para recuperar sus mensajes
     * @returns {json} ok 
     */
-  const loadMsgs = async (_id) => {
+  const loadMsgs = async () => {
 
-    console.log('_id', _id)
-    const msgs = await fetchDataMsgs(_id);
-    console.log('msgs response', msgs)
+    const msgs = await fetchDataMsgs(user._id);
+
     if (!msgs.ok)
       return {
         ok: false,
@@ -276,7 +273,6 @@ export const useUserStore = () => {
     dispatch(onLoadingUsers());
 
     const users = await fetchGetUsers();
-    console.log('users', users)
 
     if (!users.ok)
       return {

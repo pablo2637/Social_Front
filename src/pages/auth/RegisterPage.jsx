@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 
 /**
  * Pagina de registro de usuarios
- * @metod RegisterPage
+ * @method RegisterPage
  * @returns La página para realizar el registro de un nuevo usuario
  */
 export const RegisterPage = () => {

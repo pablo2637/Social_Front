@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { SocketProvider } from './contexts/SocketProvider.jsx';
 import './sass/styles.scss';
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 

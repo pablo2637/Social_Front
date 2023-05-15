@@ -8,7 +8,7 @@ import { User } from "./components";
 
 /**
  * Pagina de usuarios 
- * @metod Users
+ * @method Users
  * @returns Una vista mas detallada de los usuarios
  */
 export const Users = () => {
@@ -25,7 +25,7 @@ export const Users = () => {
             {(users) &&
                 users.map(u =>
                     (!u.isAdmin) &&
-                    <User key={`${u._id}${Date.now()}`} _id={u._id} />
+                    <User key={`users${u._id}`} _id={u._id} />
                 )
             }
 

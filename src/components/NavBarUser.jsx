@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Chats, Friends } from '../pages/user/components';
+import { Friends } from '../pages/user/components';
 
 
 /**
@@ -161,7 +161,7 @@ export const NavBarUser = () => {
                                         >Mis Relaciones
                                         </NavLink>
                                     </li>
-                                    
+
                                     <li>
                                         <NavLink
                                             to='/messages'

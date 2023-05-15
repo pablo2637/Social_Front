@@ -100,3 +100,27 @@
         }
     }
 }
+
+@mixin img-blur() {
+    opacity: 0.9;
+    filter: blur(3px);
+    mask-image: linear-gradient(transparent, $body-bg , transparent);
+    mask-image: linear-gradient(to Right, transparent, $body-bg , transparent);
+    -webkit-mask-image: linear-gradient(transparent, $body-bg , transparent);
+    -webkit-mask-image: linear-gradient(to Right, transparent, $body-bg , transparent);
+    transition: 500ms ease;
+}
+
+@mixin img-front() {
+
+    .imgContainer {
+        @include container(100%, 0);
+        position: absolute;
+        z-index: -1;
+
+        img {
+            @include image(contain);
+            @include img-blur();
+        }
+    }
+}

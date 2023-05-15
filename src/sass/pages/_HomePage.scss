@@ -1,24 +1,37 @@
 @import '../base/settings';
 
-.secHomePage {
 
-    div {
+.secHomePage {
+    height: 100%;
+    @include flexbox(center, column, 0);
+
+    div:first-child {
         @include container-img-texto($font-col, center, 45, 0);
 
-        h1 {
-            font-weight: bold;
-            text-shadow: 0 0 5px $bg-font-col;
-
-            a {
-                text-decoration: none;
-                color: $font-col;
-            }
-
-            a:hover {
-                color: $bg-font-col;
-                text-shadow: 0 0 5px $bg;
-            }
+        img {
+            @include img-blur();
         }
 
+        img:hover {
+            filter: blur(0);
+        }
+
+        div {
+
+            h1 {
+                font-weight: bold;
+                text-shadow: 0 0 5px $bg-font-col;
+
+                a {
+                    text-decoration: none;
+                    color: $font-col;
+                }
+
+                a:hover {
+                    color: $bg-font-col;
+                    text-shadow: 0 0 5px $bg;
+                }
+            }
+        }
     }
 }

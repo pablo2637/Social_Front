@@ -190,7 +190,8 @@ export const loginWithCredentials = async (email, password) => {
         };
 
     } catch (e) {
-        if (!e.toString().includes('auth/wrong-password'))
+        if (!e.toString().includes('auth/wrong-password')
+            && !e.toString().includes('auth/user-not-found'))
             console.log('loginWithCredentials error:', e);
 
         return {

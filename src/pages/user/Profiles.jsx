@@ -22,7 +22,7 @@ export const Profiles = () => {
 
             <h2>Perfiles:</h2>
 
-            <div>
+            <div className="imgContainer">
                 <img src="../../assets/profiles.png" alt="Imagen de portada de perfiles" />
             </div>
 

@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID, onNewChats, onChatActive } from '../store/slice/socketSlice';
+import { useContext } from 'react';
+
 import { useUserStore } from './useUserStore';
 import { useAuthStore } from './useAuthStore';
+
 import { SocketContext } from '../contexts/SocketContext';
-import { useContext } from 'react';
+
 import { getLocal, setLocalChats } from '../helpers/localStorage';
+
 import { onNewInvites } from '../store/slice/usersSlice';
 import { onUpdateUser } from '../store/slice/authSlice';
+import { onReconnectLimit, onSendMsg, onConnected, onConnecting, onConnectError, onDisconnect, onReconnect, onReconnectAttempt, onReconnectFailed, onSending, onLoadChats, onJoinChat, onUpdateID, onNewChats, onChatActive } from '../store/slice/socketSlice';
+
 
 /**
  * @author Pablo
@@ -36,22 +41,24 @@ export const useSocketStore = () => {
      * @async
      * @returns {json} OK
      */
-    const operations = () => {
+    const operations = async () => {
 
+        console.log('operations user', user)
         /**
          * Ejecuta instrucciones que llegan desde el servidor, para que el cliente vuelva a recargar información (ej: perfiles, invitaciones, chats, etc...)
          */
         socket.on('execute', (data) => {
 
+
             data.command.forEach(cmd => {
                 console.log('command:', cmd)
 
                 switch (cmd) {
-                    case 'profiles':                        
+                    case 'profiles':
                         loadProfiles();
                         break;
 
-                    case 'invites':                        
+                    case 'invites':
                         loadInvites();
                         dispatch(onNewInvites(true));
                         break;
@@ -61,34 +68,34 @@ export const useSocketStore = () => {
                         break;
 
                     case 'chats':
-                        if (!user) dispatch(onUpdateUser(getLocal()));
+                        // if (!user._id) dispatch(onUpdateUser(getLocal()));                        
                         loadChats(user._id);
                         break;
 
                     case 'msgs':
-                        if (!user) dispatch(onUpdateUser(getLocal()));
+                        // if (!user._id) dispatch(onUpdateUser(getLocal()));
                         loadMsgs(user._id)
                         break;
 
                     case 'friends':
-                        if (!user) dispatch(onUpdateUser(getLocal()));
+                        // if (!user._id) dispatch(onUpdateUser(getLocal()));
                         loadFriends(user._id)
                         break;
 
                     case 'identify':
-                        if (!user) dispatch(onUpdateUser(getLocal()));
+                        // if (!user._id) dispatch(onUpdateUser(getLocal()));
                         socket.emit('whoAmI', { userID: user._id })
                         break;
 
                     case 'all':
                         loadInvites();
                         loadProfiles();
-                        loadChats(user, _id);
+                        loadChats(user._id);
                         if (!user.isAdmin) loadUser(user.email);
                         break;
 
                     case 'logout':
-                        logoutUser();
+                        user = {};
                         break;
                 }
 
@@ -99,10 +106,12 @@ export const useSocketStore = () => {
 
 
         socket.on("connect", () => {
+            console.log('connect');
             dispatch(onConnected());
         });
 
         socket.on("disconnect", () => {
+            console.log('discon');
             dispatch(onDisconnect());
         });
 
@@ -124,6 +133,7 @@ export const useSocketStore = () => {
         });
 
         socket.on("connect_error", () => {
+            console.log('error conn');
 
             dispatch(onReconnectFailed());
 
@@ -141,13 +151,16 @@ export const useSocketStore = () => {
          * quíen es el usuario conectado y verificar las salas de chats
          */
         socket.on('whoAreYou', async () => {
+
             console.log('whoAreYou', user._id)
 
             if (user)
                 await socket.emit('whoAmI', { userID: user._id });
 
-            else
+            else {
+                console.log('whoAreYou getlocal');
                 dispatch(onUpdateUser(getLocal()));
+            }
         });
 
 
@@ -155,15 +168,37 @@ export const useSocketStore = () => {
         /**
          * Modifica el _id del chat
          */
-        socket.on('chatID', ({ _id, sender, receiver }) => {
-            console.log('chatID', _id, sender, receiver)
+        socket.on('chatID', (data) => {
+            console.log('chatID', data)
 
-            const ind = findChat(sender, receiver);
+            const ind = findChat(data.chat.sender, data.chat.receiver);
+            console.log('chatID ind', ind);
+            if (ind != -1) return
 
-            if (ind != -1) {
-                dispatch(onUpdateID({ _id, ind }));
-                dispatch(onChatActive(_id));
-            }
+            dispatch(onJoinChat([...chats, {
+                sender: data.chat.sender,
+                receiver: data.chat.receiver,
+                name: data.chat.name,
+                id_: data.chat._id,
+                chat: data.chat.chat
+            }]));
+
+            // const ind = findChat(sender, receiver);
+            // console.log('chatID ind', ind);
+
+            // if (ind != -1) {
+            // dispatch(onUpdateID({ _id, ind }));
+            // dispatch(onChatActive(_id));
+            // }
+
+
+            setLocalChats([...chats, {
+                sender: data.chat.sender,
+                receiver: data.chat.receiver,
+                name: data.chat.name,
+                id_: data.chat._id,
+                chat: data.chat.chat
+            }]);
         });
 
 
@@ -225,7 +260,7 @@ export const useSocketStore = () => {
      * @param {String} receiver ID del usuario que recibe la información
      * @returns {Number} índice del chat
      */
-    const openChat = async (sender, receiver) => {
+    const openChat = (sender, receiver) => {
 
         const ind = findChat(sender, receiver);
         console.log('ind', ind, chats[ind])
@@ -245,20 +280,20 @@ export const useSocketStore = () => {
         };
 
 
-        dispatch(onJoinChat([...chats, {
-            sender,
-            receiver,
-            name: `${sender}-${receiver}`,
-            chat: []
-        }]));
+        // dispatch(onJoinChat([...chats, {
+        //     sender,
+        //     receiver,
+        //     name: `${sender}-${receiver}`,
+        //     chat: []
+        // }]));
 
         console.log('newChatRoom', newChatRoom)
-        await socket.emit('newChat', newChatRoom);
+        socket.emit('newChat', newChatRoom);
 
 
-        setLocalChats(chats);
+        // setLocalChats(chats);
 
-        return chats.length;
+        // return chats.length;
     }
 
 
@@ -269,15 +304,15 @@ export const useSocketStore = () => {
      * @param {String} ind El ID del chat
      * @param {String} receiver El ID del usuario que va a recibir el mensaje
      */
-    const sendMsg = async (msg, ind, receiver) => {
+    const sendMsg = async (msg, ind, receiver, _id) => {
         console.log('msg', msg)
 
         const newMsg = {
             date: new Date(Date.now()).toLocaleString(),
-            sender: user._id,
+            sender: _id,
             receiver,
             msg,
-            msgSender: user._id
+            msgSender: _id
         };
 
         socket.emit('msgTo', { ...newMsg, _id: chats[ind]._id, name: chats[ind].name });
@@ -299,6 +334,7 @@ export const useSocketStore = () => {
     return {
         operations,
         sendMsg,
+        findChat,
         openChat,
         onConnect
     }

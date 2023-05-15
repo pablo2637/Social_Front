@@ -10,7 +10,7 @@ import { User } from "./components/";
 
 /**
  * Pagina principal del administrador
- * @metod HomePageAdmin
+ * @method HomePageAdmin
  * @returns El dashboard del administrador
  */
 export const HomePageAdmin = () => {
@@ -33,7 +33,8 @@ export const HomePageAdmin = () => {
 
   return (
 
-    <section>
+    <section className="secAdmin">
+
       <h1>Dashboard:</h1>
 
       <div>

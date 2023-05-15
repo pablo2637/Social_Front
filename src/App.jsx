@@ -6,15 +6,18 @@ import { useContext, useEffect, useState } from 'react';
 import { useSocketStore } from './hooks/useSocketStore';
 import { io } from 'socket.io-client';
 
+
 function App() {
 
   const { status, user, isLoading, isChecking } = useSelector((state) => state.auth);
-  const { isReceiving, isSending, isConnecting, connState } = useSelector((state) => state.socket)
+  const { isReceiving, isSending, isConnecting, connState, chats } = useSelector((state) => state.socket)
 
   const { socket, setSocket } = useContext(SocketContext);
   const { operations, onConnect } = useSocketStore();
   const [reconnect, setReconnect] = useState(false);
 
+
+  const [theme, setTheme] = useState(false);
 
 
   const handleOnReconnect = ({ target }) => {
@@ -63,8 +66,9 @@ function App() {
   }, [reconnect]);
 
 
-  useEffect(() => {
 
+  useEffect(() => {
+    console.log('socket', user);
     if (socket)
       operations();
 
@@ -74,7 +78,8 @@ function App() {
   return (
 
     <>
-      <header>
+
+      <header className='header'>
         <div>
 
           <div className='divLogo'>
@@ -88,7 +93,7 @@ function App() {
           (status === 'authenticated' || status === 'admin') &&
 
           <div className='divUserImage'>
-              <img key={Date.now()} src={user.image} title={`Foto de ${user.name}`} alt={`Foto de ${user.name}`} />
+            <img key={Date.now()} src={user.image} title={`Foto de ${user.name}`} alt={`Foto de ${user.name}`} />
           </div>
 
         }
@@ -109,9 +114,9 @@ function App() {
             <NavBar />
       }
 
-      <main>
+      <main className='main'>
         {
-          (connState == 'stop') &&
+          (connState == 'stop' || connState == 'disconnected') &&
           <div className='divReconnect'>
             <p>Fallo en la conexión al servidor</p>
             <button onClick={handleOnReconnect}><i className="fa-solid fa-arrows-rotate"></i> Reconectar</button>
@@ -136,7 +141,7 @@ function App() {
       </main>
 
 
-      <footer>
+      <footer className='footer'>
         <p>© Pablo Pace - 2023 {`- (${(socket) && socket.id})`} </p>
       </footer>
 

@@ -45,7 +45,7 @@ export const Meet = () => {
 
             <h2>Conocer Gente:</h2>
 
-            <div>
+            <div className="imgContainer">
                 <img src="../../assets/meet.png" alt="Imagen de portada de perfiles" />
             </div>
 

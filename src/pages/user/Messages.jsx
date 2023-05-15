@@ -68,7 +68,7 @@ export const Messages = () => {
 
       <h2>Mis Mensajes:</h2>
 
-      <div>
+      <div className="imgContainer">
         <img src="../../assets/msg.png" alt="Imagen de portada de perfiles" />
       </div>
 

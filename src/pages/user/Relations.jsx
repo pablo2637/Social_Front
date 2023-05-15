@@ -37,7 +37,7 @@ export const Relations = () => {
 
             <h2>Mis Relaciones:</h2>
 
-            <div>
+            <div className="imgContainer">
                 <img src="../../assets/relations.png" alt="Imagen de portada de perfiles" />
             </div>
 

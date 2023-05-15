@@ -22,13 +22,8 @@
         border-bottom: 1px dotted $bg;
     }
 
-    div {
-        @include container(100%, 0);
-
-        img {
-            @include image(contain);
-        }
-    }
+   
+    @include img-front();
 
     .errorProfile {
         padding: pixels-rem(10);

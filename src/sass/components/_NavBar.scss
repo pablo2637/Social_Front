@@ -1,8 +1,7 @@
 @import '../base/settings';
 
-nav {
-
-    background-color: $bg-nav;
+nav {    
+    background-color: $bg-nav;    
 
     .divNavContainer {
         @include grid(0.25fr 0.4fr 0.35fr, left, center, 0, 0);
@@ -36,11 +35,12 @@ nav {
                 img {
                     @include image(contain);
                     @include border($bg-font-col, 100);
-                }                
+                }
             }
         }
 
         .divStatus {
+            grid-column: 3 / 4;
             justify-self: right;
             @include grid(1fr 1fr 1fr, right, center, 0, 2);
             margin-right: pixels-rem(5);

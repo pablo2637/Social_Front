@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 /**
  * Componente que renderiza la barra de navegación pública
- * @metod NavBar
+ * @method NavBar
  * @returns La barra de navegación genéroca de la app
  */
 export const NavBar = () => {

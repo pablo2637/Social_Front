@@ -155,7 +155,7 @@ export const EditPrivateProfile = () => {
 
             <h2>Edita tu perfil Privado:</h2>
 
-            <div>
+            <div className="imgContainer">
                 <img src="../../assets/bg-chat.png" alt="Imagen de portada de perfiles" />
             </div>
 

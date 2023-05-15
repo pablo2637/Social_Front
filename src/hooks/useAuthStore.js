@@ -132,7 +132,9 @@ export const useAuthStore = () => {
 
 
         const { user } = await loadUser(email);
+        console.log('next 1');
         await loadInvites();
+        console.log('next 2');
         await loadChats(user._id);
 
 
