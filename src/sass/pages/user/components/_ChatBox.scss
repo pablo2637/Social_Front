@@ -1,4 +1,4 @@
-@import '../../../base/settings';
+// @import '../../../base/settings';
 
 .divChatBox {
 
@@ -32,7 +32,7 @@
             @include border($bg, 5);
             background-color: $input-bg;
 
-            @include container(98%, auto);
+            @include container(98%, 0);
 
             tbody {
 

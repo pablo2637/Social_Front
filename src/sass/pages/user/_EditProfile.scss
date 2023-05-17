@@ -1,4 +1,4 @@
-@import '../../base/settings';
+// @import '../../base/settings';
 
 .secEditProfile {
     @include container(95%, 10);
@@ -22,35 +22,89 @@
         border-bottom: 1px dotted $bg;
     }
 
-   
+
     @include img-front();
 
     .errorProfile {
+        position: absolute;   
+        width: 95%;
+        margin: 0 auto;
+        @include border($error-bad, 5);
         padding: pixels-rem(10);
+        font-size: pixels-rem(17);
+        background-color: $msg-bg;
         text-align: center;
-        color: $error-bad;
+        color: $nav-font-col-act;
     }
 
     form {
-
-        @include container(90%, 0);
+        @include container(95%, 0);
         margin-top: pixels-rem(20);
 
-        input:not([type="submit"]),
-        textarea {
-            width: 100%;
-            margin: pixels-rem(10) 0;
-            padding: pixels-rem(5);
-            border-radius: pixels-rem(5);
-            font-size: pixels-rem(12);
-            text-indent: pixels-rem(5);
-            @include border($bg, 5);
+        .divElProfile {            
+            @include grid(0.2fr 0.6fr 0.2fr, right, center, 0, 5);
 
+            input:not([type="submit"]),
+            textarea {
+                width: 100%;
+                background-color: $form-title;
+                margin: pixels-rem(10) 0;
+                padding: pixels-rem(5);
+                border-radius: pixels-rem(5);
+                font-size: pixels-rem(12);
+                text-indent: pixels-rem(5);
+                @include border($bg, 5);
+            }
+
+            label {
+                color: $prof-text;
+            }
+
+            div {
+                @include grid(1fr 1fr 1fr, space-around, center, 0, 0);
+                justify-self: left;
+
+                button {
+                    @include boton-ico();
+                    color: $bg;
+                    padding: 0 pixels-rem(2);
+                }
+
+                button:nth-child(2) {
+                    color: $error-bad;
+                    border-left: 1px dotted $bg;
+                    border-right: 1px dotted $bg;
+                }
+
+                button:hover {
+                    color: $input-bg;
+                    text-shadow: 0 0 5px $bg;
+                }
+            }
         }
 
-        .selected {
-            background-color: $input-bg;
+        .divElProfileSel {
+
+            @include grid(0.2fr 0.6fr 0.2fr, right, center, 0, 5);
+
+            label {
+                color: $prof-text;
+            }
+
+            .selected {
+                width: 100%;
+                color: $nav-font-col;
+                background-color: $prof-text;
+                margin: pixels-rem(10) 0;
+                padding: pixels-rem(5);
+                border-radius: pixels-rem(5);
+                font-size: pixels-rem(12);
+                text-indent: pixels-rem(5);
+                @include border($bg, 5);
+            }
         }
+
+
 
         .divBtnsForm {
             margin-top: pixels-rem(15);
@@ -74,6 +128,7 @@
                 button:hover {
                     @include boton-multi-hover();
                 }
+
             }
         }
 

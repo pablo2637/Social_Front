@@ -1,77 +1,122 @@
-@import '../../../base/settings';
+// @import '../../../base/settings';
 
-.secProfile {
+.secProfile,
+.secPrivateProfile {
     // @include border($bg, 6);
-    border-radius: pixels-rem(10);
-    border: 2px ridge $bg;
-    margin: pixels-rem(25) auto;
-    padding: pixels-rem(5);
-    background-color: $bg-prof;
+    // border-radius: pixels-rem(10);
+    // border: 2px ridge $bg;
+    // margin: pixels-rem(25) auto;
+    // padding: pixels-rem(5);
+    // background-color: $bg-prof;
 
-    .divName {
+
+    border-bottom: 1px dotted $bg;
+    margin: pixels-rem(30) 0 pixels-rem(50);
+    background-image: linear-gradient(transparent, $bg-font-col, transparent);
+
+    header {
+        border-radius: pixels-rem(10);
+        background-image: linear-gradient(to right, $user-bg-header, transparent);
+        height: pixels-rem(75);
+        box-shadow: 0px 3px 10px black;
+        margin-bottom: pixels-rem(45);
 
         h3 {
-            text-align: right;
-            font-size: pixels-rem(25);
-            color: $user-name;
-            border-bottom: 1px dotted $bg ;
+            font-size: pixels-rem(22);
+            text-indent: pixels-rem(5);
+            color: $bg;
+            padding: pixels-rem(15);
         }
+
 
         p {
             padding: pixels-rem(5);
+            margin-right: pixels-rem(5);
             color: $user-date;
             font-style: italic;
             text-align: right;
             font-size: pixels-rem(11);
         }
-    }
 
-    .divProfile {
+        .divUserImage {
+            border-radius: 100px;
+            box-shadow: 0px 3px 10px black;
+            position: static;
+            transform: translate(pixels-rem(-5), pixels-rem(-50));
+            float: right;
+            width: pixels-rem(80);
+            height: pixels-rem(80);
 
-        article {
-
-            .pText {
-                margin: pixels-rem(15) 0;
-                text-align: left;
-                text-indent: pixels-rem(3);
-                font-size: pixels-rem(15);
-                color: $prof-text;
-            }
-
-            .pTitle {
-                margin-top: pixels-rem(20);
-                background-color: $bg-title;
-                padding: pixels-rem(6) 0;
-                border-radius: pixels-rem(10);
-                font-weight: bold;
-                text-align: center;
-                font-size: pixels-rem(20);
-                color: $prof-title;
-            }
-
-            .pParagraph {
-                padding: 0 pixels-rem(10);
-                margin-top: pixels-rem(5);
-                font-style: italic;
-                text-align: justify;
-                font-size: pixels-rem(14);
-                color: $prof-para;
-            }
-
-            .divImageContainer {
-                margin: pixels-rem(30) auto;
-                @include border($user-name, 5);
-                background-color: $bg-img;
-                width: 98%;
-                height: pixels-rem(250);
-
-                img {
-                    @include image(contain);
-                    padding: pixels-rem(5);                    
-                }
-
+            img {
+                @include border($bg, 100);
+                @include image(contain);
             }
         }
 
+    }
+
+    main {
+
+        .divProfile {
+
+            article {
+
+                .pText {
+                    margin: pixels-rem(15) 0;
+                    text-align: left;
+                    text-indent: pixels-rem(10);
+                    font-size: pixels-rem(15);
+                    color: $prof-text;
+                }
+
+                .pTitle {
+                    margin: pixels-rem(20) auto 0;
+                    width: 80%;
+                    // background-color: $bg-title;
+                    background-image: linear-gradient(to Right, transparent, $form-title, transparent);
+                    border-left: 2px solid $bg;
+                    border-right: 2px solid $bg;
+                    box-shadow: 0 2px 5px $bg;
+                    padding: pixels-rem(6) 0;
+                    border-radius: pixels-rem(10);
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: pixels-rem(20);
+                    color: $prof-title;
+                }
+
+                .pParagraph {
+                    padding: 0 pixels-rem(10);
+                    margin-top: pixels-rem(5);
+                    font-style: italic;
+                    text-align: justify;
+                    font-size: pixels-rem(14);
+                    color: $prof-para;
+                }
+
+                .divImageContainer {
+                    margin: pixels-rem(30) auto;
+                    @include border($user-name, 5);
+                    background-color: transparent;
+                    width: 98%;
+                    height: pixels-rem(250);
+
+                    img {
+                        @include image(contain);
+                        padding: pixels-rem(5);
+                    }
+
+                }
+            }
+
+        }
+    }
+}
+
+.secPrivateProfile {
+    background-image: linear-gradient(transparent, $user-bg-header-priv, transparent);
+
+    header {
+        background-image: linear-gradient(to right, $user-bg-header-priv, transparent);
     }
 }

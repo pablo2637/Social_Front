@@ -41,7 +41,7 @@ export const HomeUserPage = () => {
         <section className='secUserProfile'>
 
           <h3>Público:</h3>
-          <Profile profile={user.profile} />
+          <Profile profile={user.profile} name={user.name} image={user.image} _id={user._id} />
 
           <NavLink to='/editPublicProfile'>Edita tu perfil público</NavLink>
 
@@ -50,7 +50,7 @@ export const HomeUserPage = () => {
         <section className='secUserProfile'>
 
           <h3>Privado:</h3>
-          <Profile profile={user.privateProfile} />
+          <Profile profile={user.privateProfile} name={user.name} image={user.image} _id={user._id} />
 
           <NavLink to='/editPrivateProfile'>Edita tu perfil privado</NavLink>
 

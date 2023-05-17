@@ -1,4 +1,4 @@
-@import '../../../base/settings';
+// @import '../../../base/settings';
 
 .artUser {
 
@@ -79,14 +79,18 @@
 
             .secInvites {
 
-                article {
-                    @include grid(0.5fr 0.4fr 0.1fr, left, center, 0, 0);
+                article {                    
+                    @include grid(0.45fr 0.50fr 0.05fr, center, center, 0, 0);
                     border-bottom: 1px dotted $bg;
+                    
+                    p{
+                        font-size: pixels-rem(10);
+                    }
 
                     p a {
                         @include boton();
                         padding: pixels-rem(5);
-                        width: pixels-rem(150);
+                        width: pixels-rem(100);
                         display: inline-block;
                         text-decoration: none;
                     }

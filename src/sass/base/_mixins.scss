@@ -8,8 +8,8 @@
 
 @mixin grid($grd-col, $justify, $align, $padding, $gap) {
     display: grid;
-    grid-template-columns: $grd-col;
-    justify-content: $justify;
+    grid-template-columns: $grd-col;    
+    justify-items: $justify;
     align-items: $align;
     padding: pixels-rem($padding);
     gap: pixels-rem($gap);
@@ -17,7 +17,7 @@
 
 @mixin container($width, $mrg-y) {
     width: $width;
-    margin: $mrg-y auto;
+    margin: pixels-rem($mrg-y) auto;
 }
 
 @mixin border($color, $radius) {

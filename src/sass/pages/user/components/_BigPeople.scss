@@ -1,4 +1,4 @@
-@import '../../../base/settings';
+// @import '../../../base/settings';
 
 .secBigPeople {
     margin: pixels-rem(25) 0;
@@ -70,7 +70,7 @@
 
     .divChatBox {
 
-        @include container(98%, auto);
+        @include container(98%, 0);
         box-shadow: 0 0 0;
         background-color: transparent;
         position: relative;

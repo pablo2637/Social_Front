@@ -1,146 +1,34 @@
-import { useEffect, useState } from "react";
-import { useUserStore } from "../../hooks/useUserStore";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Profile } from "./components/Profile";
-import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { validateFormProfile } from "../../helpers/validateForm";
+import { useProfiles } from "./hooks/useProfiles";
 
 export const EditPrivateProfile = () => {
 
     const { user } = useSelector((state) => state.auth);
     const { isLoading } = useSelector((state) => state.users);
 
-    const { updateUserPrivateProfile } = useUserStore();
+    const {
+        form,
+        handleImageSelect,
+        handleOnChange,
+        handleOnClick,
+        handleOnSubmit,
 
-    const [form, setForm] = useState([]);
-    const [order, setOrder] = useState([]);
-    const [validate, setValidate] = useState('');
+        loadFormPrivate,
 
-    const navigate = useNavigate();
+        order,
+        validate,
 
-
-    const serializeForm = (serialForm) => {
-
-        const data = {};
-        const formData = new FormData(serialForm);
-
-        for (let [key, value] of formData) {
-
-            if (value.length > 1000)
-                delete data.key
-
-            else
-                data[key] = typeof value === 'string' ? value.trim() : value;
-        };
-
-        return { data, formData };
-    };
-
-
-
-    const handleOnClick = (type) => {
-
-        const id = Date.now();
-
-        setForm(prevForm => ([
-            ...prevForm,
-            {
-                typeInput: type,
-                content: '',
-                name: `${type}-${id}`,
-                id: `${type}-${id}`
-            }
-        ]));
-
-        setOrder([
-            ...order,
-            `${type}-${id}`
-        ])
-
-    };
-
-
-
-    const handleImageSelect = ({ target }) => {
-
-        const ind = form.findIndex(el => el.id == target.id);
-        const newInput = form[ind];
-
-        const reader = new FileReader();
-        reader.onload = ({ target }) => {
-
-            const newForm = [
-                ...form.slice(0, ind),
-                { ...newInput, content: target.result },
-                ...form.slice(ind + 1)
-            ];
-            setForm(newForm);
-        };
-        reader.readAsDataURL(target.files[0]);
-    };
-
-
-
-    const handleOnSubmit = async (ev) => {
-        ev.preventDefault();
-
-
-        const { data, formData } = serializeForm(ev.target);
-
-        const validateOK = validateFormProfile(data);
-        if (!validateOK) {
-            setValidate('No puedes dejar campos vacíos...');
-
-            setTimeout(() => {
-                setValidate('');
-            }, 3000)
-            return
-        }
-
-        if (!data) {
-            setValidate('Tienes que agregar aunque sea 1 elemtento para continuar...');
-
-            setTimeout(() => {
-                setValidate('');
-            }, 3000)
-            return
-        }
-
-        const response = await updateUserPrivateProfile(formData);
-
-        if (!response.ok) return
-
-        navigate('/');
-
-    };
-
-
-    const handleOnChange = (target) => {
-
-        setForm((prevForm) =>
-            prevForm.map((el) => {
-                if (el.id === target.id)
-                    return { ...el, content: target.value };
-
-                return el;
-            })
-        );
-
-    };
-
-
-    const loadForm = () => {
-
-        setOrder(user.privateProfileOrder);
-        const newForm = [...user.privateProfile];
-
-        setForm(newForm);
-    };
+        handleMoveDown,
+        handleMoveUp,
+        handleRemove
+    } = useProfiles();
 
 
     useEffect(() => {
-        loadForm();
+        loadFormPrivate();
 
     }, [])
 
@@ -159,11 +47,8 @@ export const EditPrivateProfile = () => {
                 <img src="../../assets/bg-chat.png" alt="Imagen de portada de perfiles" />
             </div>
 
-            {validate &&
-                <p className="errorProfile">{validate}</p>
-            }
 
-            <form onSubmit={handleOnSubmit}>
+            <form onSubmit={(ev) => handleOnSubmit(ev, true)}>
                 <input type="hidden" name="_id" value={user._id} />
                 <input type="hidden" name="uid" value={user.uid} />
                 <input type="hidden" name="privateProfileOrder" value={order} />
@@ -172,53 +57,113 @@ export const EditPrivateProfile = () => {
                 {
                     form.map(el => (
                         <div key={`d${el.id}`}>
-                            {(el.typeInput == 'title') && <input
-                                type="text"
-                                name={el.name}
-                                id={el.id}
-                                value={el.content}
-                                placeholder='Titulo...'
-                                onChange={({ target }) => handleOnChange(target, el.typeInput)}
-                            />}
+                            {
+                                (el.typeInput == 'title') &&
+                                <div className="divElProfile">
 
-                            {(el.typeInput == 'text') && <input
-                                type="text"
-                                name={el.name}
-                                id={el.id}
-                                value={el.content}
-                                placeholder='Texto...'
-                                onChange={({ target }) => handleOnChange(target, el.typeInput)}
-                            />}
-
-                            {(el.typeInput == 'paragraph') && <textarea
-                                name={el.name}
-                                id={el.id}
-                                placeholder='Párrafo...'
-                                onChange={({ target }) => handleOnChange(target, el.typeInput)}
-                                defaultValue={el.content}>
-                            </textarea>}
-
-                            {(el.typeInput == 'image') &&
-                                <>
-                                    <label
-                                        htmlFor={`${el.name}_imageURL`}
-                                    >Imagen elegida:
-                                    </label>
+                                    <label htmlFor={el.name}>Título:</label>
                                     <input
+                                        className="btnTitle"
                                         type="text"
-                                        readOnly
-                                        name={`${el.name}_imageURL`}
-                                        value={(el.content.length < 1000) ? el.content : '...'}
-                                        placeholder="Aún sin seleccionar..."
-                                    />
-                                    <input
-                                        type="file"
-                                        accept="image/*"
                                         name={el.name}
                                         id={el.id}
-                                        onChange={handleImageSelect}
+                                        value={el.content}
+                                        placeholder='Titulo...'
+                                        onChange={({ target }) => handleOnChange(target, el.typeInput)}
                                     />
-                                </>}
+
+                                    <div>
+                                        <button onClick={(ev) => handleMoveUp(ev, el.id)}><i className="fa-solid fa-up-long"></i></button>
+                                        <button onClick={(ev) => handleRemove(ev, el.id)}><i className="fa-solid fa-trash"></i></button>
+                                        <button onClick={(ev) => handleMoveDown(ev, el.id)}><i className="fa-solid fa-down-long"></i></button>
+                                    </div>
+                                </div>
+                            }
+
+                            {
+                                (el.typeInput == 'text') &&
+                                <div className="divElProfile">
+
+                                    <label htmlFor={el.name}>Texto:</label>
+                                    <input
+                                        className="btnText"
+                                        type="text"
+                                        name={el.name}
+                                        id={el.id}
+                                        value={el.content}
+                                        placeholder='Texto...'
+                                        onChange={({ target }) => handleOnChange(target, el.typeInput)}
+                                    />
+
+                                    <div>
+                                        <button onClick={(ev) => handleMoveUp(ev, el.id)}><i className="fa-solid fa-up-long"></i></button>
+                                        <button onClick={(ev) => handleRemove(ev, el.id)}><i className="fa-solid fa-trash"></i></button>
+                                        <button onClick={(ev) => handleMoveDown(ev, el.id)}><i className="fa-solid fa-down-long"></i></button>
+                                    </div>
+                                </div>
+                            }
+
+                            {(el.typeInput == 'paragraph') &&
+                                <div className="divElProfile">
+
+                                    <label htmlFor={el.name}>Párrafo:</label>
+                                    <textarea
+                                        className="btnParagraph"
+                                        name={el.name}
+                                        id={el.id}
+                                        placeholder='Párrafo...'
+                                        onChange={({ target }) => handleOnChange(target, el.typeInput)}
+                                        defaultValue={el.content}>
+                                    </textarea>
+
+                                    <div>
+                                        <button onClick={(ev) => handleMoveUp(ev, el.id)}><i className="fa-solid fa-up-long"></i></button>
+                                        <button onClick={(ev) => handleRemove(ev, el.id)}><i className="fa-solid fa-trash"></i></button>
+                                        <button onClick={(ev) => handleMoveDown(ev, el.id)}><i className="fa-solid fa-down-long"></i></button>
+                                    </div>
+                                </div>
+                            }
+
+                            {(el.typeInput == 'image') &&
+
+                                <>
+
+                                    <div className="divElProfileSel">
+                                        <label
+                                            htmlFor={`${el.name}_imageURL`}
+                                        >Imagen elegida:
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            className="selected"
+                                            readOnly
+                                            name={`${el.name}_imageURL`}
+                                            value={(el.content.length < 1000) ? el.content : '...'}
+                                            placeholder="Aún sin seleccionar..."
+                                        />
+                                    </div>
+
+                                    <div className="divElProfile">
+
+                                        <label htmlFor={el.name}>Imagen:</label>
+                                        <input
+                                            className="btnImg"
+                                            type="file"
+                                            accept="image/*"
+                                            name={el.name}
+                                            id={el.id}
+                                            onChange={handleImageSelect}
+                                        />
+
+                                        <div>
+                                            <button onClick={(ev) => handleMoveUp(ev, el.id)}><i className="fa-solid fa-up-long"></i></button>
+                                            <button onClick={(ev) => handleRemove(ev, el.id)}><i className="fa-solid fa-trash"></i></button>
+                                            <button onClick={(ev) => handleMoveDown(ev, el.id)}><i className="fa-solid fa-down-long"></i></button>
+                                        </div>
+                                    </div>
+                                </>
+                            }
 
                         </div>
                     ))
@@ -229,10 +174,10 @@ export const EditPrivateProfile = () => {
 
                     <p>Agregar elemento:</p>
                     <div>
-                        <button onClick={() => handleOnClick('title')} ><i className="fa-solid fa-t"></i> Título</button>
-                        <button onClick={() => handleOnClick('paragraph')} ><i className="fa-solid fa-paragraph"></i> Párrafo</button>
-                        <button onClick={() => handleOnClick('text')} ><i className="fa-solid fa-i-cursor"></i> Texto</button>
-                        <button onClick={() => handleOnClick('image')} ><i className="fa-regular fa-image"></i>Imagen</button>
+                        <button className="btnTitle" onClick={(ev) => handleOnClick(ev, 'title')} ><i className="fa-solid fa-t"></i> Título</button>
+                        <button className="btnParagraph" onClick={(ev) => handleOnClick(ev, 'paragraph')} ><i className="fa-solid fa-paragraph"></i> Párrafo</button>
+                        <button className="btnText" onClick={(ev) => handleOnClick(ev, 'text')} ><i className="fa-solid fa-i-cursor"></i> Texto</button>
+                        <button className="btnImg" onClick={(ev) => handleOnClick(ev, 'image')} ><i className="fa-regular fa-image"></i>Imagen</button>
                     </div>
                 </div>
 
@@ -262,6 +207,9 @@ export const EditPrivateProfile = () => {
                 }
             </form>
 
+            {validate &&
+                <p className="errorProfile">{validate}</p>
+            }
 
             <h2>Previsualización:</h2>
 
