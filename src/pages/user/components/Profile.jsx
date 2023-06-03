@@ -8,7 +8,7 @@ export const Profile = ({ profile, _id = Date.now(), name, dateMod, image }) => 
     return (
         <section className="secProfile" key={'sec' + _id}>
 
-            <header>
+            <header className="profHeader">
 
                 <p className="pDate">Ult. mod.: {dateMod} hrs.</p>
                 <h3>{name}</h3>
@@ -21,7 +21,7 @@ export const Profile = ({ profile, _id = Date.now(), name, dateMod, image }) => 
 
             </header>
 
-            <main>
+            <main className="profMain">
 
                 <div className="divProfile">
                     {

@@ -8,10 +8,10 @@ export const PrivateProfile = ({ privateProfile, _id = Date.now(), name, private
     return (
         <section className="secPrivateProfile" key={'sec' + _id}>
 
-            <header>
+            <header className="profHeader">
 
                 <p className="pDate">Ult. mod.: {privateDateMod} hrs.</p>
-                <h3>{name} (Privado)</h3>
+                <h3>{name} <i className="fa-solid fa-mask"></i></h3>
 
                 <div className="divUserImage">
                     <NavLink to={`/detail/${_id}`} >
@@ -21,7 +21,7 @@ export const PrivateProfile = ({ privateProfile, _id = Date.now(), name, private
 
             </header>
 
-            <main>
+            <main className="profMain">
 
                 <div className="divProfile">
                     {

@@ -36,7 +36,6 @@
                 margin-top: pixels-rem(15);
             }
 
-            @import './components/Profile';
 
             a {
                 @include boton();
@@ -50,6 +49,9 @@
             a:hover {
                 @include boton-hover();
             }
+
+
+            @import './components/Profile';
 
         }
     }

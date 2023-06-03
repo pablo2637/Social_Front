@@ -14,12 +14,12 @@
     margin: pixels-rem(30) 0 pixels-rem(50);
     background-image: linear-gradient(transparent, $bg-font-col, transparent);
 
-    header {
+    .profHeader {
         border-radius: pixels-rem(10);
         background-image: linear-gradient(to right, $user-bg-header, transparent);
         height: pixels-rem(75);
         box-shadow: 0px 3px 10px black;
-        margin-bottom: pixels-rem(45);
+        margin-bottom: pixels-rem(65);
 
         h3 {
             font-size: pixels-rem(22);
@@ -41,21 +41,26 @@
         .divUserImage {
             border-radius: 100px;
             box-shadow: 0px 3px 10px black;
-            position: static;
-            transform: translate(pixels-rem(-5), pixels-rem(-50));
+            // position: relative;
+            // transform: translate(pixels-rem(-5), pixels-rem(-50));
             float: right;
+            // right: pixels-rem(15);
             width: pixels-rem(80);
             height: pixels-rem(80);
 
-            img {
-                @include border($bg, 100);
-                @include image(contain);
+            a {
+                text-decoration: none;
+
+                img {
+                    @include border($bg, 100);
+                    @include image(contain);
+                }
             }
         }
 
     }
 
-    main {
+    .profMain {
 
         .divProfile {
 
@@ -116,7 +121,7 @@
 .secPrivateProfile {
     background-image: linear-gradient(transparent, $user-bg-header-priv, transparent);
 
-    header {
+    .profHeader {
         background-image: linear-gradient(to right, $user-bg-header-priv, transparent);
     }
 }
